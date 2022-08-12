@@ -1,0 +1,9 @@
+#set( $updateList = {} )
+#foreach( $entry in $ctx.args.updatePermissionMasterInput.keySet() )
+  #set( $discard = $updateList.put($entry, "'$ctx.args.updatePermissionMasterInput[$entry]'") )
+#end
+#set( $update = $updateList.toString().replace("{","").replace("}","") )
+{
+  "version": "2018-05-29",
+  "statements":   ["UPDATE PermissionMaster SET $update WHERE id=$ctx.args.updatePermissionMasterInput.id", "SELECT * FROM PermissionMaster WHERE id=$ctx.args.updatePermissionMasterInput.id"]
+}

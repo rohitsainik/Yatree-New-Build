@@ -1,0 +1,28 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-yatree-dev-230905-authRole",
+      "UnauthRoleArn": "arn:aws:iam::762162388578:role/amplify-yatree-dev-230905-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::762162388578:role/amplify-yatree-dev-230905-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-yatree-dev-230905-deployment",
+      "UnauthRoleName": "amplify-yatree-dev-230905-unauthRole",
+      "StackName": "amplify-yatree-dev-230905",
+      "StackId": "arn:aws:cloudformation:us-east-1:762162388578:stack/amplify-yatree-dev-230905/5c0bcd20-05cb-11ec-820a-0e6c28966f7b",
+      "AmplifyAppId": "d27wgyplu755ap"
+    },
+    "categories": {
+      "auth": {
+        "yatreef5815569": {}
+      },
+      "api": {
+        "yatree": {
+          "rdsRegion": "us-east-1",
+          "rdsClusterIdentifier": "arn:aws:rds:us-east-1:762162388578:cluster:yatree-db",
+          "rdsSecretStoreArn": "arn:aws:secretsmanager:us-east-1:762162388578:secret:rds-db-credentials/cluster-J3VY2GOBSO7HYCIG5QMXQTGXRM/yatree_dev-GodEEK",
+          "rdsDatabaseName": "yatree_dev"
+        }
+      }
+    }
+  }
+}

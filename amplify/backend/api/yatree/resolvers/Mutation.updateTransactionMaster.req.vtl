@@ -1,0 +1,9 @@
+#set( $updateList = {} )
+#foreach( $entry in $ctx.args.updateTransactionMasterInput.keySet() )
+  #set( $discard = $updateList.put($entry, "'$ctx.args.updateTransactionMasterInput[$entry]'") )
+#end
+#set( $update = $updateList.toString().replace("{","").replace("}","") )
+{
+  "version": "2018-05-29",
+  "statements":   ["UPDATE TransactionMaster SET $update WHERE id=$ctx.args.updateTransactionMasterInput.id", "SELECT * FROM TransactionMaster WHERE id=$ctx.args.updateTransactionMasterInput.id"]
+}

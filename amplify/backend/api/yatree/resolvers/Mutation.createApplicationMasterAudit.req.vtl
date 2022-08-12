@@ -1,0 +1,12 @@
+#set( $cols = [] )
+#set( $vals = [] )
+#foreach( $entry in $ctx.args.createApplicationMasterAuditInput.keySet() )
+  #set( $discard = $cols.add($entry) )
+  #set( $discard = $vals.add("'$ctx.args.createApplicationMasterAuditInput[$entry]'") )
+#end
+#set( $valStr = $vals.toString().replace("[","(").replace("]",")") )
+#set( $colStr = $cols.toString().replace("[","(").replace("]",")") )
+{
+  "version": "2018-05-29",
+  "statements":   ["INSERT INTO ApplicationMasterAudit $colStr VALUES $valStr", "SELECT * FROM ApplicationMasterAudit WHERE auditId=$ctx.args.createApplicationMasterAuditInput.auditId"]
+}

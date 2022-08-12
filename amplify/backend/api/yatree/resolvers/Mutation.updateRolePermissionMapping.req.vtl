@@ -1,0 +1,9 @@
+#set( $updateList = {} )
+#foreach( $entry in $ctx.args.updateRolePermissionMappingInput.keySet() )
+  #set( $discard = $updateList.put($entry, "'$ctx.args.updateRolePermissionMappingInput[$entry]'") )
+#end
+#set( $update = $updateList.toString().replace("{","").replace("}","") )
+{
+  "version": "2018-05-29",
+  "statements":   ["UPDATE RolePermissionMapping SET $update WHERE rpId=$ctx.args.updateRolePermissionMappingInput.rpId", "SELECT * FROM RolePermissionMapping WHERE rpId=$ctx.args.updateRolePermissionMappingInput.rpId"]
+}

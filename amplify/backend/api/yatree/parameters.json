@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "yatree",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authyatreef5815569",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

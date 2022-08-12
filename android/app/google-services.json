@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "480699227467",
+    "project_id": "yatree-app",
+    "storage_bucket": "yatree-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480699227467:android:b0ac9b79d0423d06ae5cce",
+        "android_client_info": {
+          "package_name": "com.bb.yatree.yatree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480699227467-3fl0cojuap9h8cngpb17020vo8jthm7d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bb.yatree.yatree",
+            "certificate_hash": "f0159c2135a258e6af561b8ffa1d75cc5ff8ce65"
+          }
+        },
+        {
+          "client_id": "480699227467-l24usckfa7verssj1c80m8iunh3ba0vv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsVhr7-BVEuj0EoExVyMpj5Iu1-YEzmMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480699227467-l24usckfa7verssj1c80m8iunh3ba0vv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

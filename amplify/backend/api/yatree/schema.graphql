@@ -1,0 +1,2070 @@
+input CreateApplicationMasterInput {
+  id: Int!
+  applicationName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type ApplicationMaster {
+  id: Int!
+  applicationName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateApplicationMasterInput {
+  id: Int!
+  applicationName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateApplicationMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  applicationName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type ApplicationMasterAudit {
+  auditId: Int!
+  id: Int!
+  applicationName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateApplicationMasterAuditInput {
+  auditId: Int!
+  id: Int
+  applicationName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateAutoMasterInput {
+  id: Int!
+  regNo: String!
+  uniqueNo: String!
+  insuranceDate: AWSDate!
+  renewalPeriod: String!
+  rcNo: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  rc: String
+  insurance: String
+}
+
+type AutoMaster {
+  id: Int!
+  regNo: String!
+  uniqueNo: String!
+  insuranceDate: AWSDate!
+  renewalPeriod: String!
+  rcNo: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  rc: String
+  insurance: String
+}
+
+input UpdateAutoMasterInput {
+  id: Int!
+  regNo: String
+  uniqueNo: String
+  insuranceDate: AWSDate
+  renewalPeriod: String
+  rcNo: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  rc: String
+  insurance: String
+}
+
+input CreateAutoMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  regNo: String!
+  uniqueNo: String!
+  insuranceDate: AWSDate!
+  renewalPeriod: String!
+  rcNo: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  rc: String
+  insurance: String
+}
+
+type AutoMasterAudit {
+  auditId: Int!
+  id: Int!
+  regNo: String!
+  uniqueNo: String!
+  insuranceDate: AWSDate!
+  renewalPeriod: String!
+  rcNo: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  rc: String
+  insurance: String
+}
+
+input UpdateAutoMasterAuditInput {
+  auditId: Int!
+  id: Int
+  regNo: String
+  uniqueNo: String
+  insuranceDate: AWSDate
+  renewalPeriod: String
+  rcNo: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  rc: String
+  insurance: String
+}
+
+input CreatePermissionMasterInput {
+  id: Int!
+  permissionName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type PermissionMaster {
+  id: Int!
+  permissionName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdatePermissionMasterInput {
+  id: Int!
+  permissionName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreatePermissionMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  permissionName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type PermissionMasterAudit {
+  auditId: Int!
+  id: Int!
+  permissionName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdatePermissionMasterAuditInput {
+  auditId: Int!
+  id: Int
+  permissionName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateRoleMasterInput {
+  id: Int!
+  roleName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type RoleMaster {
+  id: Int!
+  roleName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateRoleMasterInput {
+  id: Int!
+  roleName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateRoleMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  roleName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type RoleMasterAudit {
+  auditId: Int!
+  id: Int!
+  roleName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateRoleMasterAuditInput {
+  auditId: Int!
+  id: Int
+  roleName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateRolePermissionMappingInput {
+  rpId: Int!
+  roleId: String!
+  permissions: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type RolePermissionMapping {
+  rpId: Int!
+  roleId: String!
+  permissions: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateRolePermissionMappingInput {
+  rpId: Int!
+  roleId: String
+  permissions: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateRolePermissionMappingAuditInput {
+  auditId: Int!
+  rpId: Int!
+  roleId: String!
+  permissions: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type RolePermissionMappingAudit {
+  auditId: Int!
+  rpId: Int!
+  roleId: String!
+  permissions: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateRolePermissionMappingAuditInput {
+  auditId: Int!
+  rpId: Int
+  roleId: String
+  permissions: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateUserMasterInput {
+  id: Int!
+  cognitoId: String!
+  name: String!
+  email: String!
+  phoneNumber: String
+  aadharNo: String
+  dlNo: String
+  age: Int
+  gender: String
+  autoAssign: Int
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  userStatus: String!
+  roleId: Int!
+  address: String!
+  photo: String
+  license: String
+  aadharCard: String
+  panCard: String
+  driverId: String
+}
+
+type UserMaster {
+  id: Int!
+  cognitoId: String!
+  name: String!
+  email: String!
+  phoneNumber: String
+  aadharNo: String
+  dlNo: String
+  age: Int
+  gender: String
+  autoAssign: Int
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  userStatus: String!
+  roleId: Int!
+  address: String!
+  photo: String
+  license: String
+  aadharCard: String
+  panCard: String
+  driverId: String
+}
+
+input UpdateUserMasterInput {
+  id: Int!
+  cognitoId: String
+  name: String
+  email: String
+  phoneNumber: String
+  aadharNo: String
+  dlNo: String
+  age: Int
+  gender: String
+  autoAssign: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  userStatus: String
+  roleId: Int
+  address: String
+  photo: String
+  license: String
+  aadharCard: String
+  panCard: String
+  driverId: String
+}
+
+input CreateUserMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  cognitoId: String!
+  name: String!
+  email: String!
+  phoneNumber: String
+  aadharNo: String
+  dlNo: String
+  age: Int
+  gender: String
+  autoAssign: Int
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  userStatus: String!
+  roleId: Int!
+  address: String!
+  photo: String
+  license: String
+  aadharCard: String
+  panCard: String
+  driverId: String
+}
+
+type UserMasterAudit {
+  auditId: Int!
+  id: Int!
+  cognitoId: String!
+  name: String!
+  email: String!
+  phoneNumber: String
+  aadharNo: String
+  dlNo: String
+  age: Int
+  gender: String
+  autoAssign: Int
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  userStatus: String!
+  roleId: Int!
+  address: String!
+  photo: String
+  license: String
+  aadharCard: String
+  panCard: String
+  driverId: String
+}
+
+input UpdateUserMasterAuditInput {
+  auditId: Int!
+  id: Int
+  cognitoId: String
+  name: String
+  email: String
+  phoneNumber: String
+  aadharNo: String
+  dlNo: String
+  age: Int
+  gender: String
+  autoAssign: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  userStatus: String
+  roleId: Int
+  address: String
+  photo: String
+  license: String
+  aadharCard: String
+  panCard: String
+  driverId: String
+}
+
+enum TableNames {
+  ApplicationMaster
+  ApplicationMasterAudit
+  AutoMaster
+  AutoMasterAudit
+  BookingMaster
+  BookingMasterAudit
+  BookingPassengerDetails
+  BookingPassengerDetailsAudit
+  OfferMaster
+  OfferMasterAudit
+  OrderMaster
+  OrderMasterAudit
+  PackageCategoryMaster
+  PackageCategoryMasterAudit
+  PackageMaster
+  PackageMasterAudit
+  PackagePlaceMapping
+  PackagePlaceMappingAudit
+  PermissionMaster
+  PermissionMasterAudit
+  PlaceImages
+  PlaceImagesAudit
+  PlaceMaster
+  PlaceMasterAudit
+  ReviewMaster
+  ReviewMasterAudit
+  RideDetails
+  RideDetailsAudit
+  RideMaster
+  RideMasterAudit
+  RoleMaster
+  RoleMasterAudit
+  RolePermissionMapping
+  RolePermissionMappingAudit
+  ServiceMaster
+  ServiceMasterAudit
+  SubServiceMaster
+  SubServiceMasterAudit
+  SupportMaster
+  SupportMasterAudit
+  TransactionMaster
+  TransactionMasterAudit
+  UserMaster
+  UserMasterAudit
+  DiscountMaster
+  DiscountMasterAudit
+}
+
+type Mutation {
+  deleteApplicationMaster(id: Int!): ApplicationMaster
+  createApplicationMaster(createApplicationMasterInput: CreateApplicationMasterInput!): ApplicationMaster
+  updateApplicationMaster(updateApplicationMasterInput: UpdateApplicationMasterInput!): ApplicationMaster
+  deleteApplicationMasterAudit(auditId: Int!): ApplicationMasterAudit
+  createApplicationMasterAudit(createApplicationMasterAuditInput: CreateApplicationMasterAuditInput!): ApplicationMasterAudit
+  updateApplicationMasterAudit(updateApplicationMasterAuditInput: UpdateApplicationMasterAuditInput!): ApplicationMasterAudit
+  deleteAutoMaster(id: Int!): AutoMaster
+  createAutoMaster(createAutoMasterInput: CreateAutoMasterInput!): AutoMaster
+  updateAutoMaster(updateAutoMasterInput: UpdateAutoMasterInput!): AutoMaster
+  deleteAutoMasterAudit(auditId: Int!): AutoMasterAudit
+  createAutoMasterAudit(createAutoMasterAuditInput: CreateAutoMasterAuditInput!): AutoMasterAudit
+  updateAutoMasterAudit(updateAutoMasterAuditInput: UpdateAutoMasterAuditInput!): AutoMasterAudit
+  deletePermissionMaster(id: Int!): PermissionMaster
+  createPermissionMaster(createPermissionMasterInput: CreatePermissionMasterInput!): PermissionMaster
+  updatePermissionMaster(updatePermissionMasterInput: UpdatePermissionMasterInput!): PermissionMaster
+  deletePermissionMasterAudit(auditId: Int!): PermissionMasterAudit
+  createPermissionMasterAudit(createPermissionMasterAuditInput: CreatePermissionMasterAuditInput!): PermissionMasterAudit
+  updatePermissionMasterAudit(updatePermissionMasterAuditInput: UpdatePermissionMasterAuditInput!): PermissionMasterAudit
+  deleteRoleMaster(id: Int!): RoleMaster
+  createRoleMaster(createRoleMasterInput: CreateRoleMasterInput!): RoleMaster
+  updateRoleMaster(updateRoleMasterInput: UpdateRoleMasterInput!): RoleMaster
+  deleteRoleMasterAudit(auditId: Int!): RoleMasterAudit
+  createRoleMasterAudit(createRoleMasterAuditInput: CreateRoleMasterAuditInput!): RoleMasterAudit
+  updateRoleMasterAudit(updateRoleMasterAuditInput: UpdateRoleMasterAuditInput!): RoleMasterAudit
+  deleteRolePermissionMapping(rpId: Int!): RolePermissionMapping
+  createRolePermissionMapping(createRolePermissionMappingInput: CreateRolePermissionMappingInput!): RolePermissionMapping
+  updateRolePermissionMapping(updateRolePermissionMappingInput: UpdateRolePermissionMappingInput!): RolePermissionMapping
+  deleteRolePermissionMappingAudit(auditId: Int!): RolePermissionMappingAudit
+  createRolePermissionMappingAudit(createRolePermissionMappingAuditInput: CreateRolePermissionMappingAuditInput!): RolePermissionMappingAudit
+  updateRolePermissionMappingAudit(updateRolePermissionMappingAuditInput: UpdateRolePermissionMappingAuditInput!): RolePermissionMappingAudit
+  deleteUserMaster(id: Int!): UserMaster
+  createUserMaster(createUserMasterInput: CreateUserMasterInput!): UserMaster
+  updateUserMaster(updateUserMasterInput: UpdateUserMasterInput!): UserMaster
+  deleteUserMasterAudit(auditId: Int!): UserMasterAudit
+  createUserMasterAudit(createUserMasterAuditInput: CreateUserMasterAuditInput!): UserMasterAudit
+  updateUserMasterAudit(updateUserMasterAuditInput: UpdateUserMasterAuditInput!): UserMasterAudit
+  customUpdateTable(tableName: TableNames!, condition: String!, data: AWSJSON!): AWSJSON
+  customDeleteTable(tableName: TableNames!, condition: String!): AWSJSON
+  deletePlaceMaster(id: Int!): PlaceMaster
+  createPlaceMaster(createPlaceMasterInput: CreatePlaceMasterInput!): PlaceMaster
+  updatePlaceMaster(updatePlaceMasterInput: UpdatePlaceMasterInput!): PlaceMaster
+  deletePlaceMasterAudit(auditId: Int!): PlaceMasterAudit
+  createPlaceMasterAudit(createPlaceMasterAuditInput: CreatePlaceMasterAuditInput!): PlaceMasterAudit
+  updatePlaceMasterAudit(updatePlaceMasterAuditInput: UpdatePlaceMasterAuditInput!): PlaceMasterAudit
+  deleteServiceMaster(id: Int!): ServiceMaster
+  createServiceMaster(createServiceMasterInput: CreateServiceMasterInput!): ServiceMaster
+  updateServiceMaster(updateServiceMasterInput: UpdateServiceMasterInput!): ServiceMaster
+  deleteServiceMasterAudit(auditId: Int!): ServiceMasterAudit
+  createServiceMasterAudit(createServiceMasterAuditInput: CreateServiceMasterAuditInput!): ServiceMasterAudit
+  updateServiceMasterAudit(updateServiceMasterAuditInput: UpdateServiceMasterAuditInput!): ServiceMasterAudit
+  deletePackageMaster(id: Int!): PackageMaster
+  createPackageMaster(createPackageMasterInput: CreatePackageMasterInput!): PackageMaster
+  updatePackageMaster(updatePackageMasterInput: UpdatePackageMasterInput!): PackageMaster
+  deletePackageMasterAudit(auditId: Int!): PackageMasterAudit
+  createPackageMasterAudit(createPackageMasterAuditInput: CreatePackageMasterAuditInput!): PackageMasterAudit
+  updatePackageMasterAudit(updatePackageMasterAuditInput: UpdatePackageMasterAuditInput!): PackageMasterAudit
+  deletePackagePlaceMapping(id: Int!): PackagePlaceMapping
+  createPackagePlaceMapping(createPackagePlaceMappingInput: CreatePackagePlaceMappingInput!): PackagePlaceMapping
+  updatePackagePlaceMapping(updatePackagePlaceMappingInput: UpdatePackagePlaceMappingInput!): PackagePlaceMapping
+  deletePackagePlaceMappingAudit(auditId: Int!): PackagePlaceMappingAudit
+  createPackagePlaceMappingAudit(createPackagePlaceMappingAuditInput: CreatePackagePlaceMappingAuditInput!): PackagePlaceMappingAudit
+  updatePackagePlaceMappingAudit(updatePackagePlaceMappingAuditInput: UpdatePackagePlaceMappingAuditInput!): PackagePlaceMappingAudit
+  deletePlaceImages(id: Int!): PlaceImages
+  createPlaceImages(createPlaceImagesInput: CreatePlaceImagesInput!): PlaceImages
+  updatePlaceImages(updatePlaceImagesInput: UpdatePlaceImagesInput!): PlaceImages
+  deletePlaceImagesAudit(auditId: Int!): PlaceImagesAudit
+  createPlaceImagesAudit(createPlaceImagesAuditInput: CreatePlaceImagesAuditInput!): PlaceImagesAudit
+  updatePlaceImagesAudit(updatePlaceImagesAuditInput: UpdatePlaceImagesAuditInput!): PlaceImagesAudit
+  deletePackageCategoryMaster(id: Int!): PackageCategoryMaster
+  createPackageCategoryMaster(createPackageCategoryMasterInput: CreatePackageCategoryMasterInput!): PackageCategoryMaster
+  updatePackageCategoryMaster(updatePackageCategoryMasterInput: UpdatePackageCategoryMasterInput!): PackageCategoryMaster
+  deletePackageCategoryMasterAudit(auditId: Int!): PackageCategoryMasterAudit
+  createPackageCategoryMasterAudit(createPackageCategoryMasterAuditInput: CreatePackageCategoryMasterAuditInput!): PackageCategoryMasterAudit
+  updatePackageCategoryMasterAudit(updatePackageCategoryMasterAuditInput: UpdatePackageCategoryMasterAuditInput!): PackageCategoryMasterAudit
+  deleteBookingMaster(id: Int!): BookingMaster
+  createBookingMaster(createBookingMasterInput: CreateBookingMasterInput!): BookingMaster
+  updateBookingMaster(updateBookingMasterInput: UpdateBookingMasterInput!): BookingMaster
+  deleteBookingMasterAudit(auditId: Int!): BookingMasterAudit
+  createBookingMasterAudit(createBookingMasterAuditInput: CreateBookingMasterAuditInput!): BookingMasterAudit
+  updateBookingMasterAudit(updateBookingMasterAuditInput: UpdateBookingMasterAuditInput!): BookingMasterAudit
+  deleteBookingPassengerDetails(id: Int!): BookingPassengerDetails
+  createBookingPassengerDetails(createBookingPassengerDetailsInput: CreateBookingPassengerDetailsInput!): BookingPassengerDetails
+  updateBookingPassengerDetails(updateBookingPassengerDetailsInput: UpdateBookingPassengerDetailsInput!): BookingPassengerDetails
+  deleteBookingPassengerDetailsAudit(auditId: Int!): BookingPassengerDetailsAudit
+  createBookingPassengerDetailsAudit(createBookingPassengerDetailsAuditInput: CreateBookingPassengerDetailsAuditInput!): BookingPassengerDetailsAudit
+  updateBookingPassengerDetailsAudit(updateBookingPassengerDetailsAuditInput: UpdateBookingPassengerDetailsAuditInput!): BookingPassengerDetailsAudit
+  deleteOfferMaster(id: Int!): OfferMaster
+  createOfferMaster(createOfferMasterInput: CreateOfferMasterInput!): OfferMaster
+  updateOfferMaster(updateOfferMasterInput: UpdateOfferMasterInput!): OfferMaster
+  deleteOfferMasterAudit(auditId: Int!): OfferMasterAudit
+  createOfferMasterAudit(createOfferMasterAuditInput: CreateOfferMasterAuditInput!): OfferMasterAudit
+  updateOfferMasterAudit(updateOfferMasterAuditInput: UpdateOfferMasterAuditInput!): OfferMasterAudit
+  deleteOrderMaster(id: Int!): OrderMaster
+  createOrderMaster(createOrderMasterInput: CreateOrderMasterInput!): OrderMaster
+  updateOrderMaster(updateOrderMasterInput: UpdateOrderMasterInput!): OrderMaster
+  deleteOrderMasterAudit(auditId: Int!): OrderMasterAudit
+  createOrderMasterAudit(createOrderMasterAuditInput: CreateOrderMasterAuditInput!): OrderMasterAudit
+  updateOrderMasterAudit(updateOrderMasterAuditInput: UpdateOrderMasterAuditInput!): OrderMasterAudit
+  deleteReviewMaster(id: Int!): ReviewMaster
+  createReviewMaster(createReviewMasterInput: CreateReviewMasterInput!): ReviewMaster
+  updateReviewMaster(updateReviewMasterInput: UpdateReviewMasterInput!): ReviewMaster
+  deleteReviewMasterAudit(auditId: Int!): ReviewMasterAudit
+  createReviewMasterAudit(createReviewMasterAuditInput: CreateReviewMasterAuditInput!): ReviewMasterAudit
+  updateReviewMasterAudit(updateReviewMasterAuditInput: UpdateReviewMasterAuditInput!): ReviewMasterAudit
+  deleteRideDetails(id: Int!): RideDetails
+  createRideDetails(createRideDetailsInput: CreateRideDetailsInput!): RideDetails
+  updateRideDetails(updateRideDetailsInput: UpdateRideDetailsInput!): RideDetails
+  deleteRideDetailsAudit(auditId: Int!): RideDetailsAudit
+  createRideDetailsAudit(createRideDetailsAuditInput: CreateRideDetailsAuditInput!): RideDetailsAudit
+  updateRideDetailsAudit(updateRideDetailsAuditInput: UpdateRideDetailsAuditInput!): RideDetailsAudit
+  deleteRideMaster(id: Int!): RideMaster
+  createRideMaster(createRideMasterInput: CreateRideMasterInput!): RideMaster
+  updateRideMaster(updateRideMasterInput: UpdateRideMasterInput!): RideMaster
+  deleteRideMasterAudit(auditId: Int!): RideMasterAudit
+  createRideMasterAudit(createRideMasterAuditInput: CreateRideMasterAuditInput!): RideMasterAudit
+  updateRideMasterAudit(updateRideMasterAuditInput: UpdateRideMasterAuditInput!): RideMasterAudit
+  deleteSubServiceMaster(id: Int!): SubServiceMaster
+  createSubServiceMaster(createSubServiceMasterInput: CreateSubServiceMasterInput!): SubServiceMaster
+  updateSubServiceMaster(updateSubServiceMasterInput: UpdateSubServiceMasterInput!): SubServiceMaster
+  deleteSubServiceMasterAudit(auditId: Int!): SubServiceMasterAudit
+  createSubServiceMasterAudit(createSubServiceMasterAuditInput: CreateSubServiceMasterAuditInput!): SubServiceMasterAudit
+  updateSubServiceMasterAudit(updateSubServiceMasterAuditInput: UpdateSubServiceMasterAuditInput!): SubServiceMasterAudit
+  deleteSupportMaster(id: Int!): SupportMaster
+  createSupportMaster(createSupportMasterInput: CreateSupportMasterInput!): SupportMaster
+  updateSupportMaster(updateSupportMasterInput: UpdateSupportMasterInput!): SupportMaster
+  deleteSupportMasterAudit(auditId: Int!): SupportMasterAudit
+  createSupportMasterAudit(createSupportMasterAuditInput: CreateSupportMasterAuditInput!): SupportMasterAudit
+  updateSupportMasterAudit(updateSupportMasterAuditInput: UpdateSupportMasterAuditInput!): SupportMasterAudit
+  deleteTransactionMaster(id: Int!): TransactionMaster
+  createTransactionMaster(createTransactionMasterInput: CreateTransactionMasterInput!): TransactionMaster
+  updateTransactionMaster(updateTransactionMasterInput: UpdateTransactionMasterInput!): TransactionMaster
+  deleteTransactionMasterAudit(auditId: Int!): TransactionMasterAudit
+  createTransactionMasterAudit(createTransactionMasterAuditInput: CreateTransactionMasterAuditInput!): TransactionMasterAudit
+  updateTransactionMasterAudit(updateTransactionMasterAuditInput: UpdateTransactionMasterAuditInput!): TransactionMasterAudit
+  deleteDiscountMaster(id: Int!): DiscountMaster
+  createDiscountMaster(createDiscountMasterInput: CreateDiscountMasterInput!): DiscountMaster
+  updateDiscountMaster(updateDiscountMasterInput: UpdateDiscountMasterInput!): DiscountMaster
+  deleteDiscountMasterAudit(auditId: Int!): DiscountMasterAudit
+  createDiscountMasterAudit(createDiscountMasterAuditInput: CreateDiscountMasterAuditInput!): DiscountMasterAudit
+  updateDiscountMasterAudit(updateDiscountMasterAuditInput: UpdateDiscountMasterAuditInput!): DiscountMasterAudit
+}
+
+type Query {
+  getApplicationMaster(id: Int!): ApplicationMaster
+  listApplicationMasters: [ApplicationMaster]
+  getApplicationMasterAudit(auditId: Int!): ApplicationMasterAudit
+  listApplicationMasterAudits: [ApplicationMasterAudit]
+  getAutoMaster(id: Int!): AutoMaster
+  listAutoMasters: [AutoMaster]
+  getAutoMasterAudit(auditId: Int!): AutoMasterAudit
+  listAutoMasterAudits: [AutoMasterAudit]
+  getPermissionMaster(id: Int!): PermissionMaster
+  listPermissionMasters: [PermissionMaster]
+  getPermissionMasterAudit(auditId: Int!): PermissionMasterAudit
+  listPermissionMasterAudits: [PermissionMasterAudit]
+  getRoleMaster(id: Int!): RoleMaster
+  listRoleMasters: [RoleMaster]
+  getRoleMasterAudit(auditId: Int!): RoleMasterAudit
+  listRoleMasterAudits: [RoleMasterAudit]
+  getRolePermissionMapping(rpId: Int!): RolePermissionMapping
+  listRolePermissionMappings: [RolePermissionMapping]
+  getRolePermissionMappingAudit(auditId: Int!): RolePermissionMappingAudit
+  listRolePermissionMappingAudits: [RolePermissionMappingAudit]
+  getUserMaster(id: Int!): UserMaster
+  listUserMasters: [UserMaster]
+  getUserMasterAudit(auditId: Int!): UserMasterAudit
+  listUserMasterAudits: [UserMasterAudit]
+  customListTable(tableName: TableNames!, condition: String!): AWSJSON
+  getPlaceMaster(id: Int!): PlaceMaster
+  listPlaceMasters: [PlaceMaster]
+  getPlaceMasterAudit(auditId: Int!): PlaceMasterAudit
+  listPlaceMasterAudits: [PlaceMasterAudit]
+  getServiceMaster(id: Int!): ServiceMaster
+  listServiceMasters: [ServiceMaster]
+  getServiceMasterAudit(auditId: Int!): ServiceMasterAudit
+  listServiceMasterAudits: [ServiceMasterAudit]
+  getPackageMaster(id: Int!): PackageMaster
+  listPackageMasters: [PackageMaster]
+  getPackageMasterAudit(auditId: Int!): PackageMasterAudit
+  listPackageMasterAudits: [PackageMasterAudit]
+  getPackagePlaceMapping(id: Int!): PackagePlaceMapping
+  listPackagePlaceMappings: [PackagePlaceMapping]
+  getPackagePlaceMappingAudit(auditId: Int!): PackagePlaceMappingAudit
+  listPackagePlaceMappingAudits: [PackagePlaceMappingAudit]
+  getPlaceImages(id: Int!): PlaceImages
+  listPlaceImages: [PlaceImages]
+  getPlaceImagesAudit(auditId: Int!): PlaceImagesAudit
+  listPlaceImagesAudits: [PlaceImagesAudit]
+  getPackageCategoryMaster(id: Int!): PackageCategoryMaster
+  listPackageCategoryMasters: [PackageCategoryMaster]
+  getPackageCategoryMasterAudit(auditId: Int!): PackageCategoryMasterAudit
+  listPackageCategoryMasterAudits: [PackageCategoryMasterAudit]
+  listPlaceImagess: [PlaceImages]
+  getBookingMaster(id: Int!): BookingMaster
+  listBookingMasters: [BookingMaster]
+  getBookingMasterAudit(auditId: Int!): BookingMasterAudit
+  listBookingMasterAudits: [BookingMasterAudit]
+  getBookingPassengerDetails(id: Int!): BookingPassengerDetails
+  listBookingPassengerDetails: [BookingPassengerDetails]
+  getBookingPassengerDetailsAudit(auditId: Int!): BookingPassengerDetailsAudit
+  listBookingPassengerDetailsAudits: [BookingPassengerDetailsAudit]
+  getOfferMaster(id: Int!): OfferMaster
+  listOfferMasters: [OfferMaster]
+  getOfferMasterAudit(auditId: Int!): OfferMasterAudit
+  listOfferMasterAudits: [OfferMasterAudit]
+  getOrderMaster(id: Int!): OrderMaster
+  listOrderMasters: [OrderMaster]
+  getOrderMasterAudit(auditId: Int!): OrderMasterAudit
+  listOrderMasterAudits: [OrderMasterAudit]
+  getReviewMaster(id: Int!): ReviewMaster
+  listReviewMasters: [ReviewMaster]
+  getReviewMasterAudit(auditId: Int!): ReviewMasterAudit
+  listReviewMasterAudits: [ReviewMasterAudit]
+  getRideDetails(id: Int!): RideDetails
+  listRideDetails: [RideDetails]
+  getRideDetailsAudit(auditId: Int!): RideDetailsAudit
+  listRideDetailsAudits: [RideDetailsAudit]
+  getRideMaster(id: Int!): RideMaster
+  listRideMasters: [RideMaster]
+  getRideMasterAudit(auditId: Int!): RideMasterAudit
+  listRideMasterAudits: [RideMasterAudit]
+  getSubServiceMaster(id: Int!): SubServiceMaster
+  listSubServiceMasters: [SubServiceMaster]
+  getSubServiceMasterAudit(auditId: Int!): SubServiceMasterAudit
+  listSubServiceMasterAudits: [SubServiceMasterAudit]
+  getSupportMaster(id: Int!): SupportMaster
+  listSupportMasters: [SupportMaster]
+  getSupportMasterAudit(auditId: Int!): SupportMasterAudit
+  listSupportMasterAudits: [SupportMasterAudit]
+  getTransactionMaster(id: Int!): TransactionMaster
+  listTransactionMasters: [TransactionMaster]
+  getTransactionMasterAudit(auditId: Int!): TransactionMasterAudit
+  listTransactionMasterAudits: [TransactionMasterAudit]
+  listBookingPassengerDetailss: [BookingPassengerDetails]
+  listRideDetailss: [RideDetails]
+  getDiscountMaster(id: Int!): DiscountMaster
+  listDiscountMasters: [DiscountMaster]
+  getDiscountMasterAudit(auditId: Int!): DiscountMasterAudit
+  listDiscountMasterAudits: [DiscountMasterAudit]
+}
+
+type Subscription {
+  onCreateApplicationMaster: ApplicationMaster @aws_subscribe(mutations: ["createApplicationMaster"])
+  onCreateApplicationMasterAudit: ApplicationMasterAudit @aws_subscribe(mutations: ["createApplicationMasterAudit"])
+  onCreateAutoMaster: AutoMaster @aws_subscribe(mutations: ["createAutoMaster"])
+  onCreateAutoMasterAudit: AutoMasterAudit @aws_subscribe(mutations: ["createAutoMasterAudit"])
+  onCreatePermissionMaster: PermissionMaster @aws_subscribe(mutations: ["createPermissionMaster"])
+  onCreatePermissionMasterAudit: PermissionMasterAudit @aws_subscribe(mutations: ["createPermissionMasterAudit"])
+  onCreateRoleMaster: RoleMaster @aws_subscribe(mutations: ["createRoleMaster"])
+  onCreateRoleMasterAudit: RoleMasterAudit @aws_subscribe(mutations: ["createRoleMasterAudit"])
+  onCreateRolePermissionMapping: RolePermissionMapping @aws_subscribe(mutations: ["createRolePermissionMapping"])
+  onCreateRolePermissionMappingAudit: RolePermissionMappingAudit @aws_subscribe(mutations: ["createRolePermissionMappingAudit"])
+  onCreateUserMaster: UserMaster @aws_subscribe(mutations: ["createUserMaster"])
+  onCreateUserMasterAudit: UserMasterAudit @aws_subscribe(mutations: ["createUserMasterAudit"])
+  onCreatePlaceMaster: PlaceMaster @aws_subscribe(mutations: ["createPlaceMaster"])
+  onCreatePlaceMasterAudit: PlaceMasterAudit @aws_subscribe(mutations: ["createPlaceMasterAudit"])
+  onCreateServiceMaster: ServiceMaster @aws_subscribe(mutations: ["createServiceMaster"])
+  onCreateServiceMasterAudit: ServiceMasterAudit @aws_subscribe(mutations: ["createServiceMasterAudit"])
+  onCreatePackageMaster: PackageMaster @aws_subscribe(mutations: ["createPackageMaster"])
+  onCreatePackageMasterAudit: PackageMasterAudit @aws_subscribe(mutations: ["createPackageMasterAudit"])
+  onCreatePackagePlaceMapping: PackagePlaceMapping @aws_subscribe(mutations: ["createPackagePlaceMapping"])
+  onCreatePackagePlaceMappingAudit: PackagePlaceMappingAudit @aws_subscribe(mutations: ["createPackagePlaceMappingAudit"])
+  onCreatePlaceImages: PlaceImages @aws_subscribe(mutations: ["createPlaceImages"])
+  onCreatePlaceImagesAudit: PlaceImagesAudit @aws_subscribe(mutations: ["createPlaceImagesAudit"])
+  onCreatePackageCategoryMaster: PackageCategoryMaster @aws_subscribe(mutations: ["createPackageCategoryMaster"])
+  onCreatePackageCategoryMasterAudit: PackageCategoryMasterAudit @aws_subscribe(mutations: ["createPackageCategoryMasterAudit"])
+  onCreateBookingMaster: BookingMaster @aws_subscribe(mutations: ["createBookingMaster"])
+  onCreateBookingMasterAudit: BookingMasterAudit @aws_subscribe(mutations: ["createBookingMasterAudit"])
+  onCreateBookingPassengerDetails: BookingPassengerDetails @aws_subscribe(mutations: ["createBookingPassengerDetails"])
+  onCreateBookingPassengerDetailsAudit: BookingPassengerDetailsAudit @aws_subscribe(mutations: ["createBookingPassengerDetailsAudit"])
+  onCreateOfferMaster: OfferMaster @aws_subscribe(mutations: ["createOfferMaster"])
+  onCreateOfferMasterAudit: OfferMasterAudit @aws_subscribe(mutations: ["createOfferMasterAudit"])
+  onCreateOrderMaster: OrderMaster @aws_subscribe(mutations: ["createOrderMaster"])
+  onCreateOrderMasterAudit: OrderMasterAudit @aws_subscribe(mutations: ["createOrderMasterAudit"])
+  onCreateReviewMaster: ReviewMaster @aws_subscribe(mutations: ["createReviewMaster"])
+  onCreateReviewMasterAudit: ReviewMasterAudit @aws_subscribe(mutations: ["createReviewMasterAudit"])
+  onCreateRideDetails: RideDetails @aws_subscribe(mutations: ["createRideDetails"])
+  onCreateRideDetailsAudit: RideDetailsAudit @aws_subscribe(mutations: ["createRideDetailsAudit"])
+  onCreateRideMaster: RideMaster @aws_subscribe(mutations: ["createRideMaster"])
+  onCreateRideMasterAudit: RideMasterAudit @aws_subscribe(mutations: ["createRideMasterAudit"])
+  onCreateSubServiceMaster: SubServiceMaster @aws_subscribe(mutations: ["createSubServiceMaster"])
+  onCreateSubServiceMasterAudit: SubServiceMasterAudit @aws_subscribe(mutations: ["createSubServiceMasterAudit"])
+  onCreateSupportMaster: SupportMaster @aws_subscribe(mutations: ["createSupportMaster"])
+  onCreateSupportMasterAudit: SupportMasterAudit @aws_subscribe(mutations: ["createSupportMasterAudit"])
+  onCreateTransactionMaster: TransactionMaster @aws_subscribe(mutations: ["createTransactionMaster"])
+  onCreateTransactionMasterAudit: TransactionMasterAudit @aws_subscribe(mutations: ["createTransactionMasterAudit"])
+  onCreateDiscountMaster: DiscountMaster @aws_subscribe(mutations: ["createDiscountMaster"])
+  onCreateDiscountMasterAudit: DiscountMasterAudit @aws_subscribe(mutations: ["createDiscountMasterAudit"])
+}
+
+input CreatePlaceMasterInput {
+  id: Int!
+  name: String!
+  latitude: Float!
+  longitude: Float!
+  images: String
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type PlaceMaster {
+  id: Int!
+  name: String!
+  latitude: Float!
+  longitude: Float!
+  images: String
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdatePlaceMasterInput {
+  id: Int!
+  name: String
+  latitude: Float
+  longitude: Float
+  images: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreatePlaceMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  name: String!
+  latitude: Float!
+  longitude: Float!
+  images: String
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type PlaceMasterAudit {
+  auditId: Int!
+  id: Int!
+  name: String!
+  latitude: Float!
+  longitude: Float!
+  images: String
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdatePlaceMasterAuditInput {
+  auditId: Int!
+  id: Int
+  name: String
+  latitude: Float
+  longitude: Float
+  images: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateServiceMasterInput {
+  id: Int!
+  name: String!
+  paymentType: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  isActive: Int!
+}
+
+type ServiceMaster {
+  id: Int!
+  name: String!
+  paymentType: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  isActive: Int!
+}
+
+input UpdateServiceMasterInput {
+  id: Int!
+  name: String
+  paymentType: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  isActive: Int
+}
+
+input CreateServiceMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  name: String!
+  paymentType: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  isActive: Int!
+}
+
+type ServiceMasterAudit {
+  auditId: Int!
+  id: Int!
+  name: String!
+  paymentType: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  isActive: Int!
+}
+
+input UpdateServiceMasterAuditInput {
+  auditId: Int!
+  id: Int
+  name: String
+  paymentType: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  isActive: Int
+}
+
+input CreatePackageMasterInput {
+  id: Int!
+  name: String!
+  description: String
+  serviceId: Int!
+  duration: Int!
+  price: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  categoryId: Int
+  isActive: Int!
+  fromTime: AWSTime
+  toTime: AWSTime
+  subServiceId: Int
+}
+
+type PackageMaster {
+  id: Int!
+  name: String!
+  description: String
+  serviceId: Int!
+  duration: Int!
+  price: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  categoryId: Int
+  isActive: Int!
+  fromTime: AWSTime
+  toTime: AWSTime
+  subServiceId: Int
+}
+
+input UpdatePackageMasterInput {
+  id: Int!
+  name: String
+  description: String
+  serviceId: Int
+  duration: Int
+  price: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  categoryId: Int
+  isActive: Int
+  fromTime: AWSTime
+  toTime: AWSTime
+  subServiceId: Int
+}
+
+input CreatePackageMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  name: String!
+  description: String
+  serviceId: Int!
+  duration: Int!
+  price: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  categoryId: Int
+  isActive: Int!
+  fromTime: AWSTime
+  toTime: AWSTime
+  subServiceId: Int
+}
+
+type PackageMasterAudit {
+  auditId: Int!
+  id: Int!
+  name: String!
+  description: String
+  serviceId: Int!
+  duration: Int!
+  price: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  categoryId: Int
+  isActive: Int!
+  fromTime: AWSTime
+  toTime: AWSTime
+  subServiceId: Int
+}
+
+input UpdatePackageMasterAuditInput {
+  auditId: Int!
+  id: Int
+  name: String
+  description: String
+  serviceId: Int
+  duration: Int
+  price: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  categoryId: Int
+  isActive: Int
+  fromTime: AWSTime
+  toTime: AWSTime
+  subServiceId: Int
+}
+
+input CreatePackagePlaceMappingInput {
+  id: Int!
+  packageId: Int!
+  placeId: Int!
+  duration: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type PackagePlaceMapping {
+  id: Int!
+  packageId: Int!
+  placeId: Int!
+  duration: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdatePackagePlaceMappingInput {
+  id: Int!
+  packageId: Int
+  placeId: Int
+  duration: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreatePackagePlaceMappingAuditInput {
+  auditId: Int!
+  id: Int!
+  packageId: Int!
+  placeId: Int!
+  duration: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type PackagePlaceMappingAudit {
+  auditId: Int!
+  id: Int!
+  packageId: Int!
+  placeId: Int!
+  duration: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdatePackagePlaceMappingAuditInput {
+  auditId: Int!
+  id: Int
+  packageId: Int
+  placeId: Int
+  duration: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreatePlaceImagesInput {
+  id: Int!
+  placeId: Int!
+  imageName: String!
+  imageLocation: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  showAsThumbnail: Int!
+}
+
+type PlaceImages {
+  id: Int!
+  placeId: Int!
+  imageName: String!
+  imageLocation: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  showAsThumbnail: Int!
+}
+
+input UpdatePlaceImagesInput {
+  id: Int!
+  placeId: Int
+  imageName: String
+  imageLocation: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  showAsThumbnail: Int
+}
+
+input CreatePlaceImagesAuditInput {
+  auditId: Int!
+  id: Int!
+  placeId: Int!
+  imageName: String!
+  imageLocation: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  showAsThumbnail: Int!
+}
+
+type PlaceImagesAudit {
+  auditId: Int!
+  id: Int!
+  placeId: Int!
+  imageName: String!
+  imageLocation: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  showAsThumbnail: Int!
+}
+
+input UpdatePlaceImagesAuditInput {
+  auditId: Int!
+  id: Int
+  placeId: Int
+  imageName: String
+  imageLocation: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  showAsThumbnail: Int
+}
+
+input CreatePackageCategoryMasterInput {
+  id: Int!
+  categoryName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type PackageCategoryMaster {
+  id: Int!
+  categoryName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdatePackageCategoryMasterInput {
+  id: Int!
+  categoryName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreatePackageCategoryMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  categoryName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type PackageCategoryMasterAudit {
+  auditId: Int!
+  id: Int!
+  categoryName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdatePackageCategoryMasterAuditInput {
+  auditId: Int!
+  id: Int
+  categoryName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateBookingMasterInput {
+  id: Int!
+  packageId: Int
+  time: AWSTime!
+  date: AWSDate!
+  totalAdult: Int
+  totalChild: Int
+  basePrice: Float!
+  tax: Float
+  discountId: Int
+  totalAmount: Float!
+  status: Int!
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type BookingMaster {
+  id: Int!
+  packageId: Int
+  time: AWSTime!
+  date: AWSDate!
+  totalAdult: Int
+  totalChild: Int
+  basePrice: Float!
+  tax: Float
+  discountId: Int
+  totalAmount: Float!
+  status: Int!
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateBookingMasterInput {
+  id: Int!
+  packageId: Int
+  time: AWSTime
+  date: AWSDate
+  totalAdult: Int
+  totalChild: Int
+  basePrice: Float
+  tax: Float
+  discountId: Int
+  totalAmount: Float
+  status: Int
+  userId: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateBookingMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  packageId: Int
+  time: AWSTime!
+  date: AWSDate!
+  totalAdult: Int
+  totalChild: Int
+  basePrice: Float!
+  tax: Float
+  discountId: Int
+  totalAmount: Float!
+  status: Int!
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type BookingMasterAudit {
+  auditId: Int!
+  id: Int!
+  packageId: Int
+  time: AWSTime!
+  date: AWSDate!
+  totalAdult: Int
+  totalChild: Int
+  basePrice: Float!
+  tax: Float
+  discountId: Int
+  totalAmount: Float!
+  status: Int!
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateBookingMasterAuditInput {
+  auditId: Int!
+  id: Int
+  packageId: Int
+  time: AWSTime
+  date: AWSDate
+  totalAdult: Int
+  totalChild: Int
+  basePrice: Float
+  tax: Float
+  discountId: Int
+  totalAmount: Float
+  status: Int
+  userId: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateBookingPassengerDetailsInput {
+  id: Int!
+  bookingId: Int
+  passengerEmail: String!
+  passengerPhone: String!
+  passengerName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type BookingPassengerDetails {
+  id: Int!
+  bookingId: Int
+  passengerEmail: String!
+  passengerPhone: String!
+  passengerName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateBookingPassengerDetailsInput {
+  id: Int!
+  bookingId: Int
+  passengerEmail: String
+  passengerPhone: String
+  passengerName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateBookingPassengerDetailsAuditInput {
+  auditId: Int!
+  id: Int!
+  bookingId: Int
+  passengerEmail: String!
+  passengerPhone: String!
+  passengerName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type BookingPassengerDetailsAudit {
+  auditId: Int!
+  id: Int!
+  bookingId: Int
+  passengerEmail: String!
+  passengerPhone: String!
+  passengerName: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateBookingPassengerDetailsAuditInput {
+  auditId: Int!
+  id: Int
+  bookingId: Int
+  passengerEmail: String
+  passengerPhone: String
+  passengerName: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateOfferMasterInput {
+  id: Int!
+  name: String!
+  image: String!
+  isActive: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type OfferMaster {
+  id: Int!
+  name: String!
+  image: String!
+  isActive: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateOfferMasterInput {
+  id: Int!
+  name: String
+  image: String
+  isActive: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateOfferMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  name: String!
+  image: String!
+  isActive: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type OfferMasterAudit {
+  auditId: Int!
+  id: Int!
+  name: String!
+  image: String!
+  isActive: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateOfferMasterAuditInput {
+  auditId: Int!
+  id: Int
+  name: String
+  image: String
+  isActive: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateOrderMasterInput {
+  id: Int!
+  bookingId: Int!
+  status: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type OrderMaster {
+  id: Int!
+  bookingId: Int!
+  status: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateOrderMasterInput {
+  id: Int!
+  bookingId: Int
+  status: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateOrderMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  bookingId: Int!
+  status: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type OrderMasterAudit {
+  auditId: Int!
+  id: Int!
+  bookingId: Int!
+  status: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateOrderMasterAuditInput {
+  auditId: Int!
+  id: Int
+  bookingId: Int
+  status: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateReviewMasterInput {
+  id: Int!
+  rideId: Int!
+  description: String!
+  rating: Int
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type ReviewMaster {
+  id: Int!
+  rideId: Int!
+  description: String!
+  rating: Int
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateReviewMasterInput {
+  id: Int!
+  rideId: Int
+  description: String
+  rating: Int
+  userId: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateReviewMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  rideId: Int!
+  description: String!
+  rating: Int
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type ReviewMasterAudit {
+  auditId: Int!
+  id: Int!
+  rideId: Int!
+  description: String!
+  rating: Int
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateReviewMasterAuditInput {
+  auditId: Int!
+  id: Int
+  rideId: Int
+  description: String
+  rating: Int
+  userId: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateRideDetailsInput {
+  id: Int!
+  rideId: Int!
+  startLocationLongitude: Float!
+  startLocationLatitude: Float!
+  endLocationLongitude: Float
+  endLocationLatitude: Float
+  startDateTime: AWSDateTime!
+  endDateTime: AWSDateTime
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type RideDetails {
+  id: Int!
+  rideId: Int!
+  startLocationLongitude: Float!
+  startLocationLatitude: Float!
+  endLocationLongitude: Float
+  endLocationLatitude: Float
+  startDateTime: AWSDateTime!
+  endDateTime: AWSDateTime
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateRideDetailsInput {
+  id: Int!
+  rideId: Int
+  startLocationLongitude: Float
+  startLocationLatitude: Float
+  endLocationLongitude: Float
+  endLocationLatitude: Float
+  startDateTime: AWSDateTime
+  endDateTime: AWSDateTime
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateRideDetailsAuditInput {
+  auditId: Int!
+  id: Int!
+  rideId: Int!
+  startLocationLongitude: Float!
+  startLocationLatitude: Float!
+  endLocationLongitude: Float
+  endLocationLatitude: Float
+  startDateTime: AWSDateTime!
+  endDateTime: AWSDateTime
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type RideDetailsAudit {
+  auditId: Int!
+  id: Int!
+  rideId: Int!
+  startLocationLongitude: Float!
+  startLocationLatitude: Float!
+  endLocationLongitude: Float
+  endLocationLatitude: Float
+  startDateTime: AWSDateTime!
+  endDateTime: AWSDateTime
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateRideDetailsAuditInput {
+  auditId: Int!
+  id: Int
+  rideId: Int
+  startLocationLongitude: Float
+  startLocationLatitude: Float
+  endLocationLongitude: Float
+  endLocationLatitude: Float
+  startDateTime: AWSDateTime
+  endDateTime: AWSDateTime
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateRideMasterInput {
+  id: Int!
+  bookingId: Int
+  userId: String!
+  rideDuration: Int
+  rideStartDateTime: AWSDateTime
+  rideEndDateTime: AWSDateTime
+  driverId: String
+  status: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type RideMaster {
+  id: Int!
+  bookingId: Int
+  userId: String!
+  rideDuration: Int
+  rideStartDateTime: AWSDateTime
+  rideEndDateTime: AWSDateTime
+  driverId: String
+  status: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateRideMasterInput {
+  id: Int!
+  bookingId: Int
+  userId: String
+  rideDuration: Int
+  rideStartDateTime: AWSDateTime
+  rideEndDateTime: AWSDateTime
+  driverId: String
+  status: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateRideMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  bookingId: Int
+  userId: String!
+  rideDuration: Int
+  rideStartDateTime: AWSDateTime
+  rideEndDateTime: AWSDateTime
+  driverId: String
+  status: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type RideMasterAudit {
+  auditId: Int!
+  id: Int!
+  bookingId: Int
+  userId: String!
+  rideDuration: Int
+  rideStartDateTime: AWSDateTime
+  rideEndDateTime: AWSDateTime
+  driverId: String
+  status: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateRideMasterAuditInput {
+  auditId: Int!
+  id: Int
+  bookingId: Int
+  userId: String
+  rideDuration: Int
+  rideStartDateTime: AWSDateTime
+  rideEndDateTime: AWSDateTime
+  driverId: String
+  status: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateSubServiceMasterInput {
+  id: Int!
+  name: String!
+  isActive: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  serviceId: Int!
+}
+
+type SubServiceMaster {
+  id: Int!
+  name: String!
+  isActive: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  serviceId: Int!
+}
+
+input UpdateSubServiceMasterInput {
+  id: Int!
+  name: String
+  isActive: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  serviceId: Int
+}
+
+input CreateSubServiceMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  name: String!
+  isActive: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  serviceId: Int!
+}
+
+type SubServiceMasterAudit {
+  auditId: Int!
+  id: Int!
+  name: String!
+  isActive: Int!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+  serviceId: Int!
+}
+
+input UpdateSubServiceMasterAuditInput {
+  auditId: Int!
+  id: Int
+  name: String
+  isActive: Int
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+  serviceId: Int
+}
+
+input CreateSupportMasterInput {
+  id: Int!
+  rideId: Int
+  bookingId: Int
+  description: String!
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type SupportMaster {
+  id: Int!
+  rideId: Int
+  bookingId: Int
+  description: String!
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateSupportMasterInput {
+  id: Int!
+  rideId: Int
+  bookingId: Int
+  description: String
+  userId: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateSupportMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  rideId: Int
+  bookingId: Int
+  description: String!
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type SupportMasterAudit {
+  auditId: Int!
+  id: Int!
+  rideId: Int
+  bookingId: Int
+  description: String!
+  userId: String!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateSupportMasterAuditInput {
+  auditId: Int!
+  id: Int
+  rideId: Int
+  bookingId: Int
+  description: String
+  userId: String
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateTransactionMasterInput {
+  id: Int!
+  orderId: Int!
+  paymentProviderTransactionId: String
+  amount: Float!
+  paymentType: String
+  transactionDateTime: AWSDateTime!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type TransactionMaster {
+  id: Int!
+  orderId: Int!
+  paymentProviderTransactionId: String
+  amount: Float!
+  paymentType: String
+  transactionDateTime: AWSDateTime!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateTransactionMasterInput {
+  id: Int!
+  orderId: Int
+  paymentProviderTransactionId: String
+  amount: Float
+  paymentType: String
+  transactionDateTime: AWSDateTime
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateTransactionMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  orderId: Int!
+  paymentProviderTransactionId: String
+  amount: Float!
+  paymentType: String
+  transactionDateTime: AWSDateTime!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type TransactionMasterAudit {
+  auditId: Int!
+  id: Int!
+  orderId: Int!
+  paymentProviderTransactionId: String
+  amount: Float!
+  paymentType: String
+  transactionDateTime: AWSDateTime!
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateTransactionMasterAuditInput {
+  auditId: Int!
+  id: Int
+  orderId: Int
+  paymentProviderTransactionId: String
+  amount: Float
+  paymentType: String
+  transactionDateTime: AWSDateTime
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateDiscountMasterInput {
+  id: Int!
+  type: Int!
+  couponCode: String
+  amount: Float!
+  amountType: Int!
+  serviceId: Int
+  subServiceId: Int
+  packageId: Int
+  fromDate: AWSDate
+  toDate: AWSDate
+  locationLongitude: Float
+  locationLatitude: Float
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type DiscountMaster {
+  id: Int!
+  type: Int!
+  couponCode: String
+  amount: Float!
+  amountType: Int!
+  serviceId: Int
+  subServiceId: Int
+  packageId: Int
+  fromDate: AWSDate
+  toDate: AWSDate
+  locationLongitude: Float
+  locationLatitude: Float
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateDiscountMasterInput {
+  id: Int!
+  type: Int
+  couponCode: String
+  amount: Float
+  amountType: Int
+  serviceId: Int
+  subServiceId: Int
+  packageId: Int
+  fromDate: AWSDate
+  toDate: AWSDate
+  locationLongitude: Float
+  locationLatitude: Float
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+input CreateDiscountMasterAuditInput {
+  auditId: Int!
+  id: Int!
+  type: Int!
+  couponCode: String
+  amount: Float!
+  amountType: Int!
+  serviceId: Int
+  subServiceId: Int
+  packageId: Int
+  fromDate: AWSDate
+  toDate: AWSDate
+  locationLongitude: Float
+  locationLatitude: Float
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+type DiscountMasterAudit {
+  auditId: Int!
+  id: Int!
+  type: Int!
+  couponCode: String
+  amount: Float!
+  amountType: Int!
+  serviceId: Int
+  subServiceId: Int
+  packageId: Int
+  fromDate: AWSDate
+  toDate: AWSDate
+  locationLongitude: Float
+  locationLatitude: Float
+  entryBy: String!
+  entryDateTime: String!
+  updatedDateTime: String!
+}
+
+input UpdateDiscountMasterAuditInput {
+  auditId: Int!
+  id: Int
+  type: Int
+  couponCode: String
+  amount: Float
+  amountType: Int
+  serviceId: Int
+  subServiceId: Int
+  packageId: Int
+  fromDate: AWSDate
+  toDate: AWSDate
+  locationLongitude: Float
+  locationLatitude: Float
+  entryBy: String
+  entryDateTime: String
+  updatedDateTime: String
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}

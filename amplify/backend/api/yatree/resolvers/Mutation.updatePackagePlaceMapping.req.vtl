@@ -1,0 +1,9 @@
+#set( $updateList = {} )
+#foreach( $entry in $ctx.args.updatePackagePlaceMappingInput.keySet() )
+  #set( $discard = $updateList.put($entry, "'$ctx.args.updatePackagePlaceMappingInput[$entry]'") )
+#end
+#set( $update = $updateList.toString().replace("{","").replace("}","") )
+{
+  "version": "2018-05-29",
+  "statements":   ["UPDATE PackagePlaceMapping SET $update WHERE id=$ctx.args.updatePackagePlaceMappingInput.id", "SELECT * FROM PackagePlaceMapping WHERE id=$ctx.args.updatePackagePlaceMappingInput.id"]
+}

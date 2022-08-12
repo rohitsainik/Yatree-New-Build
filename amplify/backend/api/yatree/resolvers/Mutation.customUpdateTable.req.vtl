@@ -1,0 +1,9 @@
+#set( $updateList = {} )
+#foreach( $entry in $ctx.args.data.keySet() )
+  #set( $discard = $updateList.put($entry, "'$ctx.args.data[$entry]'") )
+#end
+#set( $update = $updateList.toString().replace("{","").replace("}","") )
+{
+  "version": "2018-05-29",
+  "statements":   ["UPDATE $ctx.args.tableName SET $update WHERE $ctx.args.condition}", "SELECT * FROM $ctx.args.tableName WHERE $ctx.args.condition"]
+}
