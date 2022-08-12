@@ -84,6 +84,7 @@ class _SpinAroundPageState extends State<SpinAroundPage> {
                               serviceId: spinData.getServicePlaceMapping?.serviceId,
                               price: e.price,
                                 categoryId: e.placeCategoryId,
+                                placeId: e.id
 
                               );
                               Get.to(()=>BookingPage(price: e.price,));

@@ -857,6 +857,7 @@ sendRentalData(
 
 createCustomPackage(
     {var id,
+      placeId,
     name,
     description,
     serviceId,
@@ -896,25 +897,31 @@ createCustomPackage(
         }
       }''';
 
+    var custompackdetail = {
+      "id": 0,
+      "name": name,
+      "description": description,
+      "serviceId": serviceId,
+      "duration":0,
+      "price": price,
+      "entryBy": userId,
+      "entryDateTime": DateTime.now().toIso8601String(),
+      "updatedDateTime": DateTime.now().toIso8601String(),
+      "categoryId": categoryId,
+      "isActive": true,
+      // "fromTime": String,
+      // "toTime": String,
+      // "subServiceId": Int,
+      // "buffer": Int,
+      // "isCreatedByCustomer": Int,
+    };
     var variables = {
-      "CreatePackageMasterInput": {
-        "id": 0,
-        "name": name,
-        "description": description,
-        "serviceId": serviceId,
-        "duration":0,
-        "price": price,
-        "entryBy": userId,
-        "entryDateTime": DateTime.now().toIso8601String(),
-        "updatedDateTime": DateTime.now().toIso8601String(),
-        "categoryId": categoryId,
-        "isActive": true,
-        // "fromTime": String,
-        // "toTime": String,
-        // "subServiceId": Int,
-        // "buffer": Int,
-        // "isCreatedByCustomer": Int,
+      "CreateCustomerPackagesInput": {
+        "createCustomerPackagesInput": custompackdetail,
+        "placeIds":placeId,
+        "userId":userId,
       }
+
     };
 
     print('custom package request body $variables');
