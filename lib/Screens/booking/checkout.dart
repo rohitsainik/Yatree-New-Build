@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yatree/model/service/sightseeing_data.dart';
+import 'package:yatree/model/service/sightseeing.dart';
 import 'package:yatree/utils/widgets/gradient.dart';
 import 'package:yatree/utils/widgets/seperator.dart';
 

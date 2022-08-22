@@ -9,8 +9,8 @@ import 'package:yatree/model/package/packageData.dart';
 import 'package:yatree/model/ride/ride_master_modle.dart';
 import 'package:yatree/model/ride/ride_modle.dart';
 import 'package:yatree/model/serive.dart';
-import 'package:yatree/model/service/sightseeing_data.dart';
-import 'package:yatree/model/service/spinaround_data.dart';
+import 'package:yatree/model/service/sightseeing.dart';
+import 'package:yatree/model/service/spinaround.dart';
 import 'package:yatree/utils/sharedPreference.dart';
 
 getUserMasterData() async {
@@ -639,7 +639,6 @@ getServicePlaceMapping() async {
               parentPlaceName
               price
               placeCategoryId
-              placeImage
               placeCategoryName
               placeSubCategoryId
               placeSubCategoryName
@@ -683,7 +682,6 @@ getListPlaceMaster() async {
           parentPlaceId
           parentPlaceName
           price
-          placeImage
           placeCategoryId
           placeCategoryName
           placeSubCategoryId
@@ -920,7 +918,7 @@ createCustomPackage(
     var variables = {
       "CreateCustomerPackagesInput": {
         "createCustomerPackagesInput": custompackdetail,
-        "placeIds":placeId.toString(),
+        "placeIds":placeId,
         "userId":userId,
       }
 

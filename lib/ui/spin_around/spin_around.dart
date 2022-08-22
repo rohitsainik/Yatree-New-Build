@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yatree/model/service/spinaround_data.dart';
+import 'package:yatree/model/service/spinaround.dart';
 import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/ui/booking/bookingForm.dart';
 import 'package:yatree/utils/widgets/gradient.dart';
@@ -99,7 +99,7 @@ class _SpinAroundPageState extends State<SpinAroundPage> {
                                       borderRadius: BorderRadius.circular(40),
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                              "https://d19y8r79r2sdoe.cloudfront.net/public/${e.placeImage}"),
+                                              "https://d19y8r79r2sdoe.cloudfront.net/public/"),
                                           fit: BoxFit.fill)),
                                 ),
                                 SizedBox(height: 10,),

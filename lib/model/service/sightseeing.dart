@@ -43,7 +43,6 @@ class ListPlaceMaster {
     this.placeCategoryName,
     this.placeSubCategoryId,
     this.placeSubCategoryName,
-    this.placeImage
   });
 
   bool? isSelected = false;
@@ -61,7 +60,6 @@ class ListPlaceMaster {
   int? price;
   int? placeCategoryId;
   String? placeCategoryName;
-  String? placeImage;
   int? placeSubCategoryId;
   dynamic placeSubCategoryName;
 
@@ -80,7 +78,6 @@ class ListPlaceMaster {
     price: json["price"],
     placeCategoryId: json["placeCategoryId"],
     placeCategoryName: json["placeCategoryName"],
-    placeImage: json["placeImage"],
     placeSubCategoryId: json["placeSubCategoryId"],
     placeSubCategoryName: json["placeSubCategoryName"],
   );
@@ -102,6 +99,5 @@ class ListPlaceMaster {
     "placeCategoryName": placeCategoryName,
     "placeSubCategoryId": placeSubCategoryId,
     "placeSubCategoryName": placeSubCategoryName,
-    "placeImage":placeImage
   };
 }
