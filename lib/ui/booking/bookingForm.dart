@@ -28,6 +28,7 @@ import 'package:yatree/ui/packages/mapScreen.dart';
 import 'package:yatree/utils/commonFunctions.dart';
 import 'package:yatree/utils/sharedPreference.dart';
 import 'package:yatree/utils/validation.dart';
+import 'package:yatree/utils/widgets/gradient.dart';
 
 import '../../Screens/perspective.dart';
 import 'discount_page.dart';
@@ -93,6 +94,7 @@ class _BookingPageState extends State<BookingPage> {
   TextEditingController personName = TextEditingController();
   TextEditingController personMobileNumber = TextEditingController();
   TextEditingController personEmail = TextEditingController();
+  TextEditingController totalPerson = TextEditingController();
   TextEditingController _Pickcontroller = TextEditingController();
 
   var _todaysDate = DateTime.now();
@@ -564,7 +566,8 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     landingPageController = Get.put(LandingPageController(), permanent: false);
     return Scaffold(
-      appBar: widget.rideType == "2"
+      appBar: buildNewAppBar(),
+      /*appBar: widget.rideType == "2"
           ? AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(
@@ -577,10 +580,10 @@ class _BookingPageState extends State<BookingPage> {
                 },
               ),
             )
-          : null,
-      backgroundColor: Color(0xffF1F1F1),
-      body: buildBody(context),
-      bottomNavigationBar: Container(
+          : null,*/
+      backgroundColor: Color(0xffEEFDFF),
+      body: buildNewBody(),
+     /* bottomNavigationBar: Container(
         height: 60,
         child: Row(
           children: [
@@ -667,6 +670,213 @@ class _BookingPageState extends State<BookingPage> {
             ),
           ],
         ),
+      ),*/
+    );
+  }
+
+  buildNewAppBar() {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      leading: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: 50,
+          width: 50,
+          child: Center(
+              child: SvgPicture.asset(
+                'assets/svg/checkout.svg',
+                fit: BoxFit.fill,
+              )),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle, gradient: buildRadialGradient()),
+        ),
+      ),
+      elevation: 0.0,
+      toolbarHeight: 70,
+      title: Text(
+        "Booking Page",
+        style: GoogleFonts.raleway(fontWeight: FontWeight.w500),
+      ),
+      centerTitle: true,
+
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).appBarTheme.backgroundColor,
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
+        ),
+      ),
+    );
+  }
+
+  buildNewBody(){
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              "Trending Udaipur",
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          SizedBox(height: 100,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: Get.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: TextFormField(
+                            validator: validateName,
+                            controller: personName,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              hintText: 'Customer Name',
+                              hintStyle: GoogleFonts.poppins(),
+                              /* border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          filled: true,
+                          contentPadding: EdgeInsets.all(16),
+                          fillColor: Colors.white,*/
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: TextFormField(
+                            maxLength: 10,
+                            validator: validateMobile,
+                            controller: personMobileNumber,
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration(
+                              hintText: 'Customer Mobile No.',
+                              hintStyle: GoogleFonts.poppins(),
+                              // border: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.circular(20),
+                              //   borderSide: const BorderSide(
+                              //     width: 0,
+                              //     style: BorderStyle.none,
+                              //   ),
+                              // ),
+                              // filled: true,
+                              // contentPadding: EdgeInsets.all(16),
+                              // fillColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: TextFormField(
+                            validator: validateEmail,
+                            controller: personEmail,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              hintText: 'Customer Email',
+                              hintStyle: GoogleFonts.poppins(),
+                              /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          filled: true,
+                          contentPadding: EdgeInsets.all(16),
+                          fillColor: Colors.white,*/
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: TextFormField(
+                            controller: totalPerson,
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              hintText: 'Event',
+                              hintStyle: GoogleFonts.poppins(),
+                              /*border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          filled: true,
+                          contentPadding: EdgeInsets.all(16),
+                          fillColor: Colors.white,*/
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (isChecked == false) {
+                              showToast(message: "Please Accept Terms and condition");
+                            } else {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              if (_keyForm.currentState!.validate()) {
+                                // No any error in validation
+                                _keyForm.currentState!.save();
+                                showToast(message: "We will Contact You Soon on Call");
+                              } else {
+                                // validation error
+                                setState(() {
+                                  _validate = true;
+                                });
+                              }
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Center(
+                                child: Text(
+                                  "Submit",
+                                  style: GoogleFonts.roboto(
+                                      color: Colors.white, fontWeight: FontWeight.w500),
+                                )),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yatree/Screens/booking/checkout.dart';
-import 'package:yatree/model/service/sightseeing.dart';
+import 'package:yatree/model/service/sightseeing_data.dart';
 import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/utils/widgets/gradient.dart';
 
@@ -114,6 +114,10 @@ class _SightSeeingState extends State<SightSeeing> {
                     width: Get.width,
                     decoration: BoxDecoration(
                         color: Colors.amber,
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                "https://d19y8r79r2sdoe.cloudfront.net/public/${data?.placeImage}"),
+                            fit: BoxFit.fill),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             bottomLeft: Radius.circular(10))),
@@ -150,14 +154,14 @@ class _SightSeeingState extends State<SightSeeing> {
                                     fontSize: 19,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.blueAccent),
-                              ),Text(
+                              ),
+                              Text(
                                  " - \u20b9",
                                 style: TextStyle(
                                     fontSize: 19,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.blueAccent),
                               ),
-
                               Text(
                                 data?.price.toString() ?? "",
                                 style: GoogleFonts.poppins(

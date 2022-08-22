@@ -98,6 +98,7 @@ class PlaceDatum {
     this.placeCategoryName,
     this.placeSubCategoryId,
     this.placeSubCategoryName,
+    this.placeImage
   });
 
   String? typename;
@@ -114,6 +115,7 @@ class PlaceDatum {
   int? price;
   int? placeCategoryId;
   dynamic placeCategoryName;
+  dynamic placeImage;
   int? placeSubCategoryId;
   dynamic placeSubCategoryName;
 
@@ -134,6 +136,7 @@ class PlaceDatum {
     placeCategoryName: json["placeCategoryName"],
     placeSubCategoryId: json["placeSubCategoryId"],
     placeSubCategoryName: json["placeSubCategoryName"],
+    placeImage: json["placeImage"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -153,5 +156,6 @@ class PlaceDatum {
     "placeCategoryName": placeCategoryName,
     "placeSubCategoryId": placeSubCategoryId,
     "placeSubCategoryName": placeSubCategoryName,
+    "placeImage": placeImage,
   };
 }
