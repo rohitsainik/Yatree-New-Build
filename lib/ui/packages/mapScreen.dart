@@ -5,6 +5,7 @@ import 'package:google_api_headers/google_api_headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:yatree/utils/commonFunctions.dart';
 
 const kGoogleApiKey = "AIzaSyCpUax37RAfu-mXq5_JSq9Jog0bbpO8qhk";
 
@@ -98,9 +99,10 @@ class _MyAppState extends State<MyApp> {
    ]);
 
   void onError(PlacesAutocompleteResponse? response) {
-    homeScaffoldKey.currentState!.showSnackBar(
+    showToast(message:response!.errorMessage.toString());
+    /*homeScaffoldKey.currentState!.showSnackBar(
       SnackBar(content: Text(response!.errorMessage.toString())),
-    );
+    );*/
   }
 
   Future<void> _handlePressButton() async {
@@ -144,9 +146,10 @@ Future<Null> displayPrediction(Prediction? p, ScaffoldState? scaffold) async {
     final lat = detail.result.geometry!.location.lat;
     final lng = detail.result.geometry!.location.lng;
 
-    scaffold!.showSnackBar(
-      SnackBar(content: Text("${p.description} - $lat/$lng")),
-    );
+    showToast(message: "${p.description} - $lat/$lng");
+    // scaffold!.showSnackBar(
+    //   SnackBar(content: Text("${p.description} - $lat/$lng")),
+    // );
   }
 }
 
@@ -185,18 +188,20 @@ class _CustomSearchScaffoldState extends PlacesAutocompleteState {
   @override
   void onResponseError(PlacesAutocompleteResponse response) {
     super.onResponseError(response);
-    searchScaffoldKey.currentState!.showSnackBar(
-      SnackBar(content: Text(response.errorMessage.toString())),
-    );
+    showToast(message: response.errorMessage.toString());
+    // searchScaffoldKey.currentState!.showSnackBar(
+    //   SnackBar(content: Text(response.errorMessage.toString())),
+    // );
   }
 
   @override
   void onResponse(PlacesAutocompleteResponse? response) {
     super.onResponse(response);
     if (response != null && response.predictions.isNotEmpty) {
-      searchScaffoldKey.currentState!.showSnackBar(
+      showToast(message: "Got answer");
+      /*searchScaffoldKey.currentState!.showSnackBar(
         SnackBar(content: Text("Got answer")),
-      );
+      );*/
     }
   }
 }

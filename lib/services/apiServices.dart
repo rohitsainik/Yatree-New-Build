@@ -908,7 +908,7 @@ createCustomPackage(
       "entryDateTime": DateTime.now().toIso8601String(),
       "updatedDateTime": DateTime.now().toIso8601String(),
       "categoryId": categoryId,
-      "isActive": true,
+      "isActive": 1,
       // "fromTime": String,
       // "toTime": String,
       // "subServiceId": Int,
@@ -916,8 +916,8 @@ createCustomPackage(
       // "isCreatedByCustomer": Int,
     };
     var variables = {
-      "CreateCustomerPackagesInput": {
-        "createCustomerPackagesInput": custompackdetail,
+      "createCustomerPackagesInput": {
+        "packageDetails": custompackdetail,
         "placeIds":placeId,
         "userId":userId,
       }

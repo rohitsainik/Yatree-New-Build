@@ -60,9 +60,10 @@ class _RentPageState extends State<RentPage> {
   var _dropDownValue;
 
   void onError(PlacesAutocompleteResponse? response) {
-    homeScaffoldKey.currentState!.showSnackBar(
-      SnackBar(content: Text(response!.errorMessage.toString())),
-    );
+    showToast(message:response!.errorMessage.toString());
+    // homeScaffoldKey.currentState!.showSnackBar(
+    //   SnackBar(content: Text(response!.errorMessage.toString())),
+    // );
   }
 
   refreshPage() {

@@ -28,6 +28,7 @@ import 'package:yatree/ui/packages/mapScreen.dart';
 import 'package:yatree/utils/commonFunctions.dart';
 import 'package:yatree/utils/sharedPreference.dart';
 import 'package:yatree/utils/validation.dart';
+import 'package:yatree/utils/widgets/gradient.dart';
 
 import '../../Screens/perspective.dart';
 import 'discount_page.dart';
@@ -479,9 +480,10 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   void onError(PlacesAutocompleteResponse? response) {
-    homeScaffoldKey.currentState!.showSnackBar(
-      SnackBar(content: Text(response!.errorMessage.toString())),
-    );
+    showToast(message:response!.errorMessage.toString());
+    // homeScaffoldKey.currentState!.(
+    //   SnackBar(content: Text(response!.errorMessage.toString())),
+    // );
   }
 
   void showPlacePicker() async {
@@ -564,6 +566,53 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     landingPageController = Get.put(LandingPageController(), permanent: false);
     return Scaffold(
+      backgroundColor: Color(0xffEEFDFF),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 50,
+            width: 50,
+            child: Center(
+                child: SvgPicture.asset(
+                  'assets/svg/checkout.svg',
+                  fit: BoxFit.fill,
+                )),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, gradient: buildRadialGradient()),
+          ),
+        ),
+        elevation: 0.0,
+        toolbarHeight: 70,
+        title: Text(
+          "Booking Page",
+          style: GoogleFonts.raleway(fontWeight: FontWeight.w500),
+        ),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).appBarTheme.backgroundColor,
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20)),
+          ),
+        ),
+      ),
+      body: newBuildBody(),
+      bottomNavigationBar: Container(
+          child:Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(height: 50,padding: const EdgeInsets.all(8),child: Center(
+              child: Text("Proceed to pay",style: GoogleFonts.raleway(color: Colors.white),),
+            ),decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Color(0xff29A71A),
+            ),),
+          )
+      ),
+    );
+   /* return Scaffold(
       appBar: widget.rideType == "2"
           ? AppBar(
               backgroundColor: Colors.white,
@@ -667,6 +716,45 @@ class _BookingPageState extends State<BookingPage> {
             ),
           ],
         ),
+      ),
+    );*/
+  }
+
+  newBuildBody() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              "Trending Udaipur",
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          SizedBox(height: 100,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: Get.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

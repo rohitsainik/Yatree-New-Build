@@ -121,9 +121,10 @@ class _PickAndDropState extends State<PickAndDrop> {
   }
 
   void onError(PlacesAutocompleteResponse? response) {
-    homeScaffoldKey.currentState!.showSnackBar(
-      SnackBar(content: Text(response!.errorMessage.toString())),
-    );
+    showToast(message:response!.errorMessage.toString());
+    // homeScaffoldKey.currentState!.showSnackBar(
+    //   SnackBar(content: Text(response!.errorMessage.toString())),
+    // );
   }
 
   Future<void> _handlePressButton({var location}) async {
