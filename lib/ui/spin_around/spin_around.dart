@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yatree/model/service/spinaround.dart';
+import 'package:yatree/model/service/spinaround_model.dart';
 import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/ui/booking/bookingForm.dart';
 import 'package:yatree/utils/widgets/gradient.dart';
@@ -83,11 +83,10 @@ class _SpinAroundPageState extends State<SpinAroundPage> {
                               description: e.description,
                               serviceId: spinData.getServicePlaceMapping?.serviceId,
                               price: e.price,
-                                categoryId: e.placeCategoryId,
+                                categoryId: 0,
                                 placeId: e.id
-
                               );
-                              Get.to(()=>BookingPage(price: e.price,));
+                              Get.to(()=>BookingPage(price: e.price,packageData: data,placeData: [e],));
                             },
                             child: Column(
                               children: [

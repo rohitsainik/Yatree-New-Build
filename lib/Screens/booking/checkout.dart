@@ -53,15 +53,15 @@ class _CheckoutState extends State<Checkout> {
       ),
       body: buildBody(),
       bottomNavigationBar: Container(
-        child:Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(height: 50,padding: const EdgeInsets.all(8),child: Center(
-            child: Text("Proceed to pay",style: GoogleFonts.raleway(color: Colors.white),),
-          ),decoration: BoxDecoration(
+          child:Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(height: 50,padding: const EdgeInsets.all(8),child: Center(
+              child: Text("Proceed to pay",style: GoogleFonts.raleway(color: Colors.white),),
+            ),decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Color(0xff29A71A),
-          ),),
-        )
+            ),),
+          )
       ),
     );
   }
@@ -107,7 +107,7 @@ class _CheckoutState extends State<Checkout> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text("\u20b9${e.price}",style: GoogleFonts.raleway(fontWeight: FontWeight.w600),)
-                                ,IconButton(onPressed: (){}, icon: Icon(Icons.delete_outline_outlined,color: Colors.redAccent,))
+                                  ,IconButton(onPressed: (){}, icon: Icon(Icons.delete_outline_outlined,color: Colors.redAccent,))
                                 ],
                               ),
                             ),
@@ -158,9 +158,9 @@ class _CheckoutState extends State<Checkout> {
                       Container(padding: const EdgeInsets.all(8),child: Center(
                         child: Text("APPLY COUPON",style: GoogleFonts.raleway(color: Color(0xffFFA200)),),
                       ),decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Color(0xffead46b),
-                        border: Border.all(color: Color(0xffFFDB00))
+                          borderRadius: BorderRadius.circular(8),
+                          color: Color(0xffead46b),
+                          border: Border.all(color: Color(0xffFFDB00))
                       ),)
                     ],
                   ),

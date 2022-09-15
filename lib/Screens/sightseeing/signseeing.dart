@@ -4,12 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yatree/Screens/booking/checkout.dart';
+import 'package:yatree/model/serive.dart';
 import 'package:yatree/model/service/sightseeing.dart';
 import 'package:yatree/services/apiServices.dart';
+import 'package:yatree/ui/booking/bookingForm.dart';
 import 'package:yatree/utils/widgets/gradient.dart';
 
 class SightSeeing extends StatefulWidget {
-  const SightSeeing({Key? key}) : super(key: key);
+  SightSeeing({Key? key, this.serviceData}) : super(key: key);
+  ListServiceMaster? serviceData;
 
   @override
   State<SightSeeing> createState() => _SightSeeingState();
@@ -64,27 +67,51 @@ class _SightSeeingState extends State<SightSeeing> {
             padding: const EdgeInsets.all(16.0),
             child: Badge(
               badgeColor: Colors.red,
-              badgeContent: Text('$count',style: TextStyle(color:Colors.white),),
-            child: InkWell(
-              onTap: (){
-                var listPlaceMasters = placeData?.listPlaceMasters?.where((element) => element.isSelected == true).toList() ?? [];
-                Get.to(()=>Checkout(listPlaceMasters: listPlaceMasters,));
-              },
-              child: Container(
-              height: 50,
-              width: 50,
-              child: Center(
-                  child: SvgPicture.asset(
-                    'assets/svg/checkout.svg',
+              badgeContent: Text(
+                '$count',
+                style: TextStyle(color: Colors.white),
+              ),
+              child: InkWell(
+                onTap: () async {
+                  var listPlaceMasters = placeData?.listPlaceMasters
+                          ?.where((element) => element.isSelected == true)
+                          .toList() ??
+                      [];
+                  List placeId = [];
+                  var total = 0;
+                  listPlaceMasters.forEach((element) {
+                    placeId.add(element.id);
+                    total = total + int.parse(element.price.toString());
+                  });
+                  var data = await createCustomPackage(
+                      name: "Custom Package",
+                      description:
+                          "You Package Contain ${listPlaceMasters.length} destinations",
+                      serviceId: widget.serviceData?.id,
+                      price: total,
+                      categoryId: 0,
+                      placeId: placeId.join(","));
+                  Get.to(() => BookingPage(
+                        price: total,
+                        packageData: data,
+                        placeData: listPlaceMasters,
+                      ));
+                  // Get.to(()=>Checkout(listPlaceMasters: listPlaceMasters,));
+                },
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  child: Center(
+                      child: SvgPicture.asset(
+                    'assetsvg/checkout.svg',
                     fit: BoxFit.fill,
                   )),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, gradient: buildRadialGradient()),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, gradient: buildRadialGradient()),
+                ),
               ),
             ),
-        ),
           ),
-
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -121,10 +148,10 @@ class _SightSeeingState extends State<SightSeeing> {
                   value: data?.isSelected ?? false,
                   onChanged: (newValue) {
                     setState(() {
-                      if(newValue == true){
-                        count ++;
-                      }else{
-                        count --;
+                      if (newValue == true) {
+                        count++;
+                      } else {
+                        count--;
                       }
                       data?.isSelected = newValue!;
                     });
@@ -150,14 +177,14 @@ class _SightSeeingState extends State<SightSeeing> {
                                     fontSize: 19,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.blueAccent),
-                              ),Text(
-                                 " - \u20b9",
+                              ),
+                              Text(
+                                " - \u20b9",
                                 style: TextStyle(
                                     fontSize: 19,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.blueAccent),
                               ),
-
                               Text(
                                 data?.price.toString() ?? "",
                                 style: GoogleFonts.poppins(

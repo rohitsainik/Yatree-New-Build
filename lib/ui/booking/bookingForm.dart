@@ -18,10 +18,14 @@ import 'package:intl/intl.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yatree/Screens/booking/checkout.dart';
 import 'package:yatree/base/appStrings.dart';
 import 'package:yatree/controller/tab_controller.dart';
+import 'package:yatree/model/package/new_package_list.dart';
 import 'package:yatree/model/package/packageData.dart';
 import 'package:yatree/model/ride/ride_modle.dart';
+import 'package:yatree/model/service/sightseeing.dart';
+import 'package:yatree/model/service/spinaround_model.dart';
 import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/services/createBooking.dart';
 import 'package:yatree/ui/packages/mapScreen.dart';
@@ -46,7 +50,9 @@ class BookingPage extends StatefulWidget {
       this.serviceId,
       this.endLocation,
       this.endposition,
-      this.startposition})
+      this.startposition,
+      this.packageData,
+      this.placeData})
       : super(key: key);
 
   var price,
@@ -59,6 +65,8 @@ class BookingPage extends StatefulWidget {
       subServiceId,
       serviceId,
       endposition;
+  NewPackageList? packageData;
+  List<ListPlaceMaster>? placeData;
 
   List<PackagePlaceMappingDetail>? packagePlaceMappingDetails = [];
 
@@ -94,6 +102,7 @@ class _BookingPageState extends State<BookingPage> {
   TextEditingController personName = TextEditingController();
   TextEditingController personMobileNumber = TextEditingController();
   TextEditingController personEmail = TextEditingController();
+  TextEditingController noOfTravellers = TextEditingController();
   TextEditingController _Pickcontroller = TextEditingController();
 
   var _todaysDate = DateTime.now();
@@ -104,7 +113,7 @@ class _BookingPageState extends State<BookingPage> {
 
   _getData() async {
     setState(() {
-      totalAmount = widget.price;
+      totalAmount = widget.packageData?.createCustomerPackages?.price;
     });
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
@@ -148,7 +157,7 @@ class _BookingPageState extends State<BookingPage> {
 
   @override
   void initState() {
-    print("Price Is ${widget.price}");
+    print("Price Is ${widget.packageData?.createCustomerPackages?.price}");
     _getData();
     setState(() {
       Time = DateFormat("HH:mm:ss").format(
@@ -171,7 +180,7 @@ class _BookingPageState extends State<BookingPage> {
     createTransaction(
       orderId: orderid,
       transactionid: response.paymentId,
-      amount: widget.price,
+      amount: widget.packageData?.createCustomerPackages?.price,
       paymentType: "online",
       transactionDateTime:
           DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
@@ -195,7 +204,7 @@ class _BookingPageState extends State<BookingPage> {
     });
   }
 
-  Future<void> _createOrder({var amount, email}) async {
+  createOrder({var amount, email}) async {
     var orderOptions = {
       'amount': amount,
       'currency': "INR",
@@ -356,19 +365,26 @@ class _BookingPageState extends State<BookingPage> {
   makeBooking({var paymentType}) async {
     print("coverted" + DateTime.now().toUtc().toIso8601String());
     var data = await setBookingData(
-      packageId: widget.packageid,
-      time: widget.rideType == "1"
+      packageId: widget.packageData?.createCustomerPackages?.id,
+      time: Time,
+      /*widget.rideType == "1"
           ? Time
-          : DateFormat("HH:mm:ss").format(DateTime.now()),
-      date: widget.rideType == "1"
+          : DateFormat("HH:mm:ss").format(DateTime.now()),*/
+      date: Date,
+      /*widget.rideType == "1"
           ? Date
-          : DateFormat("yyyy-MM-dd").format(DateTime.now()),
-      totalAdult: _totalAdults.toInt(),
+          : DateFormat("yyyy-MM-dd").format(DateTime.now()),*/
+      totalAdult: int.parse(noOfTravellers.text),
       totalChild: int.parse(_totalChild.toString()),
-      basePrice: double.parse(widget.price.toString()),
-      tax: double.parse((widget.price * .18).toString()),
+      basePrice: double.parse(
+          widget.packageData?.createCustomerPackages?.price?.toString() ?? ""),
+      tax:
+          "${double.parse(widget.packageData?.createCustomerPackages?.price.toString() ?? '') * .18} ",
+
+      // double.parse((widget.packageData?.createCustomerPackages?.price.toString() ?? "" * .18).toString()),
       discountId: discountId,
-      totalAmount: double.parse(widget.price.toString()),
+      totalAmount: double.parse(
+          widget.packageData?.createCustomerPackages?.price?.toString() ?? ""),
       status: 1,
       userId: userid.toString(),
       entryBy: userid.toString(),
@@ -480,7 +496,7 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   void onError(PlacesAutocompleteResponse? response) {
-    showToast(message:response!.errorMessage.toString());
+    showToast(message: response!.errorMessage.toString());
     // homeScaffoldKey.currentState!.(
     //   SnackBar(content: Text(response!.errorMessage.toString())),
     // );
@@ -576,9 +592,9 @@ class _BookingPageState extends State<BookingPage> {
             width: 50,
             child: Center(
                 child: SvgPicture.asset(
-                  'assets/svg/checkout.svg',
-                  fit: BoxFit.fill,
-                )),
+              'assets/svg/checkout.svg',
+              fit: BoxFit.fill,
+            )),
             decoration: BoxDecoration(
                 shape: BoxShape.circle, gradient: buildRadialGradient()),
           ),
@@ -600,19 +616,8 @@ class _BookingPageState extends State<BookingPage> {
         ),
       ),
       body: newBuildBody(),
-      bottomNavigationBar: Container(
-          child:Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(height: 50,padding: const EdgeInsets.all(8),child: Center(
-              child: Text("Proceed to pay",style: GoogleFonts.raleway(color: Colors.white),),
-            ),decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Color(0xff29A71A),
-            ),),
-          )
-      ),
     );
-   /* return Scaffold(
+    /*return Scaffold(
       appBar: widget.rideType == "2"
           ? AppBar(
               backgroundColor: Colors.white,
@@ -736,24 +741,221 @@ class _BookingPageState extends State<BookingPage> {
               ),
             ),
           ),
-          SizedBox(height: 100,),
+          SizedBox(
+            height: 100,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: Get.width,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                    ],
-                  ),
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(50)),
+              width: Get.width,
+              height: Get.height,
+              child: Form(
+                key: _keyForm,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: TextFormField(
+                          validator: validateName,
+                          controller: personName,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            hintText: 'Customer Name',
+                            hintStyle: GoogleFonts.poppins(),
+                            /* border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                        ),
+                        filled: true,
+                        contentPadding: EdgeInsets.all(16),
+                        fillColor: Colors.white,*/
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: TextFormField(
+                          maxLength: 10,
+                          validator: validateMobile,
+                          controller: personMobileNumber,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            hintText: 'Customer Mobile No.',
+                            hintStyle: GoogleFonts.poppins(),
+                            // border: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(20),
+                            //   borderSide: const BorderSide(
+                            //     width: 0,
+                            //     style: BorderStyle.none,
+                            //   ),
+                            // ),
+                            // filled: true,
+                            // contentPadding: EdgeInsets.all(16),
+                            // fillColor: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: TextFormField(
+                          validator: validateEmail,
+                          controller: personEmail,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            hintText: 'Customer Email',
+                            hintStyle: GoogleFonts.poppins(),
+                            /*border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                        ),
+                        filled: true,
+                        contentPadding: EdgeInsets.all(16),
+                        fillColor: Colors.white,*/
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: TextFormField(
+                          validator: validateTraveller,
+                          controller: noOfTravellers,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: 'Number of Travellers',
+                            hintStyle: GoogleFonts.poppins(),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                _selectDate(context);
+                              },
+                              child: _buildPickerbutton(
+                                  context,
+                                  DateFormat.yMd().format(selectedDate),
+                                  "assets/svg/calendar.svg"),
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                _selectTime(context);
+                              },
+                              child: _buildPickerbutton(
+                                context,
+                                formatDate(
+                                    DateTime(2019, 08, 1, selectedTime.hour,
+                                        selectedTime.minute),
+                                    [hh, ':', nn, " ", am]).toString(),
+                                "assets/svg/hourglass.svg",
+                              ),
+                            )),
+                      ],
+                    ),
+                    InkWell(
+                      onTap: () {
+                        /*if (isChecked == false) {
+                          showToast(message: "Please Accept Terms and condition");
+                        } else {*/
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        if (_keyForm.currentState!.validate()) {
+                          // No any error in validation
+                          _keyForm.currentState!.save();
+                          if (Date == null) {
+                            showToast(message: "Please select date");
+                          } else if (Time == null) {
+                            showToast(message: "Please select Time");
+                          }
+                          /*else if (_Pickcontroller.text.isEmpty) {
+                            showToast(
+                                message: "Please select Pick up Location");
+                          }*/
+                          else {
+                            setState(() {
+                              isloading = true;
+                            });
+                            // makeBooking(paymentType: 2);
+                            // showBottomSheet(context);
+                            if (driverAvailable) {
+                              Get.to(() => Checkout(
+                                  listPlaceMasters: widget.placeData,
+                                  onBookNow: createOrder(
+                                      amount: (widget.price +
+                                              (widget.price * .18)) *
+                                          100,
+                                      email: username)));
+                            } else {
+                              showToast(
+                                  message:
+                                      "Auto not available for selected Date ");
+                              setState(() {
+                                isloading = false;
+                              });
+                            }
+                          }
+                        } else {
+                          // validation error
+                          setState(() {
+                            _validate = true;
+                          });
+                        }
+                        // }
+                      },
+                      child: isloading
+                          ? Container(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              color: Colors.transparent,
+                              child: Center(child: CircularProgressIndicator()))
+                          : Container(
+                              child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 50,
+                                padding: const EdgeInsets.all(8),
+                                child: Center(
+                                  child: Text(
+                                    "Submit",
+                                    style: GoogleFonts.raleway(
+                                        color: Colors.white),
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                            )),
+                    ),
+                  ],
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -1378,7 +1580,7 @@ class _BookingPageState extends State<BookingPage> {
   _buildPickerbutton(BuildContext context, name, icon) {
     return Container(
       height: 45,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width / 3,
       decoration: BoxDecoration(
         color: Colors.white, //background color of box
         borderRadius: BorderRadius.circular(20),
@@ -1397,13 +1599,13 @@ class _BookingPageState extends State<BookingPage> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            SvgPicture.asset(icon),
             Text(
               name,
               style: GoogleFonts.poppins(),
             ),
-            SvgPicture.asset(icon)
           ],
         ),
       ),
@@ -1420,7 +1622,7 @@ class _BookingPageState extends State<BookingPage> {
             onPressed: () {
               // makeBooking(paymentType: 2);
               if (driverAvailable) {
-                _createOrder(amount: widget.price * 100, email: username);
+                createOrder(amount: widget.price * 100, email: username);
               } else {
                 showToast(message: "Auto not available for selected Date ");
               }

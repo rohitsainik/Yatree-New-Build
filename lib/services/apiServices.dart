@@ -5,12 +5,13 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:yatree/model/asStrip.dart';
 import 'package:yatree/model/discountList.dart';
 import 'package:yatree/model/offers/offers.dart';
+import 'package:yatree/model/package/new_package_list.dart';
 import 'package:yatree/model/package/packageData.dart';
 import 'package:yatree/model/ride/ride_master_modle.dart';
 import 'package:yatree/model/ride/ride_modle.dart';
 import 'package:yatree/model/serive.dart';
 import 'package:yatree/model/service/sightseeing.dart';
-import 'package:yatree/model/service/spinaround.dart';
+import 'package:yatree/model/service/spinaround_model.dart';
 import 'package:yatree/utils/sharedPreference.dart';
 
 getUserMasterData() async {
@@ -871,7 +872,7 @@ createCustomPackage(
       subServiceId,buffer,
       isCreatedByCustomer
     }) async {
-  try {
+  // try {
     SharedPref pref = SharedPref();
     var userId = await pref.getUserId();
     String graphQLDocument =
@@ -913,15 +914,14 @@ createCustomPackage(
       // "toTime": String,
       // "subServiceId": Int,
       // "buffer": Int,
-      // "isCreatedByCustomer": Int,
+      "isCreatedByCustomer": 1,
     };
     var variables = {
       "createCustomerPackagesInput": {
         "packageDetails": custompackdetail,
-        "placeIds":placeId,
+        "placeIds":placeId.toString(),
         "userId":userId,
       }
-
     };
 
     print('custom package request body $variables');
@@ -935,10 +935,12 @@ createCustomPackage(
     print('custom package detail result: ' + data!);
     print('custom package result: ' + response.errors.toString());
 
+    NewPackageList result =  newPackageListFromJson(data);
+    print("result is $result : ${result.toJson()}");
     var value = json.decode(data);
 
-    return value;
-  } catch (e) {
-    print('getCustomTableData Query failed: $e');
-  }
+    return result;
+  // } catch (e) {
+  //   print('getCustomTableData Query failed: $e');
+  // }
 }

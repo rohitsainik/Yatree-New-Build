@@ -24,6 +24,7 @@ class Placelist {
   };
 }
 
+
 class ListPlaceMaster {
   ListPlaceMaster({
     this.typename,

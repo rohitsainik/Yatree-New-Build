@@ -315,7 +315,7 @@ class _MyHomePageState extends State<MyHomePage>
                             }else if(servicedata!.listServiceMasters![index].name == "SpinAround" ){
                               Get.to(()=>SpinAroundPage());
                             }else if(servicedata!.listServiceMasters![index].name == "Sightseeing" ){
-                              Get.to(()=>SightSeeing());
+                              Get.to(()=>SightSeeing(serviceData: servicedata!.listServiceMasters![index],));
                             }
 
 
