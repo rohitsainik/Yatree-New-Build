@@ -28,6 +28,13 @@ String? validateEmail(String? value) {
   }
 }
 
+String? validateTraveller(String? value) {
+  if (value!.length == 0) {
+    return "Minimum One is Required";
+  }
+  return null;
+}
+
 String? validateMobile(String? value) {
   final patttern = RegExp(r'(^[6-9][0-9]*$)');
   if (value!.length == 0) {
