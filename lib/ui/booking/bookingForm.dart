@@ -205,6 +205,7 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   createOrder({var amount, email}) async {
+    print("amount $amount");
     var orderOptions = {
       'amount': amount,
       'currency': "INR",
@@ -903,11 +904,9 @@ class _BookingPageState extends State<BookingPage> {
                             if (driverAvailable) {
                               Get.to(() => Checkout(
                                   listPlaceMasters: widget.placeData,
-                                  onBookNow: createOrder(
-                                      amount: (widget.price +
-                                              (widget.price * .18)) *
-                                          100,
-                                      email: username)));
+                                  onBookNow: createOrder,
+                              price: widget.price,
+                              username: username,));
                             } else {
                               showToast(
                                   message:

@@ -8,7 +8,9 @@ import 'package:yatree/utils/widgets/seperator.dart';
 
 class Checkout extends StatefulWidget {
   final List<ListPlaceMaster>? listPlaceMasters;
-  const Checkout({Key? key,this.listPlaceMasters}) : super(key: key);
+  final Function? onBookNow;
+  final price, username;
+  const Checkout({Key? key,this.listPlaceMasters, this.onBookNow, this.price, this.username}) : super(key: key);
 
   @override
   State<Checkout> createState() => _CheckoutState();
@@ -55,12 +57,21 @@ class _CheckoutState extends State<Checkout> {
       bottomNavigationBar: Container(
           child:Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(height: 50,padding: const EdgeInsets.all(8),child: Center(
-              child: Text("Proceed to pay",style: GoogleFonts.raleway(color: Colors.white),),
-            ),decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Color(0xff29A71A),
-            ),),
+            child: GestureDetector(
+              onTap: (){
+                widget.onBookNow!(
+                    amount: (widget.price +
+                        (widget.price * .18)) *
+                        100,
+                    email: widget.username);
+              },
+              child: Container(height: 50,padding: const EdgeInsets.all(8),child: Center(
+                child: Text("Proceed to pay",style: GoogleFonts.raleway(color: Colors.white),),
+              ),decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Color(0xff29A71A),
+              ),),
+            ),
           )
       ),
     );
