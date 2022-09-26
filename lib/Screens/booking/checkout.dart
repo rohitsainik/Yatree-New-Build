@@ -11,9 +11,14 @@ import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/utils/widgets/gradient.dart';
 import 'package:yatree/utils/widgets/seperator.dart';
 
+import '../../ui/booking/discount_page.dart';
+
 class Checkout extends StatefulWidget {
   final List<ListPlaceMaster>? listPlaceMasters;
-  const Checkout({Key? key,this.listPlaceMasters}) : super(key: key);
+  final Function? onBookNow;
+  final price, username;
+  final packageid;
+  const Checkout({Key? key,this.listPlaceMasters, this.onBookNow, this.price, this.username,  this.packageid}) : super(key: key);
 
   @override
   State<Checkout> createState() => _CheckoutState();
@@ -21,6 +26,12 @@ class Checkout extends StatefulWidget {
 
 class _CheckoutState extends State<Checkout> {
 
+
+
+  var coupon = "Apply Coupon";
+
+  var totalAmount;
+  var discountId = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +73,21 @@ class _CheckoutState extends State<Checkout> {
       bottomNavigationBar: Container(
           child:Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(height: 50,padding: const EdgeInsets.all(8),child: Center(
-              child: Text("Proceed to pay",style: GoogleFonts.raleway(color: Colors.white),),
-            ),decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Color(0xff29A71A),
-            ),),
+            child: GestureDetector(
+              onTap: (){
+                widget.onBookNow!(
+                    amount: (widget.price +
+                        (widget.price * .18)) *
+                        100,
+                    email: widget.username);
+              },
+              child: Container(height: 50,padding: const EdgeInsets.all(8),child: Center(
+                child: Text("Proceed to pay",style: GoogleFonts.raleway(color: Colors.white),),
+              ),decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Color(0xff29A71A),
+              ),),
+            ),
           )
       ),
     );
@@ -128,10 +148,10 @@ class _CheckoutState extends State<Checkout> {
                       }).toList() ?? [],),
                       SizedBox(height: 20,),
                       ListTile(
-                        leading: TextButton(
-                          onPressed: (){},
-                          child: Text("+Add more locations",style: GoogleFonts.raleway(fontWeight: FontWeight.w600),),
-                        ),
+                        // leading: TextButton(
+                        //   onPressed: (){},
+                        //   child: Text("+Add more locations",style: GoogleFonts.raleway(fontWeight: FontWeight.w600),),
+                        // ),
                         trailing: Text("Total : \u20b9",style: GoogleFonts.raleway(fontWeight: FontWeight.w600),),
                       ),
                       Padding(
@@ -163,13 +183,44 @@ class _CheckoutState extends State<Checkout> {
                         ),
                       ),
                       SizedBox(height: 20,),
-                      Container(padding: const EdgeInsets.all(8),child: Center(
-                        child: Text("APPLY COUPON",style: GoogleFonts.raleway(color: Color(0xffFFA200)),),
-                      ),decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Color(0xffead46b),
-                          border: Border.all(color: Color(0xffFFDB00))
-                      ),)
+                      GestureDetector(
+                        onTap: (){
+                          var result = Get.to(DiscountPage(
+                            packageId: widget.packageid,
+                            serviceId: 4,
+                            subServiceId: 7,
+                            locationLatitude: 0.0,
+                            locationLongitude: 0.0,
+                            bookingDate: '2021-11-01',
+                          ));
+                          result!.then((value) {
+                            print(value.couponCode.toString());
+                            setState(() {
+                              if (value != null) {
+                                coupon = "COUPON APPLIED";
+                                discountId = value.id;
+                                if (value.amountType == 1) {
+                                  totalAmount = widget.price - value.amount;
+                                } else if (value.amountType == 2) {
+                                  totalAmount = widget.price -
+                                      ((widget.price * value.amount) / 100);
+                                }
+                              } else {
+                                discountId = 0;
+                                coupon = "APPLY COUPON";
+                                totalAmount = widget.price;
+                              }
+                            });
+                          });
+                        },
+                        child: Container(padding: const EdgeInsets.all(8),child: Center(
+                          child: Text("APPLY COUPON",style: GoogleFonts.raleway(color: Color(0xffFFA200)),),
+                        ),decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Color(0xffead46b),
+                            border: Border.all(color: Color(0xffFFDB00))
+                        ),),
+                      )
                     ],
                   ),
                 ),

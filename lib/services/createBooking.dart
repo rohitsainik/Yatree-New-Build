@@ -8,22 +8,22 @@ import 'package:yatree/utils/commonFunctions.dart';
 
 setBookingData(
     {var totalAdult,
-    totalChild,
-    basePrice,
-    totalAmount,
-    tax,
-    time,
-    date,
-    discountId,
-    packageId,
-    entryBy,
-    updatedDateTime,
-    entryDateTime,
-    status,
-    personName,
-    personEmail,
-    personmobileNumber,
-    userId}) async {
+      totalChild,
+      basePrice,
+      totalAmount,
+      tax,
+      time,
+      date,
+      discountId,
+      packageId,
+      entryBy,
+      updatedDateTime,
+      entryDateTime,
+      status,
+      personName,
+      personEmail,
+      personmobileNumber,
+      userId}) async {
   String graphQLDocument =
   '''mutation CreateBookingMaster(\$createBookingMasterInput: CreateBookingMasterInput!) {
         createBookingMaster(createBookingMasterInput: \$createBookingMasterInput) {
@@ -56,7 +56,7 @@ setBookingData(
       "date": date,
       "totalAmount": totalAmount,
       "basePrice":basePrice,
-      "tax": tax,
+      "tax": double.parse(tax),
       "status": int.parse(status.toString()),
       "userId": userId,
       "entryBy": entryBy,
@@ -85,24 +85,24 @@ setBookingData(
 
 
 
- // var value = json.decode(data);
+  // var value = json.decode(data);
 
- return data;
+  return data;
 }
 
 setCustomDetailData(
     {var passengerEmail,
-    bookingId,
-    passengerName,
-    totalAmount,
-    passengerPhone,
-    entryBy,
-    entryDateTime,
-    tax,
-    discountId,
-    status,
-    updatedDateTime,
-    userId}) async {
+      bookingId,
+      passengerName,
+      totalAmount,
+      passengerPhone,
+      entryBy,
+      entryDateTime,
+      tax,
+      discountId,
+      status,
+      updatedDateTime,
+      userId}) async {
   try {
     //todo create
     String graphQLDocument =
@@ -179,6 +179,11 @@ createOrderMaster({var bookingId,status,enterBy,entryDateTime,updateTime}) async
       "updatedDateTime": updateTime,
     }
   };
+
+  print("--------------------------------------------------------------");
+  print(variables);
+  print("--------------------------------------------------------------");
+
   var operation = Amplify.API.mutate(
       request: GraphQLRequest<String>(
           document: graphQLDocument, variables: variables));
@@ -203,9 +208,9 @@ createTransaction({var orderId,transactionid,amount,paymentType,transactionDateT
 
 
 
-    try {
-      String graphQLDocument =
-      '''mutation CreateTransactionMaster(\$createTransactionMasterInput: CreateTransactionMasterInput!) {
+  try {
+    String graphQLDocument =
+    '''mutation CreateTransactionMaster(\$createTransactionMasterInput: CreateTransactionMasterInput!) {
         createTransactionMaster(createTransactionMasterInput: \$createTransactionMasterInput) {
           __typename
           id
@@ -220,45 +225,46 @@ createTransaction({var orderId,transactionid,amount,paymentType,transactionDateT
         }
       }''';
 
-      var variables = {
-        "createTransactionMasterInput": {
-          "id": 0,
-          "orderId": orderId,
-          "paymentProviderTransactionId": transactionid,
-          "amount": amount,
-          "paymentType": paymentType,
-          "transactionDateTime": transactionDateTime,
-          "entryBy": entryBy,
-          "entryDateTime": entryDateTime,
-          "updatedDateTime": updatedDateTime,
-        }
-      };
-      var operation = Amplify.API.mutate(
-          request: GraphQLRequest<String>(
-              document: graphQLDocument, variables: variables));
+    var variables = {
+      "createTransactionMasterInput": {
+        "id": 0,
+        "orderId": orderId,
+        "paymentProviderTransactionId": transactionid,
+        "amount": amount,
+        "paymentType": paymentType,
+        "transactionDateTime": transactionDateTime,
+        "entryBy": entryBy,
+        "entryDateTime": entryDateTime,
+        "updatedDateTime": updatedDateTime,
+      }
+    };
+    var operation = Amplify.API.mutate(
+        request: GraphQLRequest<String>(
+            document: graphQLDocument, variables: variables));
 
-      var response = await operation.response;
-      var data = response.data;
+    var response = await operation.response;
+    var data = response.data;
 
-      print('data result: ' + data!);
+    print('data result: ' + data!);
 
-      //var value = json.decode(data);
-      print('data error: ' + response.errors.toString());
+    //var value = json.decode(data);
+    print('data error: ' + response.errors.toString());
 
-    } catch (e) {
+  } catch (e) {
     print('getCustomTableData Query failed: $e');
   }
 }
 
 generateRide({var bookingId, userId, status,rideStartDateTime,rideType,startLocationlat,startLocationlong,enLocdationlong,endLocationlat,startLocationName,endLocationName}) async{
   var rideDuration;
+  var variables;
+
+  print('sdkweiofy8sigvduietiydivkdsygfdikgfg7w8fyfiogeriogybg8y');
   if(rideType == "2"){
     rideDuration = await getDuration(startPosition:LatLng(startLocationlat, startLocationlong),endPosition:LatLng(endLocationlat, enLocdationlong));
 
   }
-
-  try {
-    String graphQLDocument =   '''query GenerateRide(\$bookingId: Int, \$userId: String!, \$rideStartDateTime: String, \$status: Int, \$rideType: Int, \$entryBy: String!, \$driverId: String, \$rideDuration: Int) {
+  String graphQLDocument =   '''query GenerateRide(\$bookingId: Int, \$userId: String!, \$rideStartDateTime: String, \$status: Int, \$rideType: Int, \$entryBy: String!, \$driverId: String, \$rideDuration: Int) {
         generateRide(bookingId: \$bookingId, userId: \$userId, rideStartDateTime: \$rideStartDateTime, status: \$status, rideType: \$rideType, entryBy: \$entryBy, driverId: \$driverId, rideDuration: \$rideDuration) {
           __typename
           id
@@ -276,72 +282,67 @@ generateRide({var bookingId, userId, status,rideStartDateTime,rideType,startLoca
           rideType
         }
       }''';
-    var variables;
-    if(rideType == "1"){
-       variables = {
-        "bookingId": bookingId,
-        "userId": userId,
-        "status": status,
-        // "rideStartDateTime": rideStartDateTime == null ? null : rideStartDateTime ,
-        "rideType": int.parse(rideType),
-         "entryBy":userId,
-         "driverId":""
-      };
-    }else{
-      variables = {
-        "bookingId": bookingId,
-        "userId": userId,
-        "status": status,
-        "rideDuration": rideDuration,
-        "rideStartDateTime": rideStartDateTime ,
-        "rideType": int.parse(rideType),
-        "entryBy":userId,
-        "driverId":""
-      };
-    }
-
-
-    var operation = Amplify.API.query(
-        request: GraphQLRequest<String>(
-            document: graphQLDocument,
-            variables:variables
-        ));
-
-    var response = await operation.response;
-    var data = response.data;
-
-    print('generate Master result: ' + data!);
-
-
-    print('generate Master error: ' + response.errors.toString());
-    var finaldata = json.decode(data);
-
-    if(response.errors.length == 0){
-      await createRideDetails(
-        rideId: finaldata["generateRide"]["id"],
-        startLocationLongitude: startLocationlong,
-        startLocationLatitude: startLocationlat,
-        endLocationLongitude: endLocationlat,
-        endLocationLatitude: enLocdationlong,
-        startDateTime: DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
-        endDateTime: 0,
-        entryBy: userId,
-        entryDateTime: DateTime.now().toIso8601String(),
-        updatedDateTime: DateTime.now().toIso8601String(),
-        locationName: "",
-        startLocationName: startLocationName,
-        endLocationName: endLocationName,
-      );
-      return true;
-    }else{
-      return false;
-    }
-
-
-  } catch (e) {
-    return false;
-    print('getPackageDetailsData Query failed: $e');
+  if(rideType == "1"){
+    variables = {
+      "bookingId": bookingId,
+      "userId": userId,
+      "status": status,
+      // "rideStartDateTime": rideStartDateTime == null ? null : rideStartDateTime ,
+      "rideType": int.parse(rideType),
+      "entryBy":userId,
+      "driverId":""
+    };
+  }else{
+    variables = {
+      "bookingId": bookingId,
+      "userId": userId,
+      "status": status,
+      "rideDuration": rideDuration,
+      "rideStartDateTime": rideStartDateTime ,
+      "rideType": 1,
+      "entryBy":userId,
+      "driverId":""
+    };
   }
+
+  // print('generate Master result: ' + variables!);
+
+  var operation = Amplify.API.query(
+      request: GraphQLRequest<String>(
+          document: graphQLDocument,
+          variables:variables
+      ));
+
+  var response = await operation.response;
+  var data = response.data;
+
+  print('generate Master result: ' + data!);
+
+
+  print('generate Master error: ' + response.errors.toString());
+  var finaldata = json.decode(data);
+
+  if(response.errors.length == 0){
+    await createRideDetails(
+      rideId: finaldata["generateRide"]["id"],
+      startLocationLongitude: startLocationlong,
+      startLocationLatitude: startLocationlat,
+      endLocationLongitude: endLocationlat,
+      endLocationLatitude: enLocdationlong,
+      startDateTime: DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
+      endDateTime: 0,
+      entryBy: userId,
+      entryDateTime: DateTime.now().toIso8601String(),
+      updatedDateTime: DateTime.now().toIso8601String(),
+      locationName: "",
+      startLocationName: startLocationName,
+      endLocationName: endLocationName,
+    );
+    return true;
+  }else{
+    return false;
+  }
+
 }
 
 
@@ -576,7 +577,7 @@ isDriverAvailable(var rideDateTime) async {
 
 
 
-return value["getAvailableDrivers"]!.length;
+  return value["getAvailableDrivers"]!.length;
   //   try {
 //     String graphQLDocument =
 //     '''mutation CreateTransactionMaster(\$createTransactionMasterInput: CreateTransactionMasterInput!) {
