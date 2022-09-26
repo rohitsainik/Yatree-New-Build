@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,8 @@ import 'package:yatree/ui/booking/BookingConfirmPage.dart';
 import 'package:yatree/ui/rides/rideDetailPage.dart';
 import 'package:yatree/utils/sharedPreference.dart';
 
+import '../../utils/widgets/gradient.dart';
+
 class MyRides extends StatefulWidget {
   MyRides({Key? key, this.appBar}) : super(key: key);
   bool? appBar;
@@ -27,10 +30,16 @@ class MyRides extends StatefulWidget {
   MyRidesState createState() => MyRidesState();
 }
 
+enum RideStatus{
+  UPCOMING,LIVE,COMPLETED
+}
+
 class MyRidesState extends State<MyRides> {
   List<RentalListTable>? rentalData = [];
-  RideModel? ridedata;
+  RideModel? ridedata = RideModel();
+  List<GetUserRide>? upcoming,live,completed;
   bool isLoading = false;
+  RideStatus rideStatus = RideStatus.UPCOMING;
 
   getData() async {
     setState(() {
@@ -67,6 +76,10 @@ class MyRidesState extends State<MyRides> {
     }
     setState(() {
       ridedata = rides;
+      upcoming = rides.getUserRides!.where((value) => (value.status == 3)).toList();
+      live = rides.getUserRides!.where((value) => (value.status == 2)).toList();
+      completed = rides.getUserRides!.where((value) => (value.status == 1)).toList();
+      ridedata?.getUserRides = upcoming;
       isLoading = false;
     });
   }
@@ -89,40 +102,31 @@ class MyRidesState extends State<MyRides> {
   Widget build(BuildContext context) {
     if (rentalData?.isEmpty == true) {
       return Scaffold(
-        appBar: widget.appBar != null
-            ? null
-            : AppBar(
-                elevation: 0.0,
-                leading: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-                backgroundColor: Colors.white,
-                bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(30),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/icons/rideIcon.svg"),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "MY RIDES",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.bold, fontSize: 23),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 50,
+              width: 50,
+              child: Center(child: SvgPicture.asset('assets/svg/rides.svg')),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: buildRadialGradient()
               ),
+            ),
+          ),
+          elevation: 0.0,
+          toolbarHeight: 70,
+          title: Text("MY RIDES",style: GoogleFonts.raleway(fontWeight: FontWeight.w500),),
+          centerTitle: false,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).appBarTheme.backgroundColor,
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
+            ),
+          ),
+        ),
         body: buildRideBody(),
       );
     } else {
@@ -131,50 +135,50 @@ class MyRidesState extends State<MyRides> {
         child: Scaffold(
           appBar: widget.appBar != null
               ? AppBar(
-                  elevation: 0.0,
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.white,
-                  bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(5),
-                    child: TabBar(
-                      indicatorColor: Colors.blue,
-                      labelColor: Colors.blue,
-                      tabs: [Tab(text: "MY RIDES"), Tab(text: "MY RENTALS")],
-                    ),
-                  ),
-                )
+            elevation: 0.0,
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(5),
+              child: TabBar(
+                indicatorColor: Colors.blue,
+                labelColor: Colors.blue,
+                tabs: [Tab(text: "MY RIDES"), Tab(text: "MY RENTALS")],
+              ),
+            ),
+          )
               : AppBar(
-                  elevation: 0.0,
-                  leading: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Get.back();
-                    },
-                  ),
-                  backgroundColor: Colors.white,
-                  // bottom: PreferredSize(preferredSize: Size.fromHeight(30),
-                  // child: Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     children: [
-                  //       SvgPicture.asset("assets/icons/rideIcon.svg"),
-                  //       SizedBox(width: 10,),
-                  //       Text("MY RIDES",style: GoogleFonts.poppins(fontWeight: FontWeight.bold,fontSize: 23),),
-                  //     ],
-                  //   ),
-                  // ),),
-                  bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(50),
-                    child: TabBar(
-                      indicatorColor: Colors.blue,
-                      labelColor: Colors.blue,
-                      tabs: [Tab(text: "MY RIDES"), Tab(text: "MY RENTALS")],
-                    ),
-                  ),
-                ),
+            elevation: 0.0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+            backgroundColor: Colors.white,
+            // bottom: PreferredSize(preferredSize: Size.fromHeight(30),
+            // child: Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Row(
+            //     children: [
+            //       SvgPicture.asset("assets/icons/rideIcon.svg"),
+            //       SizedBox(width: 10,),
+            //       Text("MY RIDES",style: GoogleFonts.poppins(fontWeight: FontWeight.bold,fontSize: 23),),
+            //     ],
+            //   ),
+            // ),),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(50),
+              child: TabBar(
+                indicatorColor: Colors.blue,
+                labelColor: Colors.blue,
+                tabs: [Tab(text: "MY RIDES"), Tab(text: "MY RENTALS")],
+              ),
+            ),
+          ),
           body: TabBarView(
             children: [
               RefreshIndicator(onRefresh: onRefresh, child: buildRideBody()),
@@ -198,219 +202,323 @@ class MyRidesState extends State<MyRides> {
     else
       return RefreshIndicator(
         onRefresh: onRefresh,
-        child: ListView.builder(
-            itemCount: ridedata!.getUserRides!.length,
-            itemBuilder: (_, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.to(() =>
-                        RideDetail(ridesdata: ridedata!.getUserRides![index]));
-                  },
-                  child: Card(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListTile(
-                                title: Text(
-                                  ridedata!.getUserRides![index].rideType
-                                              .toString() ==
-                                          "2"
-                                      ? "Pick and Drop"
-                                      : "${ridedata!.getUserRides![index].packageName.toString()}",
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13),
-                                ),
-                                subtitle: Row(
-                                  children: [
-                                    Text(
-                                      "Booking id : ",
-                                      style: GoogleFonts.poppins(fontSize: 13),
-                                    ),
-                                    Text(
-                                      "${ridedata!.getUserRides![index].bookingId}",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blue),
-                                    ),
-                                  ],
-                                ),
-                                trailing: Text(
-                                  "Rs ${ridedata!.getUserRides![index].totalAmount}.00",
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      color: Colors.blue),
-                                ),
-                                leading: CachedNetworkImage(
-                                  imageUrl:
-                                      "${AppStrings.imageUrl}${ridedata!.getUserRides![index].imageLocation}",
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  placeholder: (context, url) => Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              "https://images.pexels.com/photos/40465/pexels-photo-40465.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
-                                          fit: BoxFit.cover),
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                ),
-                              )
-                              // Row(
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   children: [
-                              //     Container(
-                              //       height: 60,
-                              //       width: 60,
-                              //       decoration: BoxDecoration(
-                              //         color: Colors.grey,
-                              //         borderRadius: BorderRadius.circular(20),
-                              //       ),
-                              //     ),
-                              //     Column(mainAxisAlignment: MainAxisAlignment.start,
-                              //         children: [
-                              //       Row(
-                              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //         children: [
-                              //           Text(
-                              //             "WonderLand",
-                              //             style: GoogleFonts.poppins(
-                              //                 fontWeight: FontWeight.bold, fontSize: 13),
-                              //           ),
-                              //           Text(
-                              //             "Rs 399.0",
-                              //             style: GoogleFonts.poppins(
-                              //                 fontWeight: FontWeight.bold,
-                              //                 fontSize: 14,
-                              //                 color: Colors.red),
-                              //           ),
-                              //         ],
-                              //       )
-                              //     ])
-                              //   ],
-                              // ),3
+        child: Column(
+          children: [
+            StaggeredGrid.count( crossAxisCount: 3,
+              mainAxisSpacing: 3,
+              crossAxisSpacing: 3,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      getRidesByStatus(RideStatus.UPCOMING);
+                    },
+                    child: Container(
+
+                      width: MediaQuery.of(context).size.width / 3,
+                      decoration: BoxDecoration(
+                          color: rideStatus == RideStatus.UPCOMING ? Colors.blue :  Colors.white, //background color of box
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade300,
+                              blurRadius: 2.0, // soften the shadow
+                              spreadRadius: .1, //extend the shadow
+                              offset: Offset(
+                                0.5, // Move to right 10  horizontally
+                                0.5, // Move to bottom 10 Vertically
                               ),
-                          createStatusContainer(
-                              ridedata!.getUserRides![index].status.toString()),
-                          ridedata!.getUserRides![index].rideType.toString() !=
-                                  "2"
-                              ? Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Total Duration of Ride",
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 13),
-                                        ),
-                                        Text(
-                                          "${ridedata!.getUserRides![index].rideDuration} min",
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              color: Colors.blue),
-                                        ),
-                                      ]),
-                                )
-                              : Container(),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SvgPicture.asset(
-                                          "assets/icons/timeIcon.svg"),
-                                    ),
-                                    Text(
-                                        ridedata!.getUserRides![index]
-                                                    .rideStartDateTime ==
-                                                null
-                                            ? ""
-                                            : DateFormat.yMMMMd().format(
-                                                DateTime.parse(ridedata!
-                                                    .getUserRides![index]
-                                                    .rideStartDateTime)),
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white)),
-                                    Container(
-                                        height: 30,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          gradient: const LinearGradient(
-                                              colors: [
-                                                Color(0xFF36A4FE),
-                                                Color(0xFF3BFF84),
-                                              ],
-                                              begin: FractionalOffset(0.0, 0.0),
-                                              end: FractionalOffset(1.0, 0.0),
-                                              stops: [0.0, 1.0],
-                                              tileMode: TileMode.clamp),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                              ridedata!.getUserRides![index]
-                                                          .rideStartDateTime ==
-                                                      null
-                                                  ? ""
-                                                  : "${DateFormat.jm().format(DateTime.parse(ridedata!.getUserRides![index].rideStartDateTime))}",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.white)),
-                                        ))
-                                  ],
-                                )),
-                          ),
-                        ]),
+                            )
+                          ]
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Upcoming",
+                          style: GoogleFonts.poppins(fontSize: 12,color: rideStatus == RideStatus.UPCOMING ? Colors.white : Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              );
-            }),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      getRidesByStatus(RideStatus.LIVE);
+                    },
+                    child: Container(
+
+                      width: MediaQuery.of(context).size.width / 3,
+                      decoration: BoxDecoration(
+                          color: rideStatus == RideStatus.LIVE ? Colors.blue :  Colors.white, //background color of box
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade300,
+                              blurRadius: 2.0, // soften the shadow
+                              spreadRadius: .1, //extend the shadow
+                              offset: Offset(
+                                0.5, // Move to right 10  horizontally
+                                0.5, // Move to bottom 10 Vertically
+                              ),
+                            )
+                          ]
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Live",
+                          style: GoogleFonts.poppins(fontSize: 12,color: rideStatus == RideStatus.LIVE ? Colors.white : Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      getRidesByStatus(RideStatus.COMPLETED);
+                    },
+                    child: Container(
+
+                      width: MediaQuery.of(context).size.width / 3,
+                      decoration: BoxDecoration(
+                          color: rideStatus == RideStatus.COMPLETED ? Colors.blue :  Colors.white, //background color of box
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade300,
+                              blurRadius: 2.0, // soften the shadow
+                              spreadRadius: .1, //extend the shadow
+                              offset: Offset(
+                                0.5, // Move to right 10  horizontally
+                                0.5, // Move to bottom 10 Vertically
+                              ),
+                            )
+                          ]
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Completed",
+                          style: GoogleFonts.poppins(fontSize: 12,color: rideStatus == RideStatus.COMPLETED ? Colors.white : Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],),
+
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: ridedata!.getUserRides!.length,
+                  itemBuilder: (_, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(() =>
+                              RideDetail(ridesdata: ridedata!.getUserRides![index]));
+                        },
+                        child: Card(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListTile(
+                                      visualDensity: VisualDensity(vertical: 4),
+                                      // dense: true,
+                                      title: Text(
+                                        "${ridedata!.getUserRides![index].packageName.toString()}",
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13),
+                                      ),
+                                      subtitle: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Rs ${ridedata!.getUserRides![index].totalAmount}.00",
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Colors.blue),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "Booking id : ",
+                                                style: GoogleFonts.poppins(fontSize: 13),
+                                              ),
+                                              Text(
+                                                "${ridedata!.getUserRides![index].bookingId}",
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.blue),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      trailing:Container(
+                                        width: 100,
+                                        height: 150,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            createStatusContainer(
+                                                ridedata!.getUserRides![index].status.toString()),
+                                            SvgPicture.asset('assets/svg/ride_card_cart.svg',fit: BoxFit.contain,height: 40,),
+                                          ],
+                                        ),
+                                      ),
+
+                                      leading: CachedNetworkImage(
+                                        imageUrl:
+                                        "${AppStrings.imageUrl}${ridedata!.getUserRides![index].imageLocation}",
+                                        imageBuilder: (context, imageProvider) =>
+                                            Container(
+                                              height: 60,
+                                              width: 60,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover),
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                        placeholder: (context, url) => Container(
+                                          height: 60,
+                                          width: 60,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Container(
+                                              height: 60,
+                                              width: 60,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        "https://images.pexels.com/photos/40465/pexels-photo-40465.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
+                                                    fit: BoxFit.cover),
+                                                color: Colors.blue,
+                                                borderRadius: BorderRadius.circular(20),
+                                              ),
+                                            ),
+                                      ),
+                                    )
+                                  // Row(
+                                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                                  //   children: [
+                                  //     Container(
+                                  //       height: 60,
+                                  //       width: 60,
+                                  //       decoration: BoxDecoration(
+                                  //         color: Colors.grey,
+                                  //         borderRadius: BorderRadius.circular(20),
+                                  //       ),
+                                  //     ),
+                                  //     Column(mainAxisAlignment: MainAxisAlignment.start,
+                                  //         children: [
+                                  //       Row(
+                                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //         children: [
+                                  //           Text(
+                                  //             "WonderLand",
+                                  //             style: GoogleFonts.poppins(
+                                  //                 fontWeight: FontWeight.bold, fontSize: 13),
+                                  //           ),
+                                  //           Text(
+                                  //             "Rs 399.0",
+                                  //             style: GoogleFonts.poppins(
+                                  //                 fontWeight: FontWeight.bold,
+                                  //                 fontSize: 14,
+                                  //                 color: Colors.red),
+                                  //           ),
+                                  //         ],
+                                  //       )
+                                  //     ])
+                                  //   ],
+                                  // ),3
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Container(
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.greenAccent,
+                                          ),
+                                          child:Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(4.0),
+                                              child: Text(
+                                                  ridedata!.getUserRides![index]
+                                                      .rideStartDateTime ==
+                                                      null
+                                                      ? ""
+                                                      : DateFormat("dd-MM-yyyy").format(
+                                                      DateTime.parse(ridedata!
+                                                          .getUserRides![index]
+                                                          .rideStartDateTime)),
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.w500,
+                                                      color: Colors.white)),
+                                            ),
+                                          )),
+                                      Container(
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.greenAccent,
+                                          ),
+                                          child:Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(4.0),
+                                              child: Text(
+                                                  ridedata!.getUserRides![index]
+                                                      .rideStartDateTime ==
+                                                      null
+                                                      ? ""
+                                                      : "${DateFormat.jm().format(DateTime.parse(ridedata!.getUserRides![index].rideStartDateTime))}",
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.w500,
+                                                      color: Colors.white)),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
       );
   }
 
@@ -489,12 +597,12 @@ class MyRidesState extends State<MyRides> {
                             ),
                             Flexible(
                                 child: Text(
-                              "${rentalData?[index].locationName}",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue),
-                            )),
+                                  "${rentalData?[index].locationName}",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue),
+                                )),
                           ],
                         ),
                       ),
@@ -569,93 +677,88 @@ class MyRidesState extends State<MyRides> {
 
   createStatusContainer(var status) {
     if (status == "0") {
-      return Padding(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-          left: 16,
-          bottom: 10,
-        ),
-        child: Container(
-          child: Center(
-              child: Text(
-            "CANCELLED",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold, fontSize: 9, color: Colors.red),
-          )),
-          height: 23,
-          width: 88,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.red),
-              color: Colors.white),
-        ),
+      return Container(
+        child: Center(
+            child: Text(
+              "CANCELLED",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold, fontSize: 9, color: Colors.red),
+            )),
+        height: 23,
+        width: 88,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.red),
+            color: Colors.white),
       );
     } else if (status == "1") {
-      return Padding(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-          left: 16,
-          bottom: 10,
-        ),
-        child: Container(
-          child: Center(
-              child: Text(
-            "COMPLETED",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold, fontSize: 9, color: Colors.green),
-          )),
-          height: 23,
-          width: 88,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.green),
-              color: Colors.white),
-        ),
+      return Container(
+        child: Center(
+            child: Text(
+              "COMPLETED",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold, fontSize: 9, color: Colors.green),
+            )),
+        height: 23,
+        width: 88,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.green),
+            color: Colors.white),
       );
     } else if (status == "2") {
-      return Padding(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-          left: 16,
-          bottom: 10,
-        ),
-        child: Container(
-          child: Center(
-              child: Text(
-            "ONGOING",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold, fontSize: 9, color: Colors.amber),
-          )),
-          height: 23,
-          width: 88,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.amber),
-              color: Colors.white),
-        ),
+      return Container(
+        child: Center(
+            child: Text(
+              "ONGOING",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold, fontSize: 9, color: Colors.amber),
+            )),
+        height: 23,
+        width: 88,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.amber),
+            color: Colors.white),
       );
     } else if (status == "3") {
-      return Padding(
-        padding: const EdgeInsets.only(
-          top: 8.0,
-          left: 16,
-          bottom: 10,
-        ),
-        child: Container(
-          child: Center(
-              child: Text(
-            "UPCOMING",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold, fontSize: 9, color: Colors.blue),
-          )),
-          height: 23,
-          width: 88,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.blue),
-              color: Colors.white),
-        ),
+      return Container(
+        child: Center(
+            child: Text(
+              "UPCOMING",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold, fontSize: 9, color: Colors.blue),
+            )),
+        height: 23,
+        width: 88,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.blue),
+            color: Colors.white),
       );
+    }
+  }
+
+  void getRidesByStatus(RideStatus status) {
+    switch (status){
+      case RideStatus.UPCOMING:
+        setState((){
+          rideStatus = status;
+          ridedata?.getUserRides = upcoming;
+        });
+        break;
+      case RideStatus.LIVE:
+        setState((){
+          rideStatus = status;
+          ridedata?.getUserRides = live;
+        });
+        break;
+      case RideStatus.COMPLETED:
+        setState((){
+          rideStatus = status;
+          ridedata?.getUserRides = completed;
+        });
+        break;
     }
   }
 }

@@ -40,19 +40,19 @@ import 'discount_page.dart';
 class BookingPage extends StatefulWidget {
   BookingPage(
       {Key? key,
-      this.price,
-      this.packageid,
-      this.packagePlaceMappingDetails,
-      this.packagename,
-      this.rideType,
-      this.startLocation,
-      this.subServiceId,
-      this.serviceId,
-      this.endLocation,
-      this.endposition,
-      this.startposition,
-      this.packageData,
-      this.placeData})
+        this.price,
+        this.packageid,
+        this.packagePlaceMappingDetails,
+        this.packagename,
+        this.rideType,
+        this.startLocation,
+        this.subServiceId,
+        this.serviceId,
+        this.endLocation,
+        this.endposition,
+        this.startposition,
+        this.packageData,
+        this.placeData})
       : super(key: key);
 
   var price,
@@ -183,7 +183,7 @@ class _BookingPageState extends State<BookingPage> {
       amount: widget.packageData?.createCustomerPackages?.price,
       paymentType: "online",
       transactionDateTime:
-          DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
+      DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now()),
       entryBy: "$userid",
       entryDateTime: DateTime.now().toUtc().toIso8601String(),
       updatedDateTime: DateTime.now().toUtc().toIso8601String(),
@@ -213,12 +213,12 @@ class _BookingPageState extends State<BookingPage> {
     };
     final client = HttpClient();
     final request =
-        await client.postUrl(Uri.parse('https://api.razorpay.com/v1/orders'));
+    await client.postUrl(Uri.parse('https://api.razorpay.com/v1/orders'));
     request.headers
         .set(HttpHeaders.contentTypeHeader, "application/json; charset=UTF-8");
     String basicAuth = 'Basic ' +
         base64Encode(
-            utf8.encode('${AppStrings.live_key}:${AppStrings.live_secret}'));
+            utf8.encode('${AppStrings.test_key}:${AppStrings.test_secret}'));
     request.headers.set(HttpHeaders.authorizationHeader, basicAuth);
     request.add(utf8.encode(json.encode(orderOptions)));
     final response = await request.close();
@@ -227,7 +227,7 @@ class _BookingPageState extends State<BookingPage> {
       String orderId = contents.split(',')[0].split(":")[1];
       orderId = orderId.substring(1, orderId.length - 1);
       var options = {
-        "key": AppStrings.live_key,
+        "key": AppStrings.test_key,
         "amount": double.parse(amount.toString()),
         "currency": "INR",
         'order_id': orderId,
@@ -903,14 +903,15 @@ class _BookingPageState extends State<BookingPage> {
                             // showBottomSheet(context);
                             if (driverAvailable) {
                               Get.to(() => Checkout(
-                                  listPlaceMasters: widget.placeData,
-                                  onBookNow: createOrder,
-                              price: widget.price,
-                              username: username,));
+                                listPlaceMasters: widget.placeData,
+                                packageid:widget.packageData?.createCustomerPackages?.id,
+                                onBookNow: createOrder,
+                                price: widget.price,
+                                username: username,));
                             } else {
                               showToast(
                                   message:
-                                      "Auto not available for selected Date ");
+                                  "Auto not available for selected Date ");
                               setState(() {
                                 isloading = false;
                               });
@@ -926,29 +927,29 @@ class _BookingPageState extends State<BookingPage> {
                       },
                       child: isloading
                           ? Container(
-                              height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.transparent,
-                              child: Center(child: CircularProgressIndicator()))
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          color: Colors.transparent,
+                          child: Center(child: CircularProgressIndicator()))
                           : Container(
-                              child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                padding: const EdgeInsets.all(8),
-                                child: Center(
-                                  child: Text(
-                                    "Submit",
-                                    style: GoogleFonts.raleway(
-                                        color: Colors.white),
-                                  ),
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.redAccent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 50,
+                              padding: const EdgeInsets.all(8),
+                              child: Center(
+                                child: Text(
+                                  "Submit",
+                                  style: GoogleFonts.raleway(
+                                      color: Colors.white),
                                 ),
                               ),
-                            )),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.redAccent,
+                              ),
+                            ),
+                          )),
                     ),
                   ],
                 ),
@@ -974,96 +975,96 @@ class _BookingPageState extends State<BookingPage> {
               children: [
                 widget.rideType == "1"
                     ? Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            height: 200,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                color: Colors.grey,
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        "${AppStrings.imageUrl}${widget.packagePlaceMappingDetails![0].imageLocation}"),
-                                    fit: BoxFit.cover)),
-                          ),
-                          BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                            child: Container(
-                              height: 100,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                  // color: Colors.grey,
-                                  ),
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "${AppStrings.imageUrl}${widget.packagePlaceMappingDetails![0].imageLocation}"),
+                              fit: BoxFit.cover)),
+                    ),
+                    BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                      child: Container(
+                        height: 100,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          // color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "${widget.packagename}",
+                      style: GoogleFonts.poppins(
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(0.0, 0.0),
+                              blurRadius: 3.0,
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
-                          ),
-                          Text(
-                            "${widget.packagename}",
-                            style: GoogleFonts.poppins(
-                                shadows: <Shadow>[
-                                  Shadow(
-                                    offset: Offset(0.0, 0.0),
-                                    blurRadius: 3.0,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                  Shadow(
-                                    offset: Offset(0.0, 0.0),
-                                    blurRadius: 8.0,
-                                    color: Colors.grey,
-                                  ),
-                                ],
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                          Positioned(
-                            left: 5,
-                            top: 30,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                Get.back();
-                              },
+                            Shadow(
+                              offset: Offset(0.0, 0.0),
+                              blurRadius: 8.0,
+                              color: Colors.grey,
                             ),
-                          ),
-                        ],
-                      )
+                          ],
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    Positioned(
+                      left: 5,
+                      top: 30,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Get.back();
+                        },
+                      ),
+                    ),
+                  ],
+                )
                     : Container(),
                 SizedBox(
                   height: 20,
                 ),
                 widget.rideType == "1"
                     ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            _selectDate(context);
-                          },
-                          child: _buildPickerbutton(
-                              context,
-                              DateFormat.yMd().format(selectedDate),
-                              "assets/svg/calenderForm.svg"),
-                        ))
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        _selectDate(context);
+                      },
+                      child: _buildPickerbutton(
+                          context,
+                          DateFormat.yMd().format(selectedDate),
+                          "assets/svg/calenderForm.svg"),
+                    ))
                     : Container(),
                 widget.rideType == "1"
                     ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            _selectTime(context);
-                          },
-                          child: _buildPickerbutton(
-                            context,
-                            formatDate(
-                                DateTime(2019, 08, 1, selectedTime.hour,
-                                    selectedTime.minute),
-                                [hh, ':', nn, " ", am]).toString(),
-                            "assets/svg/timeForm.svg",
-                          ),
-                        ))
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        _selectTime(context);
+                      },
+                      child: _buildPickerbutton(
+                        context,
+                        formatDate(
+                            DateTime(2019, 08, 1, selectedTime.hour,
+                                selectedTime.minute),
+                            [hh, ':', nn, " ", am]).toString(),
+                        "assets/svg/timeForm.svg",
+                      ),
+                    ))
                     : Container(),
 
                 Padding(
@@ -1073,8 +1074,8 @@ class _BookingPageState extends State<BookingPage> {
                       driverAvailable && driverCount > 1
                           ? "$driverCount Auto available"
                           : driverAvailable
-                              ? "$driverCount Auto available"
-                              : "No Auto available on selected date",
+                          ? "$driverCount Auto available"
+                          : "No Auto available on selected date",
                       style: GoogleFonts.poppins(
                           fontSize: 16, fontStyle: FontStyle.italic),
                     ),
@@ -1119,7 +1120,7 @@ class _BookingPageState extends State<BookingPage> {
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   IconButton(
                                       onPressed: () {
@@ -1176,7 +1177,7 @@ class _BookingPageState extends State<BookingPage> {
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   IconButton(
                                       onPressed: () {
@@ -1217,7 +1218,7 @@ class _BookingPageState extends State<BookingPage> {
                 Container(
                   child: Column(
                     children:
-                        List.generate(_totalChild + _totalAdults, (index) {
+                    List.generate(_totalChild + _totalAdults, (index) {
                       if (index == 0) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -1376,7 +1377,7 @@ class _BookingPageState extends State<BookingPage> {
                 GestureDetector(
                   onTap: () {
                     var result = Get.to(DiscountPage(
-                      packageId: widget.packageid,
+                      packageId: widget.packageData?.createCustomerPackages?.id,
                       serviceId: 4,
                       subServiceId: 7,
                       locationLatitude: 0.0,
@@ -1421,51 +1422,51 @@ class _BookingPageState extends State<BookingPage> {
                 widget.rideType == "2"
                     ? Container()
                     : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                      child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                            child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            // maxLines: 3,
-                            controller: _Pickcontroller,
-                            onTap: () {
-                              //_handlePressButton(location: "start");
-                              showPlacePicker();
-                              FocusScope.of(context).unfocus();
-                            },
-                            style: GoogleFonts.poppins(
-                                fontSize: 15, fontWeight: FontWeight.w500),
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  new EdgeInsets.symmetric(vertical: 0.0),
-                              border: InputBorder.none,
-                              labelText: "Pick Up Address",
-                              hintText: "Pick Up Address",
-                              hintStyle: GoogleFonts.poppins(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
+                        child: TextFormField(
+                          // maxLines: 3,
+                          controller: _Pickcontroller,
+                          onTap: () {
+                            //_handlePressButton(location: "start");
+                            showPlacePicker();
+                            FocusScope.of(context).unfocus();
+                          },
+                          style: GoogleFonts.poppins(
+                              fontSize: 15, fontWeight: FontWeight.w500),
+                          decoration: InputDecoration(
+                            contentPadding:
+                            new EdgeInsets.symmetric(vertical: 0.0),
+                            border: InputBorder.none,
+                            labelText: "Pick Up Address",
+                            hintText: "Pick Up Address",
+                            hintStyle: GoogleFonts.poppins(
+                                fontSize: 15, fontWeight: FontWeight.bold),
                           ),
-                        )
-                            // ListTile(
-                            //   leading: SvgPicture.asset("assets/svg/Pick Up.svg"),
-                            //   title: TextFormField(
-                            //     maxLines: 3,
-                            //     controller: _Pickcontroller,
-                            //     onTap: (){_handlePressButton(location: "start");
-                            //     FocusScope.of(context).unfocus();},
-                            //     style:GoogleFonts.poppins(
-                            //         fontSize: 15, fontWeight: FontWeight.w500),
-                            //     decoration: InputDecoration(
-                            //       contentPadding: new EdgeInsets.symmetric(vertical: 0.0),
-                            //       border: InputBorder.none,
-                            //       // labelText: "Pick Up Address",
-                            //       hintText: "Pick Up Address",
-                            //       hintStyle: GoogleFonts.poppins(
-                            //           fontSize: 15, fontWeight: FontWeight.bold),),
-                            //   ),
-                            // ),
-                            ),
-                      ),
+                        ),
+                      )
+                    // ListTile(
+                    //   leading: SvgPicture.asset("assets/svg/Pick Up.svg"),
+                    //   title: TextFormField(
+                    //     maxLines: 3,
+                    //     controller: _Pickcontroller,
+                    //     onTap: (){_handlePressButton(location: "start");
+                    //     FocusScope.of(context).unfocus();},
+                    //     style:GoogleFonts.poppins(
+                    //         fontSize: 15, fontWeight: FontWeight.w500),
+                    //     decoration: InputDecoration(
+                    //       contentPadding: new EdgeInsets.symmetric(vertical: 0.0),
+                    //       border: InputBorder.none,
+                    //       // labelText: "Pick Up Address",
+                    //       hintText: "Pick Up Address",
+                    //       hintStyle: GoogleFonts.poppins(
+                    //           fontSize: 15, fontWeight: FontWeight.bold),),
+                    //   ),
+                    // ),
+                  ),
+                ),
 
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -1483,37 +1484,37 @@ class _BookingPageState extends State<BookingPage> {
                 ),
                 widget.rideType == "1"
                     ? Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: List.generate(
-                            widget.packagePlaceMappingDetails!.length, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'L${index + 1} : ${widget.packagePlaceMappingDetails![index].placeName} : ${widget.packagePlaceMappingDetails![index].duration} Minutes',
-                              style: GoogleFonts.poppins(fontSize: 16),
-                            ),
-                          );
-                        }),
-                      )
-                    : Column(
-                        children: [
-                          ListTile(
-                            leading: SvgPicture.asset("assets/svg/Pick Up.svg"),
-                            title: Text(
-                              '${widget.startLocation}',
-                              style: GoogleFonts.poppins(fontSize: 16),
-                            ),
-                          ),
-                          ListTile(
-                            leading: SvgPicture.asset("assets/svg/drop.svg"),
-                            title: Text(
-                              '${widget.endLocation}',
-                              style: GoogleFonts.poppins(fontSize: 16),
-                            ),
-                          )
-                        ],
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                      widget.packagePlaceMappingDetails!.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'L${index + 1} : ${widget.packagePlaceMappingDetails![index].placeName} : ${widget.packagePlaceMappingDetails![index].duration} Minutes',
+                        style: GoogleFonts.poppins(fontSize: 16),
                       ),
+                    );
+                  }),
+                )
+                    : Column(
+                  children: [
+                    ListTile(
+                      leading: SvgPicture.asset("assets/svg/Pick Up.svg"),
+                      title: Text(
+                        '${widget.startLocation}',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                    ),
+                    ListTile(
+                      leading: SvgPicture.asset("assets/svg/drop.svg"),
+                      title: Text(
+                        '${widget.endLocation}',
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                    )
+                  ],
+                ),
                 // Padding(
                 //   padding: const EdgeInsets.all(8.0),
                 //   child: Text('L1 : Fatehsagar : 45 Minutes',style: GoogleFonts.poppins(fontSize: 16),),
@@ -1567,10 +1568,10 @@ class _BookingPageState extends State<BookingPage> {
         ),
         isloading == true
             ? Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.transparent,
-                child: Center(child: CircularProgressIndicator()))
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.transparent,
+            child: Center(child: CircularProgressIndicator()))
             : Container()
       ],
     );
