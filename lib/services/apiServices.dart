@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:fimber/fimber.dart';
 import 'package:yatree/model/asStrip.dart';
 import 'package:yatree/model/discountList.dart';
 import 'package:yatree/model/offers/offers.dart';
@@ -12,6 +13,7 @@ import 'package:yatree/model/ride/ride_modle.dart';
 import 'package:yatree/model/serive.dart';
 import 'package:yatree/model/service/sightseeing.dart';
 import 'package:yatree/model/service/spinaround_model.dart';
+import 'package:yatree/model/trending.dart';
 import 'package:yatree/utils/sharedPreference.dart';
 
 getUserMasterData() async {
@@ -169,6 +171,35 @@ getAutoMasterData() async {
   }
 }
 
+//get trending data
+getTrendingNowData() async {
+  try {
+    String graphQLDocument = '''query ListTrendingNow {
+        listTrendingNow {
+          __typename
+          id
+          name
+          image
+          url
+        }
+      }''';
+
+    var operation = Amplify.API.query(
+        request: GraphQLRequest<String>(
+      document: graphQLDocument,
+    ));
+
+    var response = await operation.response;
+    var data = response.data;
+    TrendingData trendingData = trendingDataFromJson(data ?? '');
+
+    print('Trending Now result: ' + data!);
+    return trendingData;
+  } catch (e) {
+    print('Query failed: $e');
+  }
+}
+
 //get booking Master
 getBookingMasterData() async {
   try {
@@ -193,15 +224,17 @@ getBookingMasterData() async {
     }
   }''';
 
-    var operation = Amplify.API.query(
+    var res = Amplify.API.query(
         request: GraphQLRequest<String>(
       document: graphQLDocument,
     ));
 
-    var response = await operation.response;
+    var response = await res.response;
     var data = response.data;
 
-    print('booking Master result: ' + data!);
+
+    Fimber.d('booking Master result: ' + data!);
+
   } catch (e) {
     print('Query failed: $e');
   }
@@ -440,6 +473,7 @@ getServiceData() async {
     print('Query failed: $e');
   }
 }
+
 
 //getMyrideData
 

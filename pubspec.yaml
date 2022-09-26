@@ -60,6 +60,7 @@ dependencies:
   place_picker: ^0.9.19
   flutter_staggered_grid_view:
   slidable_button: ^2.0.0+1
+  fimber:
 
 
 

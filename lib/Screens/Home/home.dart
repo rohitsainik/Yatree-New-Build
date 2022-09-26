@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,9 +16,11 @@ import 'package:yatree/controller/tab_controller.dart';
 import 'package:yatree/model/offers/offers.dart';
 import 'package:yatree/model/package/packageData.dart';
 import 'package:yatree/model/serive.dart';
+import 'package:yatree/model/trending.dart';
 import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/ui/rental/rent_auto.dart';
 import 'package:yatree/ui/spin_around/spin_around.dart';
+import 'package:yatree/utils/sharedPreference.dart';
 import 'package:yatree/utils/widgets/drawer.dart';
 import 'package:yatree/utils/widgets/indicatorDots.dart';
 
@@ -40,15 +43,15 @@ class _MyHomePageState extends State<MyHomePage>
 
   var offertestImage =
       "https://images.pexels.com/photos/56832/road-asphalt-space-sky-56832.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
-
+  SharedPref pref = SharedPref();
   ServiceDataModel? servicedata;
+  TrendingData? trendingData;
   OfferDataModel? offerData;
   AllPackageDataModel? packageListdata;
   PageController _pageController = PageController();
   var current = 0;
 
   getData() async {
-
     ServiceDataModel service = await getServiceData();
     OfferDataModel offer = await getOfferMasterData();
     AllPackageDataModel packagedata = await getPackageDetailsData(
@@ -57,10 +60,12 @@ class _MyHomePageState extends State<MyHomePage>
         packageId: 0,
         categoryId: 0,
         currentTime: "00:00:00");
+    TrendingData treding = await getTrendingNowData();
     setState(() {
       packageListdata = packagedata;
       servicedata = service;
       offerData = offer;
+      trendingData = treding;
     });
   }
 
@@ -251,7 +256,7 @@ class _MyHomePageState extends State<MyHomePage>
                       ),
                     ),
                   ),
-                  _buildOfferList(context),
+                  _buildTrendingList(context),
                   SizedBox(height: 20),
                   /*SizedBox(height: 10),
                   _buildBodyList(context),
@@ -294,8 +299,7 @@ class _MyHomePageState extends State<MyHomePage>
               height: 200,
               width: MediaQuery.of(context).size.width - 20,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.white
-                  ),
+                  borderRadius: BorderRadius.circular(10), color: Colors.white),
               child: AlignedGridView.count(
                 crossAxisCount: 3,
                 itemCount: servicedata!.listServiceMasters!.length,
@@ -308,18 +312,27 @@ class _MyHomePageState extends State<MyHomePage>
                         padding: const EdgeInsets.all(5.0),
                         child: GestureDetector(
                           onTap: () {
-                            if(servicedata!.listServiceMasters![index].name == 'Rent us'){
-                              Get.to(()=>RentPage());
-                            }else if(servicedata!.listServiceMasters![index].name == 'Pick N Drop'){
-                              Get.to(()=>PickAndDrop());
-                            }else if(servicedata!.listServiceMasters![index].name == "SpinAround" ){
-                              Get.to(()=>SpinAroundPage());
-                            }else if(servicedata!.listServiceMasters![index].name == "Sightseeing" ){
-                              Get.to(()=>SightSeeing(serviceData: servicedata!.listServiceMasters![index],));
+                            if (servicedata!.listServiceMasters![index].name ==
+                                'Rent us') {
+                              Get.to(() => RentPage());
+                            } else if (servicedata!
+                                    .listServiceMasters![index].name ==
+                                'Pick N Drop') {
+                              Get.to(() => PickAndDrop());
+                            } else if (servicedata!
+                                    .listServiceMasters![index].name ==
+                                "SpinAround") {
+                              Get.to(() => SpinAroundPage());
+                            } else if (servicedata!
+                                    .listServiceMasters![index].name ==
+                                "Sightseeing") {
+                              Get.to(() => SightSeeing(
+                                    serviceData:
+                                        servicedata!.listServiceMasters![index],
+                                  ));
                             }
 
-
-                           /* Get.to(() => PackageList(
+                            /* Get.to(() => PackageList(
                                   serviceId: servicedata!
                                       .listServiceMasters![index].id,
                                   categoryId:
@@ -330,7 +343,7 @@ class _MyHomePageState extends State<MyHomePage>
                             height: 70,
                             width: 70,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
+                                // borderRadius: BorderRadius.circular(40),
                                 image: DecorationImage(
                                     image: NetworkImage(
                                         "https://d19y8r79r2sdoe.cloudfront.net/public/${servicedata!.listServiceMasters![index].image}"),
@@ -374,19 +387,27 @@ class _MyHomePageState extends State<MyHomePage>
                         SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          "${widget.username}",
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
+                        FutureBuilder(
+                            future: pref.getUsername(),
+                            builder: (context, snap) {
+                              return Text(
+                                "${snap.data}",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              );
+                            }),
                       ],
                     ),
 
                     // Spacer(),
                     IconButton(
-                        onPressed: () {}, icon: Icon(Icons.notifications,color: Colors.amber,))
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.notifications,
+                          color: Colors.amber,
+                        ))
                   ],
                 ),
               )),
@@ -397,16 +418,117 @@ class _MyHomePageState extends State<MyHomePage>
 
   _buildOfferList(BuildContext context) {
     return Container(
+        height: 140,
+
+        // width: MediaQuery.of(context).size.width /2,
+        child: CarouselSlider.builder(
+          itemCount: offerData?.listOfferMasters!.length,
+          itemBuilder: (context, index, pageViewIndex) {
+            return Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)
+                ),
+
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "${AppStrings.imageUrl}${offerData?.listOfferMasters![index].image}",
+                            imageBuilder: (context, imageProvider) => Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.fill),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 5,
+                                    spreadRadius: 1,
+                                    color: Colors.grey.shade400,
+                                  ),
+                                ],
+                                // color: Colors.white,
+                              ),
+                            ),
+                            placeholder: (context, url) => Container(
+                              height: 140,
+                              width: MediaQuery.of(context).size.width - 20,
+                              color: Colors.blue,
+                            ),
+                            errorWidget: (context, url, error) => Container(
+                                height: 140,
+                                width: MediaQuery.of(context).size.width - 20,
+                                color: Colors.blue,
+                                child: Center(
+                                  child: Icon(Icons.error),
+                                )),
+                          ),
+                        ),
+                        Expanded(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Text(
+                              'E-Rickshaw Rides',
+                              style: GoogleFonts.raleway(fontSize: 10),
+                            ),
+                            Text(
+                              'Flat 10% OFF on Rides!',
+                              style: GoogleFonts.raleway(
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ))
+                      ],
+                    ),
+                    DottedLine(
+                      lineThickness: 1.0,
+                      dashLength: 10.0,
+                      dashGapLength: 10.0,
+                    ),
+                    TextButton(onPressed: () {
+                    }, child: Text("Copy & Book: ${offerData?.listOfferMasters![index].name}"))
+                  ],
+                ),
+              ),
+            );
+          },
+          options: CarouselOptions(
+            autoPlay: true,
+            // enlargeCenterPage: true,
+            viewportFraction: 0.7,
+            // aspectRatio: 2.0,
+            // initialPage: 2,
+          ),
+        ));
+  }
+
+  _buildTrendingList(BuildContext context) {
+    return Container(
         height: 180,
         // width: MediaQuery.of(context).size.width /2,
         child: CarouselSlider.builder(
-          itemCount: offerData!.listOfferMasters!.length,
+          itemCount: trendingData?.listTrendingNow!.length,
           itemBuilder: (context, index, pageViewIndex) {
             return Padding(
               padding: const EdgeInsets.all(5.0),
               child: CachedNetworkImage(
                 imageUrl:
-                    "${AppStrings.imageUrl}${offerData!.listOfferMasters![index].image}",
+                    "${AppStrings.imageUrl}${trendingData!.listTrendingNow![index].image}",
                 imageBuilder: (context, imageProvider) => Container(
                   height: 180,
                   width: MediaQuery.of(context).size.width * 0.65,
@@ -449,7 +571,7 @@ class _MyHomePageState extends State<MyHomePage>
         ));
   }
 
-  _buildBodyList(BuildContext context) {
+/*  _buildBodyList(BuildContext context) {
     return Column(
       children: List.generate(servicedata!.listServiceMasters!.length, (index) {
         return Column(
@@ -583,7 +705,7 @@ class _MyHomePageState extends State<MyHomePage>
       //  ]
     );
   }
-
+`
   _buildBottom(BuildContext context) {
     return Container(
       child: Column(
@@ -1085,7 +1207,7 @@ class _MyHomePageState extends State<MyHomePage>
               ),
             ],
           );
-  }
+  }*/
 
   bool test = false;
 

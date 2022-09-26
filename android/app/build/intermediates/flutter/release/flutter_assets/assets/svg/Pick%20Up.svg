@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="25" viewBox="0 0 21 25">
+  <g id="Pick_Up" data-name="Pick Up" transform="translate(-47 -176)">
+    <g id="Group_290" data-name="Group 290">
+      <rect id="Rectangle_34" data-name="Rectangle 34" width="21" height="21" transform="translate(47 176)" fill="#36a4fe"/>
+      <path id="Polygon_2" data-name="Polygon 2" d="M9.078,2.194a1,1,0,0,1,1.844,0l1.327,3.157a1,1,0,0,0,.9.612l3.585.077a1,1,0,0,1,.52,1.84L14.709,9.522a1,1,0,0,0-.4,1.173l.97,2.748a1,1,0,0,1-1.444,1.2L10.5,12.712a1,1,0,0,0-1,0L6.166,14.642a1,1,0,0,1-1.444-1.2l.97-2.748a1,1,0,0,0-.4-1.173L2.746,7.881a1,1,0,0,1,.52-1.84l3.585-.077a1,1,0,0,0,.9-.612Z" transform="translate(47 178)" fill="#fff"/>
+      <path id="Polygon_3" data-name="Polygon 3" d="M4,0,8,5H0Z" transform="translate(62 201) rotate(180)" fill="#36a4fe"/>
+    </g>
+  </g>
+</svg>

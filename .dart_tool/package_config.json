@@ -284,6 +284,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "fimber",
+      "rootUri": "file:///Users/rohitsainik/flutter/.pub-cache/hosted/pub.dartlang.org/fimber-0.6.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "firebase_core",
       "rootUri": "file:///Users/rohitsainik/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.19.1",
       "packageUri": "lib/",
@@ -1076,7 +1082,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-09-05T13:48:20.328710Z",
+  "generated": "2022-09-25T13:39:38.500808Z",
   "generator": "pub",
-  "generatorVersion": "2.18.0"
+  "generatorVersion": "2.18.1"
 }

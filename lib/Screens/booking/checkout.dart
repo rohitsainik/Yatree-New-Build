@@ -1,8 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yatree/base/appStrings.dart';
 import 'package:yatree/model/service/sightseeing.dart';
+import 'package:yatree/model/trending.dart';
+import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/utils/widgets/gradient.dart';
 import 'package:yatree/utils/widgets/seperator.dart';
 
@@ -15,6 +20,8 @@ class Checkout extends StatefulWidget {
 }
 
 class _CheckoutState extends State<Checkout> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +89,7 @@ class _CheckoutState extends State<Checkout> {
               ),
             ),
           ),
+          _buildTrendingList(context),
           SizedBox(height: 100,),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -171,5 +179,75 @@ class _CheckoutState extends State<Checkout> {
         ],
       ),
     );
+  }
+
+  _buildTrendingList(BuildContext context) {
+    return Container(
+        height: 180,
+        // width: MediaQuery.of(context).size.width /2,
+        child: CarouselSlider.builder(
+          itemCount: trendingData?.listTrendingNow!.length,
+          itemBuilder: (context, index, pageViewIndex) {
+            return Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: CachedNetworkImage(
+                imageUrl:
+                "${AppStrings.imageUrl}${trendingData!.listTrendingNow![index].image}",
+                imageBuilder: (context, imageProvider) => Container(
+                  height: 180,
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  decoration: BoxDecoration(
+                    image:
+                    DecorationImage(image: imageProvider, fit: BoxFit.fill),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                        color: Colors.grey.shade400,
+                      ),
+                    ],
+                    // color: Colors.white,
+                  ),
+                ),
+                placeholder: (context, url) => Container(
+                  height: 140,
+                  width: MediaQuery.of(context).size.width - 20,
+                  color: Colors.blue,
+                ),
+                errorWidget: (context, url, error) => Container(
+                    height: 140,
+                    width: MediaQuery.of(context).size.width - 20,
+                    color: Colors.blue,
+                    child: Center(
+                      child: Icon(Icons.error),
+                    )),
+              ),
+            );
+          },
+          options: CarouselOptions(
+            autoPlay: true,
+            // enlargeCenterPage: true,
+            viewportFraction: 0.7,
+            // aspectRatio: 2.0,
+            // initialPage: 2,
+          ),
+        ));
+  }
+
+  TrendingData? trendingData;
+
+  getData() async {
+
+    TrendingData treding = await getTrendingNowData();
+    setState(() {
+      trendingData = treding;
+    });
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
   }
 }

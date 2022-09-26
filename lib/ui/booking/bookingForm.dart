@@ -903,11 +903,7 @@ class _BookingPageState extends State<BookingPage> {
                             if (driverAvailable) {
                               Get.to(() => Checkout(
                                   listPlaceMasters: widget.placeData,
-                                  onBookNow: createOrder(
-                                      amount: (widget.price +
-                                              (widget.price * .18)) *
-                                          100,
-                                      email: username)));
+                                 ));
                             } else {
                               showToast(
                                   message:

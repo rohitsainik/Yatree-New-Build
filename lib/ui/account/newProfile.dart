@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yatree/services/registrationFunction.dart';
 
 class NewProfile extends StatefulWidget {
   const NewProfile({Key? key}) : super(key: key);
@@ -331,6 +332,32 @@ class _NewProfileState extends State<NewProfile> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: GestureDetector(
+        onTap: () {
+          signOut();
+        },
+        child: Container(
+          height: 50,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.login_outlined,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Text(
+                "Logout",
+                style: TextStyle(
+                  color: Colors.blue,
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
