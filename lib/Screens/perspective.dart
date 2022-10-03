@@ -9,9 +9,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:yatree/Screens/Explore/ExplorePage.dart';
 import 'package:yatree/controller/tab_controller.dart';
 import 'package:yatree/services/apiServices.dart';
+import 'package:yatree/ui/offers/offersPage.dart';
 import 'package:yatree/ui/rental/rent_auto.dart';
 import 'package:yatree/ui/rides/myRides.dart';
 import 'package:yatree/utils/sharedPreference.dart';
+import 'package:yatree/utils/webview.dart';
 
 import '../ui/account/newProfile.dart';
 import 'Home/home.dart';
@@ -38,7 +40,6 @@ class _PerspectivePageState extends State<PerspectivePage> {
     permission = await Geolocator.requestPermission();
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    await _getstartPlace(position.latitude, position.longitude);
     SharedPref pref = SharedPref();
     var userId = await pref.getUserId();
     var userName = await pref.getUsername();
@@ -49,6 +50,7 @@ class _PerspectivePageState extends State<PerspectivePage> {
     });
     print("user id is $userId");
     print("user name is $username");
+    await _getstartPlace(position.latitude, position.longitude);
   }
 
   _getstartPlace(lat, long) async {
@@ -92,9 +94,10 @@ class _PerspectivePageState extends State<PerspectivePage> {
                   appBar: false,
                   key: ridePageKey,
                 ),
+                WebViewPage(url: "https://www.yatreedestination.com/blogs",),
 
                 // ExplorePageOld(),
-                ExplorePage(username: username),
+                OffersPage(),
                 NewProfile(),
                 // ProfilePage()
               ],
@@ -130,14 +133,14 @@ class _PerspectivePageState extends State<PerspectivePage> {
                 ),
                 label:  'Rides',
             ),
-            // BottomNavigationBarItem(
-            //   backgroundColor: Colors.black,
-            //     icon: SvgPicture.asset(
-            //       "assets/icons/homeFullIcon.svg",
-            //       color: Colors.white,
-            //     ),
-            //     label: 'Blog',
-            //     ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.black,
+                icon: SvgPicture.asset(
+                  "assets/icons/blog.svg",
+                  color: Colors.white,
+                ),
+                label: 'Blog',
+                ),
             BottomNavigationBarItem(
               backgroundColor: Colors.black,
                 icon: SvgPicture.asset(

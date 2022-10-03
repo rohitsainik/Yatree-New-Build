@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -18,9 +19,11 @@ import 'package:yatree/model/package/packageData.dart';
 import 'package:yatree/model/serive.dart';
 import 'package:yatree/model/trending.dart';
 import 'package:yatree/services/apiServices.dart';
+import 'package:yatree/ui/offers/offersPage.dart';
 import 'package:yatree/ui/rental/rent_auto.dart';
 import 'package:yatree/ui/spin_around/spin_around.dart';
 import 'package:yatree/utils/sharedPreference.dart';
+import 'package:yatree/utils/webview.dart';
 import 'package:yatree/utils/widgets/drawer.dart';
 import 'package:yatree/utils/widgets/indicatorDots.dart';
 
@@ -52,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage>
   var current = 0;
 
   getData() async {
+    getUserMasterData();
     ServiceDataModel service = await getServiceData();
     OfferDataModel offer = await getOfferMasterData();
     AllPackageDataModel packagedata = await getPackageDetailsData(
@@ -151,11 +155,16 @@ class _MyHomePageState extends State<MyHomePage>
                         fontSize: 16,
                       ),
                     ),
-                    trailing: Text(
-                      "View All >",
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                    trailing: InkWell(
+                      onTap: (){
+                        Get.to(() => OffersPage());
+                      },
+                      child: Text(
+                        "View All >",
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ),
@@ -330,6 +339,20 @@ class _MyHomePageState extends State<MyHomePage>
                                     serviceData:
                                         servicedata!.listServiceMasters![index],
                                   ));
+                            } else if (servicedata!
+                                    .listServiceMasters![index].name ==
+                                "Outstation Ride") {
+                              Get.to(() => WebViewPage(
+                                    url:
+                                        "https://www.yatreedestination.com/services/Outstation-Rides",
+                                  ));
+                            }else if (servicedata!
+                                    .listServiceMasters![index].name ==
+                                "City Guide") {
+                              Get.to(() => WebViewPage(
+                                    url:
+                                        "https://www.yatreedestination.com/services/Outstation-Rides",
+                                  ));
                             }
 
                             /* Get.to(() => PackageList(
@@ -402,12 +425,12 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
 
                     // Spacer(),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.notifications,
-                          color: Colors.amber,
-                        ))
+                    // IconButton(
+                    //     onPressed: () {},
+                    //     icon: Icon(
+                    //       Icons.notifications,
+                    //       color: Colors.amber,
+                    //     ))
                   ],
                 ),
               )),
@@ -429,9 +452,7 @@ class _MyHomePageState extends State<MyHomePage>
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)
-                ),
-
+                    borderRadius: BorderRadius.circular(20)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -500,8 +521,14 @@ class _MyHomePageState extends State<MyHomePage>
                       dashLength: 10.0,
                       dashGapLength: 10.0,
                     ),
-                    TextButton(onPressed: () {
-                    }, child: Text("Copy & Book: ${offerData?.listOfferMasters![index].name}"))
+                    TextButton(
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: offerData?.listOfferMasters![index].name)).then((_){
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("copied to clipboard")));
+                          });
+                        },
+                        child: Text(
+                            "Copy & Book: ${offerData?.listOfferMasters![index].name}"))
                   ],
                 ),
               ),

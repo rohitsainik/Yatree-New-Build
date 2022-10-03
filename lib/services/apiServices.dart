@@ -20,8 +20,10 @@ getUserMasterData() async {
   print("id");
   SharedPref pref = SharedPref();
   var id = await pref.getUserId();
+  print("------------------");
   print(id);
-  try {
+  print("------------------");
+  // try {
     String graphQLDocument = '''query GetUserMaster($id: Int!) {
         getUserMaster(id: $id) {
           __typename
@@ -57,10 +59,11 @@ getUserMasterData() async {
     var response = await operation.response;
     var data = response.data;
 
-    print('Auto Master result: ' + data!);
-  } catch (e) {
-    print('Query failed: $e');
-  }
+    print('user Master result: ${data}');
+  // }
+  // catch (e) {
+  //   print('Query failed: $e');
+  // }
 }
 
 // get Package Data

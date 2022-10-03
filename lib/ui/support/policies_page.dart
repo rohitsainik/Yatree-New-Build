@@ -45,7 +45,7 @@ class _PolicyPageState extends State<PolicyPage> {
         ),
         InkWell(
           onTap: ()async {
-            var _url = "https://yatreedestination.com/Terms-of-Use.html";
+            var _url = "https://www.yatreedestination.com/Terms-of-Use";
             if (!await launch(_url)) throw 'Could not launch $_url';
           },
           child: Card(
@@ -60,7 +60,7 @@ class _PolicyPageState extends State<PolicyPage> {
         ),
         InkWell(
           onTap: ()async {
-            var _url = "https://yatreedestination.com/Privacy-Policy.html";
+            var _url = "https://www.yatreedestination.com/Privacy-Policy";
             if (!await launch(_url)) throw 'Could not launch $_url';
           },
           child: Card(
@@ -75,7 +75,7 @@ class _PolicyPageState extends State<PolicyPage> {
         ),
         InkWell(
           onTap: ()async {
-            var _url = "https://yatreedestination.com/Refund-And-Cancellation-Policy.html";
+            var _url = "https://www.yatreedestination.com/Refund-And-Cancellation-Policy";
             if (!await launch(_url)) throw 'Could not launch $_url';
           },
           child: Card(

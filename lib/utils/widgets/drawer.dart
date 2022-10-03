@@ -135,7 +135,7 @@ Widget AppDrawer(
                   color: Colors.grey,
                 ),
               ),
-              ListTile(
+              /*ListTile(
                 onTap: () {
                   //Get.to(() => SupportPage());
                   Get.to(() => Support());
@@ -150,7 +150,7 @@ Widget AppDrawer(
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500, fontSize: 15),
                 ),
-              ),
+              ),*/
               ListTile(
                 onTap: () {
                   Get.to(() => SubmitReview());

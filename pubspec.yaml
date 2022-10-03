@@ -61,6 +61,7 @@ dependencies:
   flutter_staggered_grid_view:
   slidable_button: ^2.0.0+1
   fimber:
+  webview_flutter: ^3.0.4
 
 
 
