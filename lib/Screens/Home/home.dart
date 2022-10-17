@@ -366,11 +366,12 @@ class _MyHomePageState extends State<MyHomePage>
                             height: 70,
                             width: 70,
                             decoration: BoxDecoration(
-                                // borderRadius: BorderRadius.circular(40),
+                  color: Colors.white,
                                 image: DecorationImage(
                                     image: NetworkImage(
                                         "https://d19y8r79r2sdoe.cloudfront.net/public/${servicedata!.listServiceMasters![index].image}"),
-                                    fit: BoxFit.fill)),
+                                    fit: BoxFit.fill,
+                                )),
                           ),
                         ),
                       ),

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,7 @@ import 'package:yatree/model/package/packageData.dart';
 import 'package:yatree/model/ride/ride_modle.dart';
 import 'package:yatree/model/service/sightseeing.dart';
 import 'package:yatree/model/service/spinaround_model.dart';
+import 'package:yatree/model/trending.dart';
 import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/services/createBooking.dart';
 import 'package:yatree/ui/packages/mapScreen.dart';
@@ -77,7 +80,7 @@ class BookingPage extends StatefulWidget {
 class _BookingPageState extends State<BookingPage> {
   String? _setTime = "", _setDate = "";
   int _totalChild = 0, _totalAdults = 1;
-
+  TrendingData? trendingData;
   String? _hour, _minute, _time;
   final GlobalKey<FormState> _keyForm = GlobalKey();
   bool _validate = false;
@@ -115,6 +118,7 @@ class _BookingPageState extends State<BookingPage> {
     setState(() {
       totalAmount = widget.packageData?.createCustomerPackages?.price;
     });
+    TrendingData treding = await getTrendingNowData();
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     _getPlace(position.latitude, position.longitude);
@@ -124,7 +128,7 @@ class _BookingPageState extends State<BookingPage> {
     var userName = await pref.getUsername();
     setState(() {
       currentposition = position;
-
+      trendingData = treding;
       username = userName;
       userid = userId;
     });
@@ -158,6 +162,7 @@ class _BookingPageState extends State<BookingPage> {
   @override
   void initState() {
     print("Price Is ${widget.packageData?.createCustomerPackages?.price}");
+
     _getData();
     setState(() {
       Time = DateFormat("HH:mm:ss").format(
@@ -581,41 +586,62 @@ class _BookingPageState extends State<BookingPage> {
   @override
   Widget build(BuildContext context) {
     landingPageController = Get.put(LandingPageController(), permanent: false);
-    return Scaffold(
-      backgroundColor: Color(0xffEEFDFF),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: 50,
-            width: 50,
-            child: Center(
-                child: SvgPicture.asset(
-              'assets/svg/checkout.svg',
-              fit: BoxFit.fill,
-            )),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, gradient: buildRadialGradient()),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xffEEFDFF),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          toolbarHeight: 70,
+          centerTitle: true,
+          flexibleSpace: Stack(
+            children: [
+              // Column(
+              //   children: [
+              //     SizedBox(height: 10,),
+              //     Container(
+              //       child: Image.asset("assets/png/booking_banner.png"),
+              //     ),
+              //   ],
+              // ),
+              Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).appBarTheme.backgroundColor,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20)),
+                ),
+                child: Center(
+                  child: ListTile(
+                    leading:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        child: Center(
+                            child: SvgPicture.asset(
+                              'assets/svg/checkout.svg',
+                              fit: BoxFit.fill,
+                            )),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, gradient: buildRadialGradient()),
+                      ),
+                    ),
+                    title:Text(
+                      "Booking Form",
+                      style: GoogleFonts.raleway(fontWeight: FontWeight.w500,color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+
+            ],
           ),
         ),
-        elevation: 0.0,
-        toolbarHeight: 70,
-        title: Text(
-          "Booking Page",
-          style: GoogleFonts.raleway(fontWeight: FontWeight.w500),
-        ),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).appBarTheme.backgroundColor,
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20)),
-          ),
-        ),
+        body: newBuildBody(),
       ),
-      body: newBuildBody(),
     );
     /*return Scaffold(
       appBar: widget.rideType == "2"
@@ -731,18 +757,9 @@ class _BookingPageState extends State<BookingPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              "Trending Udaipur",
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ),
+          _buildTrendingList(context),
           SizedBox(
-            height: 100,
+            height: 10,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -751,7 +768,7 @@ class _BookingPageState extends State<BookingPage> {
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(50)),
               width: Get.width,
-              height: Get.height,
+              // height: Get.height,
               child: Form(
                 key: _keyForm,
                 child: Column(
@@ -926,7 +943,7 @@ class _BookingPageState extends State<BookingPage> {
                       },
                       child: isloading
                           ? Container(
-                          height: MediaQuery.of(context).size.height,
+                          height: 70,
                           width: MediaQuery.of(context).size.width,
                           color: Colors.transparent,
                           child: Center(child: CircularProgressIndicator()))
@@ -1661,5 +1678,60 @@ class _BookingPageState extends State<BookingPage> {
       driverAvailable = false;
       driverCount = 0;
     }
+  }
+
+  _buildTrendingList(BuildContext context) {
+    return Container(
+        height: 180,
+        width: MediaQuery.of(context).size.width ,
+        child: CarouselSlider.builder(
+          itemCount: widget.placeData?.length,
+          itemBuilder: (context, index, pageViewIndex) {
+            return Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: CachedNetworkImage(
+                imageUrl:
+                "${AppStrings.imageUrl}${widget.placeData?[index].placeImage ?? ""}",
+                imageBuilder: (context, imageProvider) => Container(
+                  height: 180,
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  decoration: BoxDecoration(
+                    image:
+                    DecorationImage(image: imageProvider, fit: BoxFit.fill),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                        color: Colors.grey.shade400,
+                      ),
+                    ],
+                    // color: Colors.white,
+                  ),
+                ),
+                placeholder: (context, url) => Container(
+                  height: 140,
+                  width: MediaQuery.of(context).size.width - 20,
+                  color: Colors.blue,
+                ),
+                errorWidget: (context, url, error) => Container(
+                    height: 140,
+                    width: MediaQuery.of(context).size.width - 20,
+                    color: Colors.blue,
+                    child: Center(
+                      child: Icon(Icons.error),
+                    )),
+              ),
+            );
+          },
+          options: CarouselOptions(
+            autoPlay: false,
+            enableInfiniteScroll: false,
+            viewportFraction: 0.7,
+            disableCenter: true
+            // aspectRatio: 2.0,
+            // initialPage: 2,
+          ),
+        ));
   }
 }

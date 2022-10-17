@@ -44,6 +44,7 @@ class ListPlaceMaster {
     this.placeCategoryName,
     this.placeSubCategoryId,
     this.placeSubCategoryName,
+    this.placeImage
   });
 
   bool? isSelected = false;
@@ -56,6 +57,7 @@ class ListPlaceMaster {
   DateTime? entryDateTime;
   DateTime? updatedDateTime;
   String? description;
+  String? placeImage;
   int? parentPlaceId;
   dynamic parentPlaceName;
   int? price;
@@ -74,6 +76,7 @@ class ListPlaceMaster {
     entryDateTime: DateTime.parse(json["entryDateTime"]),
     updatedDateTime: DateTime.parse(json["updatedDateTime"]),
     description: json["description"],
+    placeImage: json["placeImage"],
     parentPlaceId: json["parentPlaceId"],
     parentPlaceName: json["parentPlaceName"],
     price: json["price"],
@@ -100,5 +103,6 @@ class ListPlaceMaster {
     "placeCategoryName": placeCategoryName,
     "placeSubCategoryId": placeSubCategoryId,
     "placeSubCategoryName": placeSubCategoryName,
+    "placeImage":placeImage
   };
 }

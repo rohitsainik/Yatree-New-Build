@@ -98,7 +98,7 @@ class _SpinAroundPageState extends State<SpinAroundPage> {
                                       borderRadius: BorderRadius.circular(40),
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                              "https://d19y8r79r2sdoe.cloudfront.net/public/"),
+                                              "https://d19y8r79r2sdoe.cloudfront.net/public/${e.placeImage}"),
                                           fit: BoxFit.fill)),
                                 ),
                                 SizedBox(height: 10,),

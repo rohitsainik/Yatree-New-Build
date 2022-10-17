@@ -110,7 +110,7 @@ class _CheckoutState extends State<Checkout> {
             ),
           ),
           _buildTrendingList(context),
-          SizedBox(height: 100,),
+          SizedBox(height: 10,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
@@ -152,7 +152,7 @@ class _CheckoutState extends State<Checkout> {
                         //   onPressed: (){},
                         //   child: Text("+Add more locations",style: GoogleFonts.raleway(fontWeight: FontWeight.w600),),
                         // ),
-                        trailing: Text("Total : \u20b9",style: GoogleFonts.raleway(fontWeight: FontWeight.w600),),
+                        trailing: Text("Total : \u20b9 ${totalAmount}",style: GoogleFonts.raleway(fontWeight: FontWeight.w600),),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -235,7 +235,7 @@ class _CheckoutState extends State<Checkout> {
   _buildTrendingList(BuildContext context) {
     return Container(
         height: 180,
-        // width: MediaQuery.of(context).size.width /2,
+        width: MediaQuery.of(context).size.width ,
         child: CarouselSlider.builder(
           itemCount: trendingData?.listTrendingNow!.length,
           itemBuilder: (context, index, pageViewIndex) {
@@ -293,6 +293,7 @@ class _CheckoutState extends State<Checkout> {
     TrendingData treding = await getTrendingNowData();
     setState(() {
       trendingData = treding;
+      totalAmount = widget.price;
     });
   }
 

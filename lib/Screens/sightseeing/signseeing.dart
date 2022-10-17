@@ -58,7 +58,7 @@ class _SightSeeingState extends State<SightSeeing> {
         elevation: 0.0,
         toolbarHeight: 70,
         title: Text(
-          "Spin Around",
+          "Sightseeing",
           style: GoogleFonts.raleway(fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
@@ -140,6 +140,10 @@ class _SightSeeingState extends State<SightSeeing> {
                     height: 150,
                     width: Get.width,
                     decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage("https://d19y8r79r2sdoe.cloudfront.net/public/${data?.placeImage}")
+                      ),
                         color: Colors.amber,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),

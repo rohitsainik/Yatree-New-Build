@@ -24,8 +24,8 @@ getUserMasterData() async {
   print(id);
   print("------------------");
   // try {
-    String graphQLDocument = '''query GetUserMaster($id: Int!) {
-        getUserMaster(id: $id) {
+    String graphQLDocument = '''query GetUserByCognitoId(\$cognitoId: String!) {
+        getUserByCognitoId(cognitoId: \$cognitoId) {
           __typename
           id
           cognitoId
@@ -51,9 +51,14 @@ getUserMasterData() async {
         }
       }''';
 
+  var variables = {
+    "cognitoId": id.toString(),
+  };
+
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
       document: graphQLDocument,
+          variables: variables
     ));
 
     var response = await operation.response;
@@ -257,6 +262,7 @@ getOfferMasterData() async {
           updatedDateTime
           description
           couponCode
+          validUpto
         }
       }''';
 
@@ -680,6 +686,7 @@ getServicePlaceMapping() async {
               placeCategoryName
               placeSubCategoryId
               placeSubCategoryName
+              placeImage
             }
           }
         }
@@ -724,6 +731,7 @@ getListPlaceMaster() async {
           placeCategoryName
           placeSubCategoryId
           placeSubCategoryName
+          placeImage
         }
       }''';
 
