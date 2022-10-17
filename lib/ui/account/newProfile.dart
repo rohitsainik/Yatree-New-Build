@@ -2,7 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yatree/model/profile.dart';
 import 'package:yatree/services/registrationFunction.dart';
+
+import '../../services/apiServices.dart';
+import '../../utils/sharedPreference.dart';
 
 class NewProfile extends StatefulWidget {
   const NewProfile({Key? key}) : super(key: key);
@@ -12,6 +16,26 @@ class NewProfile extends StatefulWidget {
 }
 
 class _NewProfileState extends State<NewProfile> {
+  var username;
+  ProfileData userProfile = ProfileData();
+
+  getData() async {
+    SharedPref pref = SharedPref();
+    var profile = await getUserMasterData();
+    var temp = await pref.getUsername();
+    setState(() {
+      username = temp;
+      userProfile = ProfileData.fromJson(profile);
+    });
+    print("profile: ${userProfile.getUserByCognitoId}");
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +51,7 @@ class _NewProfileState extends State<NewProfile> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
-                              "https://d2az3zd39o5d63.cloudfront.net/linkedin-profile-picture-squinch.jpg"),
+                              "https://cdn-icons-png.flaticon.com/512/147/147142.png"),
                           fit: BoxFit.cover)),
                   child: new BackdropFilter(
                     filter: new ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
@@ -103,7 +127,7 @@ class _NewProfileState extends State<NewProfile> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "DIVYANKA TRIPATHI",
+                                      "DIVYANK TRIPATHI",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -300,7 +324,7 @@ class _NewProfileState extends State<NewProfile> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: NetworkImage(
-                                      "https://d2az3zd39o5d63.cloudfront.net/linkedin-profile-picture-squinch.jpg"),
+                                      "https://cdn-icons-png.flaticon.com/512/147/147142.png"),
                                   fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(70),
                             ),

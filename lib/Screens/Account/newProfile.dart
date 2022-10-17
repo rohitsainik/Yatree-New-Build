@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/utils/sharedPreference.dart';
 
 class NewProfile extends StatefulWidget {
@@ -13,14 +14,17 @@ class NewProfile extends StatefulWidget {
 
 class _NewProfileState extends State<NewProfile> {
   var username;
+  var userProfile;
 
   getData() async {
     SharedPref pref = SharedPref();
+    var profile = getUserMasterData();
     var temp = await pref.getUsername();
     setState(() {
       username = temp;
+      userProfile = profile;
     });
-    print(username.runtimeType);
+    print(profile);
   }
 
   @override
