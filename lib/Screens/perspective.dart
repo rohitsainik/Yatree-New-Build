@@ -152,8 +152,8 @@ class _PerspectivePageState extends State<PerspectivePage> {
                 ),
             BottomNavigationBarItem(
               backgroundColor: Colors.black,
-                icon: Image.asset(
-                  "assets/png/profile.png",
+                icon: Image.network(
+                  "https://cdn-icons-png.flaticon.com/512/147/147142.png",
                   color: Colors.white,
                   height: 32,
                 ),

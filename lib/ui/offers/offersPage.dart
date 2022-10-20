@@ -71,88 +71,108 @@ class _OffersPageState extends State<OffersPage> {
       body: ListView.builder(
         itemCount: offerData != null ? offerData!.listOfferMasters!.length : 0,
         itemBuilder: (_,index){
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
+          return  Padding(
+            padding: const EdgeInsets.all(5.0),
             child: Container(
+              height: 180,
+              width: Get.width -100,
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(20)),
+                  borderRadius: BorderRadius.circular(50)),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                          "${AppStrings.imageUrl}${offerData?.listOfferMasters![index].image}",
-                          imageBuilder: (context, imageProvider) => Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: imageProvider, fit: BoxFit.fill),
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 5,
-                                  spreadRadius: 1,
-                                  color: Colors.grey.shade400,
-                                ),
-                              ],
-                              // color: Colors.white,
+                  Expanded(
+                    flex: 4,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                            "${AppStrings.imageUrl}${offerData?.listOfferMasters![index].image}",
+                            imageBuilder: (context, imageProvider) => Container(
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.fill),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 5,
+                                    spreadRadius: 1,
+                                    color: Colors.grey.shade400,
+                                  ),
+                                ],
+                                // color: Colors.white,
+                              ),
                             ),
-                          ),
-                          placeholder: (context, url) => Container(
-                            height: 140,
-                            width: MediaQuery.of(context).size.width - 20,
-                            color: Colors.blue,
-                          ),
-                          errorWidget: (context, url, error) => Container(
+                            placeholder: (context, url) => Container(
                               height: 140,
                               width: MediaQuery.of(context).size.width - 20,
                               color: Colors.blue,
-                              child: Center(
-                                child: Icon(Icons.error),
-                              )),
+                            ),
+                            errorWidget: (context, url, error) => Container(
+                                height: 140,
+                                width: MediaQuery.of(context).size.width - 20,
+                                color: Colors.blue,
+                                child: Center(
+                                  child: Icon(Icons.error),
+                                )),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Text(
-                                'E-Rickshaw Rides',
-                                style: GoogleFonts.raleway(fontSize: 10),
-                              ),
-                              Text(
-                                'Flat 10% OFF on Rides!',
-                                style: GoogleFonts.raleway(
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ))
-                    ],
+                        Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                Text(
+                                  "${offerData?.listOfferMasters![index].name}",
+                                  style: GoogleFonts.raleway(fontSize: 10),
+                                ),
+                                Text(
+                                  "${offerData?.listOfferMasters![index].description}",
+                                  style: GoogleFonts.raleway(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                               SizedBox(height: 25,),
+                                Row(
+                                  children: [
+                                    Icon(Icons.calendar_month),
+                                    SizedBox(width: 10,),
+                                    Text(
+                                      "${offerData?.listOfferMasters![index].validUpto}",
+                                      style: GoogleFonts.raleway(
+                                        fontSize: 10,),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ))
+                      ],
+                    ),
                   ),
                   DottedLine(
                     lineThickness: 1.0,
                     dashLength: 10.0,
                     dashGapLength: 10.0,
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Clipboard.setData(ClipboardData(text: offerData?.listOfferMasters![index].name)).then((_){
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("copied to clipboard")));
-                        });
-                      },
-                      child: Text(
-                          "Copy & Book: ${offerData?.listOfferMasters![index].name}"))
+                  Expanded(
+                    flex: 2,
+                    child: TextButton(
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: offerData?.listOfferMasters![index].name)).then((_){
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("copied to clipboard")));
+                          });
+                        },
+                        child: Text(
+                            "Copy & Book: ${offerData?.listOfferMasters![index].couponCode}")),
+                  )
                 ],
               ),
             ),

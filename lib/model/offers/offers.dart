@@ -35,7 +35,8 @@ class ListOfferMaster {
     this.entryDateTime,
     this.updatedDateTime,
     this.description,
-    this.couponCode
+    this.couponCode,
+    this.validUpto
   });
 
   String? typename;
@@ -45,6 +46,7 @@ class ListOfferMaster {
   int? isActive;
   String? entryBy;
   String? description;
+  String? validUpto;
   String? couponCode;
   DateTime? entryDateTime;
   DateTime? updatedDateTime;
@@ -55,6 +57,7 @@ class ListOfferMaster {
     name: json["name"],
     image: json["image"],
     isActive: json["isActive"],
+    validUpto: json["validUpto"],
     entryBy: json["entryBy"],
     entryDateTime: DateTime.parse(json["entryDateTime"]),
     description:json["description"],
@@ -72,6 +75,7 @@ class ListOfferMaster {
     "image": image,
     "isActive": isActive,
     "entryBy": entryBy,
+    "validUpto": validUpto,
     "entryDateTime": entryDateTime!.toIso8601String(),
     "updatedDateTime": updatedDateTime!.toIso8601String(),
     "description": description,

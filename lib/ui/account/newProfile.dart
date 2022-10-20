@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yatree/model/profile.dart';
 import 'package:yatree/services/registrationFunction.dart';
@@ -16,18 +18,45 @@ class NewProfile extends StatefulWidget {
 }
 
 class _NewProfileState extends State<NewProfile> {
-  var username;
+  var username,location,place;
   ProfileData userProfile = ProfileData();
 
   getData() async {
     SharedPref pref = SharedPref();
     var profile = await getUserMasterData();
     var temp = await pref.getUsername();
+    LocationPermission permission;
+    permission = await Geolocator.requestPermission();
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     setState(() {
       username = temp;
-      userProfile = ProfileData.fromJson(profile);
+      userProfile = profile;
     });
+    await _getstartPlace(position.latitude, position.longitude);
     print("profile: ${userProfile.getUserByCognitoId}");
+  }
+
+  _getstartPlace(lat, long) async {
+    List<Placemark> newPlace = await placemarkFromCoordinates(lat, long);
+
+    // this is all you need
+    Placemark placeMark = newPlace[0];
+    String? name = placeMark.name;
+    String? subLocality = placeMark.subLocality;
+    String? locality = placeMark.locality;
+    String? administrativeArea = placeMark.administrativeArea;
+    String? postalCode = placeMark.postalCode;
+    String? country = placeMark.country;
+    String? address = "$locality ${subLocality}";
+
+    print(address);
+
+    setState(() {
+      place = address.toString();
+      location = name.toString();
+      // update _address
+    });
   }
 
   @override
@@ -127,7 +156,7 @@ class _NewProfileState extends State<NewProfile> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "DIVYANK TRIPATHI",
+                                      "${userProfile.getUserByCognitoId?.name}",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -137,13 +166,15 @@ class _NewProfileState extends State<NewProfile> {
                                     SizedBox(height: 5),
                                     Row(
                                       children: [
-                                        Icon(
-                                          Icons.location_on_outlined,
-                                          color: Colors.grey,
-                                          size: 20,
-                                        ),
+                                        if(location != null)
+                                          Icon(
+                                            Icons.location_on_outlined,
+                                            color: Colors.grey,
+                                            size: 20,
+                                          ),
+
                                         Text(
-                                          "Jaipur, Raj",
+                                          location ?? "",
                                           style: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 16,
@@ -189,7 +220,7 @@ class _NewProfileState extends State<NewProfile> {
                                       ),
                                     ),
                                     Text(
-                                      "Divyanka Tripathi",
+                                      "${userProfile.getUserByCognitoId?.name}",
                                       style: GoogleFonts.roboto(
                                         color: Colors.grey.shade600,
                                         fontSize: 16,
@@ -212,7 +243,7 @@ class _NewProfileState extends State<NewProfile> {
                                       ),
                                     ),
                                     Text(
-                                      "+919876543210",
+                                      "${userProfile.getUserByCognitoId?.phoneNumber}",
                                       style: GoogleFonts.roboto(
                                         color: Colors.grey.shade600,
                                         fontSize: 16,
@@ -235,7 +266,7 @@ class _NewProfileState extends State<NewProfile> {
                                       ),
                                     ),
                                     Text(
-                                      "divyanka@gmail.com",
+                                      "${userProfile.getUserByCognitoId?.email}",
                                       style: GoogleFonts.roboto(
                                         color: Colors.grey.shade600,
                                         fontSize: 16,
@@ -270,7 +301,7 @@ class _NewProfileState extends State<NewProfile> {
                                       ),
                                     ),
                                     Text(
-                                      "Jaipur, Raj.",
+                                      location ?? "",
                                       style: GoogleFonts.roboto(
                                         color: Colors.grey.shade600,
                                         fontSize: 16,
@@ -280,7 +311,7 @@ class _NewProfileState extends State<NewProfile> {
                                   ],
                                 ),
                                 SizedBox(height: 12),
-                                Row(
+                               Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -295,7 +326,7 @@ class _NewProfileState extends State<NewProfile> {
                                     Container(
                                       width: 150,
                                       child: Text(
-                                        "358, Murlipura, Jaipur, Raj.",
+                                        place ??"",
                                         style: GoogleFonts.roboto(
                                           color: Colors.grey.shade600,
                                           fontSize: 16,
@@ -329,7 +360,7 @@ class _NewProfileState extends State<NewProfile> {
                               borderRadius: BorderRadius.circular(70),
                             ),
                           ),
-                          Positioned(
+                          /*Positioned(
                               bottom: 0,
                               right: 0,
                               child: Container(
@@ -344,7 +375,7 @@ class _NewProfileState extends State<NewProfile> {
                                   color: Colors.white,
                                   size: 20,
                                 ),
-                              ))
+                              ))*/
                         ],
                         clipBehavior: Clip.none,
                       ),
