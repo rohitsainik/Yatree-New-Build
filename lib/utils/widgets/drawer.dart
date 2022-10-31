@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yatree/Screens/Account/newProfile.dart';
 import 'package:yatree/Screens/Support/Support.dart';
 import 'package:yatree/controller/tab_controller.dart';
 import 'package:yatree/services/registrationFunction.dart';
 import 'package:yatree/ui/account/autoInfoPage.dart';
+import 'package:yatree/ui/account/newProfile.dart';
 import 'package:yatree/ui/review/addReview.dart';
 import 'package:yatree/ui/support/policies_page.dart';
 
@@ -27,7 +27,7 @@ Widget AppDrawer(
                   // Get.to(() => ProfilePage(
                   //       appbar: true,
                   //     ));
-                  Get.to(() => NewProfile());
+                  Get.to(() => NewProfile(fromBottom:true));
 
                   // SharedPref pref = SharedPref();
                   // var userId = await pref.getUserId();
@@ -42,7 +42,7 @@ Widget AppDrawer(
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(
-                            "https://d2az3zd39o5d63.cloudfront.net/linkedin-profile-picture-squinch.jpg"),
+                            "https://cdn-icons-png.flaticon.com/512/147/147142.png"),
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(70),
                   ),
@@ -75,7 +75,7 @@ Widget AppDrawer(
               ),
               ListTile(
                 onTap: () {
-                  Get.to(() => NewProfile());
+                  Get.to(() => NewProfile(fromBottom:true));
                 },
                 leading: SvgPicture.asset(
                   "assets/icons/support.svg",

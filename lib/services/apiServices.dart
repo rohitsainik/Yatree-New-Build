@@ -8,6 +8,7 @@ import 'package:yatree/model/discountList.dart';
 import 'package:yatree/model/offers/offers.dart';
 import 'package:yatree/model/package/new_package_list.dart';
 import 'package:yatree/model/package/packageData.dart';
+import 'package:yatree/model/profile.dart';
 import 'package:yatree/model/ride/ride_master_modle.dart';
 import 'package:yatree/model/ride/ride_modle.dart';
 import 'package:yatree/model/serive.dart';
@@ -24,7 +25,7 @@ getUserMasterData() async {
   print(id);
   print("------------------");
   // try {
-    String graphQLDocument = '''query GetUserByCognitoId(\$cognitoId: String!) {
+  String graphQLDocument = '''query GetUserByCognitoId(\$cognitoId: String!) {
         getUserByCognitoId(cognitoId: \$cognitoId) {
           __typename
           id
@@ -55,16 +56,20 @@ getUserMasterData() async {
     "cognitoId": id.toString(),
   };
 
-    var operation = Amplify.API.query(
-        request: GraphQLRequest<String>(
-      document: graphQLDocument,
+  var operation = Amplify.API.query(
+      request: GraphQLRequest<String>(
+          document: graphQLDocument,
           variables: variables
-    ));
+      ));
 
-    var response = await operation.response;
-    var data = response.data;
+  var response = await operation.response;
+  var data = response.data;
+  ProfileData profile = ProfileData.fromJson(json.decode(data.toString()));
 
-    print('user Master result: ${data}');
+  print('user Master result: ${data}');
+  print('user Master result: ${profile}');
+
+  return profile;
   // }
   // catch (e) {
   //   print('Query failed: $e');
@@ -167,8 +172,8 @@ getAutoMasterData() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -194,8 +199,8 @@ getTrendingNowData() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -234,15 +239,14 @@ getBookingMasterData() async {
 
     var res = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await res.response;
     var data = response.data;
 
 
     Fimber.d('booking Master result: ' + data!);
-
   } catch (e) {
     print('Query failed: $e');
   }
@@ -268,8 +272,8 @@ getOfferMasterData() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -296,8 +300,8 @@ getFaqMasterData() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -335,8 +339,8 @@ getDiscountMasterData() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -367,8 +371,8 @@ getReviewData() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -384,7 +388,7 @@ getPackageDetailsData(
     {var serviceId, subServiceId, currentTime, packageId, categoryId}) async {
   try {
     String graphQLDocument =
-        '''query GetPackagesDetails(\$serviceId: Int!, \$subServiceId: Int!, \$currentTime: String!, \$packageId: Int!, \$categoryId: Int!) {
+    '''query GetPackagesDetails(\$serviceId: Int!, \$subServiceId: Int!, \$currentTime: String!, \$packageId: Int!, \$categoryId: Int!) {
   getPackagesDetails(serviceId: \$serviceId, subServiceId: \$subServiceId, currentTime: \$currentTime, packageId: \$packageId, categoryId: \$categoryId) {
     package_id
     package_name
@@ -440,7 +444,7 @@ getPackageDetailsData(
     print('package Master result: ' + response.errors.toString());
 
     AllPackageDataModel newpackageData =
-        AllPackageDataModel.fromJson(json.decode(data));
+    AllPackageDataModel.fromJson(json.decode(data));
     return newpackageData;
 
     print('review Master result: ' + data);
@@ -469,8 +473,8 @@ getServiceData() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -489,7 +493,7 @@ getServiceData() async {
 getUserRide({var customerId}) async {
   try {
     String graphQLDocument =
-        '''query GetUserRides(\$customerId: String, \$driverId: String) {
+    '''query GetUserRides(\$customerId: String, \$driverId: String) {
         getUserRides(customerId: \$customerId, driverId: \$driverId) {
           __typename
           id
@@ -559,8 +563,8 @@ getRideMaster({var id}) async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(document: graphQLDocument, variables: {
-      "id": id,
-    }));
+          "id": id,
+        }));
 
     var response = await operation.response;
     var data = response.data;
@@ -578,7 +582,7 @@ getRideMaster({var id}) async {
 UpdateEndpoint({var userId, token}) async {
   try {
     String graphQLDocument =
-        '''query UpdateEndpoint(\$userId: String!, \$token: String!) {
+    '''query UpdateEndpoint(\$userId: String!, \$token: String!) {
         updateEndpoint(userId: \$userId, token: \$token)
       }''';
 
@@ -643,8 +647,8 @@ AdStripList() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument,
-    ));
+          document: graphQLDocument,
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -694,8 +698,8 @@ getServicePlaceMapping() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument, variables: {"serviceId": 13}
-    ));
+            document: graphQLDocument, variables: {"serviceId": 13}
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -737,8 +741,9 @@ getListPlaceMaster() async {
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(
-      document: graphQLDocument, variables: {"placeCategoryId": -1,"placeSubCategoryId":-1}
-    ));
+            document: graphQLDocument,
+            variables: {"placeCategoryId": -1, "placeSubCategoryId": -1}
+        ));
 
     var response = await operation.response;
     var data = response.data;
@@ -792,16 +797,15 @@ getRideDetail({var id}) async {
   }
 }
 
-getDiscountData(
-    {var serviceId,
-    subServiceId,
-    packageId,
-    locationLatitude,
-    locationLongitude,
-    bookingDate}) async {
+getDiscountData({var serviceId,
+  subServiceId,
+  packageId,
+  locationLatitude,
+  locationLongitude,
+  bookingDate}) async {
   try {
     String graphQLDocument =
-        '''query GetDiscountData(\$serviceId: Int!, \$subServiceId: Int!, \$packageId: Int!, \$locationLatitude: Float, \$locationLongitude: Float, \$bookingDate: Date) {
+    '''query GetDiscountData(\$serviceId: Int!, \$subServiceId: Int!, \$packageId: Int!, \$locationLatitude: Float, \$locationLongitude: Float, \$bookingDate: Date) {
         getDiscountData(serviceId: \$serviceId, subServiceId: \$subServiceId, packageId: \$packageId, locationLatitude: \$locationLatitude, locationLongitude: \$locationLongitude, bookingDate: \$bookingDate) {
           __typename
           id
@@ -815,13 +819,13 @@ getDiscountData(
 
     var operation = Amplify.API.query(
         request: GraphQLRequest<String>(document: graphQLDocument, variables: {
-      "serviceId": serviceId,
-      "subServiceId": subServiceId,
-      "packageId": packageId,
-      "locationLatitude": locationLatitude,
-      "locationLongitude": locationLongitude,
-      "bookingDate": bookingDate,
-    }));
+          "serviceId": serviceId,
+          "subServiceId": subServiceId,
+          "packageId": packageId,
+          "locationLatitude": locationLatitude,
+          "locationLongitude": locationLongitude,
+          "bookingDate": bookingDate,
+        }));
 
     var response = await operation.response;
     var data = response.data;
@@ -836,22 +840,93 @@ getDiscountData(
   }
 }
 
-sendRentalData(
-    {var passengerEmail,
-    passengerName,
-    noOfAutos,
-    passengerPhone,
-    entryBy,
-    entryDateTime,
-    updatedDateTime,
-    locationName,
-    startDate,
-    startTime,
-    userId}) async {
+updateUserData({var passengerEmail,
+  name,
+  email,
+  phoneNumber,
+  entryBy,
+  entryDateTime,
+  updatedDateTime,
+  address, cognitoId}) async {
   try {
     //todo create
     String graphQLDocument =
-        '''mutation CreateEvRentalQueryMaster(\$createEvRentalQueryMasterInput: CreateEvRentalQueryMasterInput!) {
+    '''mutation UpdateUserMaster(\$updateUserMasterInput: UpdateUserMasterInput!) {
+        updateUserMaster(updateUserMasterInput: \$updateUserMasterInput) {
+          __typename
+          id
+          cognitoId
+          name
+          email
+          phoneNumber
+          aadharNo
+          dlNo
+          age
+          gender
+          autoAssign
+          entryBy
+          entryDateTime
+          updatedDateTime
+          userStatus
+          roleId
+          address
+          photo
+          license
+          aadharCard
+          panCard
+          driverId
+        }
+      }''';
+
+    var variables = {
+    "updateUserMasterInput": {
+    "id": 0,
+    "cognitoId":cognitoId,
+    "name": name,
+    "email": email,
+    "phoneNumber": phoneNumber,
+    "entryBy": entryBy,
+    "entryDateTime": entryDateTime,
+    "updatedDateTime": updatedDateTime,
+    "address":address,
+  }
+};
+
+    print('data detail variable: ${variables.toString()}');
+  var operation = Amplify.API.query(
+  request: GraphQLRequest<String>(
+  document: graphQLDocument, variables: variables));
+
+  var response = await operation.response;
+  var data = response.data;
+
+  print('data detail result: ' + data!);
+  print('data detail result: ' + response.errors.toString());
+
+  var value = json.decode(data);
+
+  return value;
+  } catch (e) {
+  print('UpdateUserMaster Query failed: $e');
+  }
+}
+
+
+sendRentalData({var passengerEmail,
+  passengerName,
+  noOfAutos,
+  passengerPhone,
+  entryBy,
+  entryDateTime,
+  updatedDateTime,
+  locationName,
+  startDate,
+  startTime,
+  userId}) async {
+  try {
+    //todo create
+    String graphQLDocument =
+    '''mutation CreateEvRentalQueryMaster(\$createEvRentalQueryMasterInput: CreateEvRentalQueryMasterInput!) {
   createEvRentalQueryMaster(createEvRentalQueryMasterInput: \$createEvRentalQueryMasterInput) {
     id
     name
@@ -901,27 +976,26 @@ sendRentalData(
 }
 
 
-createCustomPackage(
-    {var id,
-      placeId,
-    name,
-    description,
-    serviceId,
-    duration,
-    price,
-    entryBy,
-      entryDateTime,
-      updatedDateTime,
-      categoryId,
-      isActive,fromTime,toTime,
-      subServiceId,buffer,
-      isCreatedByCustomer
-    }) async {
+createCustomPackage({var id,
+  placeId,
+  name,
+  description,
+  serviceId,
+  duration,
+  price,
+  entryBy,
+  entryDateTime,
+  updatedDateTime,
+  categoryId,
+  isActive, fromTime, toTime,
+  subServiceId, buffer,
+  isCreatedByCustomer
+}) async {
   // try {
-    SharedPref pref = SharedPref();
-    var userId = await pref.getUserId();
-    String graphQLDocument =
-        '''mutation CreateCustomerPackages(\$createCustomerPackagesInput: CreateCustomerPackagesInput) {
+  SharedPref pref = SharedPref();
+  var userId = await pref.getUserId();
+  String graphQLDocument =
+  '''mutation CreateCustomerPackages(\$createCustomerPackagesInput: CreateCustomerPackagesInput) {
         createCustomerPackages(createCustomerPackagesInput: \$createCustomerPackagesInput) {
           __typename
           id
@@ -943,48 +1017,48 @@ createCustomPackage(
         }
       }''';
 
-    var custompackdetail = {
-      "id": 0,
-      "name": name,
-      "description": description,
-      "serviceId": serviceId,
-      "duration":0,
-      "price": price,
-      "entryBy": userId,
-      "entryDateTime": DateTime.now().toIso8601String(),
-      "updatedDateTime": DateTime.now().toIso8601String(),
-      "categoryId": categoryId,
-      "isActive": 1,
-      // "fromTime": String,
-      // "toTime": String,
-      // "subServiceId": Int,
-      // "buffer": Int,
-      "isCreatedByCustomer": 1,
-    };
-    var variables = {
-      "createCustomerPackagesInput": {
-        "packageDetails": custompackdetail,
-        "placeIds":placeId.toString(),
-        "userId":userId,
-      }
-    };
+  var custompackdetail = {
+    "id": 0,
+    "name": name,
+    "description": description,
+    "serviceId": serviceId,
+    "duration": 0,
+    "price": price,
+    "entryBy": userId,
+    "entryDateTime": DateTime.now().toIso8601String(),
+    "updatedDateTime": DateTime.now().toIso8601String(),
+    "categoryId": categoryId,
+    "isActive": 1,
+    // "fromTime": String,
+    // "toTime": String,
+    // "subServiceId": Int,
+    // "buffer": Int,
+    "isCreatedByCustomer": 1,
+  };
+  var variables = {
+    "createCustomerPackagesInput": {
+      "packageDetails": custompackdetail,
+      "placeIds": placeId.toString(),
+      "userId": userId,
+    }
+  };
 
-    print('custom package request body $variables');
-    var operation = Amplify.API.query(
-        request: GraphQLRequest<String>(
-            document: graphQLDocument, variables: variables));
+  print('custom package request body $variables');
+  var operation = Amplify.API.query(
+      request: GraphQLRequest<String>(
+          document: graphQLDocument, variables: variables));
 
-    var response = await operation.response;
-    var data = response.data;
+  var response = await operation.response;
+  var data = response.data;
 
-    print('custom package detail result: ' + data!);
-    print('custom package result: ' + response.errors.toString());
+  print('custom package detail result: ' + data!);
+  print('custom package result: ' + response.errors.toString());
 
-    NewPackageList result =  newPackageListFromJson(data);
-    print("result is $result : ${result.toJson()}");
-    var value = json.decode(data);
+  NewPackageList result = newPackageListFromJson(data);
+  print("result is $result : ${result.toJson()}");
+  var value = json.decode(data);
 
-    return result;
+  return result;
   // } catch (e) {
   //   print('getCustomTableData Query failed: $e');
   // }

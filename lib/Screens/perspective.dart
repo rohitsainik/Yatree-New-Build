@@ -12,6 +12,7 @@ import 'package:yatree/services/apiServices.dart';
 import 'package:yatree/ui/offers/offersPage.dart';
 import 'package:yatree/ui/rental/rent_auto.dart';
 import 'package:yatree/ui/rides/myRides.dart';
+import 'package:yatree/utils/buildBottomNavigation.dart';
 import 'package:yatree/utils/sharedPreference.dart';
 import 'package:yatree/utils/webview.dart';
 
@@ -98,7 +99,7 @@ class _PerspectivePageState extends State<PerspectivePage> {
 
                 // ExplorePageOld(),
                 OffersPage(),
-                NewProfile(),
+                NewProfile(fromBottom: false,),
                 // ProfilePage()
               ],
             ),
@@ -107,59 +108,5 @@ class _PerspectivePageState extends State<PerspectivePage> {
     );
   }
 
-  buildBottomNavyBar(landingPageController) {
-    return Obx(() => BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      unselectedItemColor: Colors.white,
-      selectedItemColor: Colors.white,
-      currentIndex: landingPageController.tabIndex.value,
-          backgroundColor: Colors.black,
 
-          onTap: landingPageController.changeTabIndex,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              backgroundColor: Colors.black,
-              icon: SvgPicture.asset(
-                "assets/svg/bottom_home.svg",
-                color: Colors.white,
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.black,
-                icon: SvgPicture.asset(
-                  "assets/svg/bottom_ride.svg",
-                  color: Colors.white,
-                ),
-                label:  'Rides',
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.black,
-                icon: SvgPicture.asset(
-                  "assets/icons/blog.svg",
-                  color: Colors.white,
-                ),
-                label: 'Blog',
-                ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.black,
-                icon: SvgPicture.asset(
-                  "assets/svg/bottom_offer.svg",
-                  color: Colors.white,
-                  height: 32,
-                ),
-                label:  'Offer',
-                ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.black,
-                icon: Image.network(
-                  "https://cdn-icons-png.flaticon.com/512/147/147142.png",
-                  color: Colors.white,
-                  height: 32,
-                ),
-                label: 'Profile',
-                ),
-          ],
-        ));
-  }
 }
